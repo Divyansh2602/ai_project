@@ -36,6 +36,7 @@ def get_result(task_id: str, db: Session = Depends(get_db)):
                     "confidence_score": r.confidence_score,
                     "findings": r.findings,
                     "heatmap_path": r.heatmap_path,
+                    "extras": r.extras,
                 }
                 for r in rows
             ]

@@ -69,6 +69,11 @@ def analyze_evidence(self, evidence_id: str):
             return {"error": "evidence not found"}
 
         evidence.status = "analyzing"
+        # Re-analysis: clear previous results first — final_verdicts/audit_logs
+        # are unique per evidence_id, so a second run would IntegrityError.
+        db.query(AgentResult).filter(AgentResult.evidence_id == evidence_id).delete()
+        db.query(FinalVerdict).filter(FinalVerdict.evidence_id == evidence_id).delete()
+        db.query(AuditLog).filter(AuditLog.evidence_id == evidence_id).delete()
         db.commit()
 
         agent_results = _run_agents(evidence.file_type, evidence.file_path)

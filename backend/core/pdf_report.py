@@ -16,6 +16,7 @@ worker never pays for them — only the report download does.
 """
 import os
 from datetime import datetime, timezone
+from xml.sax.saxutils import escape
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -125,11 +126,11 @@ def build_pdf(evidence, verdict, agent_results, audit) -> str:
             story.append(Spacer(1, 6))
             story.append(Paragraph("Reasoning:", ss["Small"]))
             for r in verdict.reasoning:
-                story.append(Paragraph(f"• {r}", ss["Small"]))
+                story.append(Paragraph(f"• {escape(str(r))}", ss["Small"]))
         if verdict.llm_summary:
             story.append(Spacer(1, 6))
             story.append(Paragraph("Forensic summary:", ss["Small"]))
-            story.append(Paragraph(verdict.llm_summary, ss["Normal"]))
+            story.append(Paragraph(escape(verdict.llm_summary), ss["Normal"]))
 
     # ── 3. Agent findings ──
     story.append(Paragraph("3. Agent Findings", ss["SectionH"]))
@@ -138,8 +139,10 @@ def build_pdf(evidence, verdict, agent_results, audit) -> str:
         story.append(Paragraph(f"<b>{ar.agent_name}</b> — authenticity {conf}", ss["Normal"]))
         data = [["Check", "Status", "Note"]]
         for f in (ar.findings or []):
+            # Findings notes may contain raw exception text with <, >, & —
+            # Paragraph parses XML, so escape or the whole PDF build crashes.
             data.append([f.get("check", ""), f.get("status", ""),
-                         Paragraph(str(f.get("note", "")), ss["Small"])])
+                         Paragraph(escape(str(f.get("note", ""))), ss["Small"])])
         t = Table(data, colWidths=[3.2 * cm, 2.2 * cm, 10.6 * cm])
         t.setStyle(TableStyle([
             ("FONTSIZE", (0, 0), (-1, -1), 7.5),
@@ -197,7 +200,7 @@ def build_pdf(evidence, verdict, agent_results, audit) -> str:
         for ev in custody:
             detail = ev.get("detail") or ev.get("key_fingerprint") or ev.get("tx_hash") or ""
             data.append([ev.get("event", ""), ev.get("timestamp", ""),
-                         Paragraph(str(detail), ss["Mono"])])
+                         Paragraph(escape(str(detail)), ss["Mono"])])
         t = Table(data, colWidths=[3.6 * cm, 5.4 * cm, 7 * cm])
         t.setStyle(TableStyle([
             ("FONTSIZE", (0, 0), (-1, -1), 7.5),

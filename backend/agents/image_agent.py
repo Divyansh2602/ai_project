@@ -51,9 +51,10 @@ def _ela(file_path: str, quality: int = 90):
         arr = np.asarray(diff, dtype=np.float32) * scale
         mean_error = float(arr.mean())
 
-        # Save an amplified heatmap for the UI.
+        # Save an amplified heatmap for the UI. Forward slashes so the stored
+        # path is URL-friendly for the frontend regardless of OS.
         heatmap = np.clip(arr, 0, 255).astype("uint8")
-        heatmap_path = os.path.join(HEATMAP_DIR, f"{base}_ela.png")
+        heatmap_path = os.path.join(HEATMAP_DIR, f"{base}_ela.png").replace("\\", "/")
         Image.fromarray(heatmap).save(heatmap_path)
 
         try:

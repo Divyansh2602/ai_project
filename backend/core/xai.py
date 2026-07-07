@@ -148,7 +148,8 @@ def gradcam_heatmap(hf_pipeline, file_path: str) -> dict | None:
 
         os.makedirs(HEATMAP_DIR, exist_ok=True)
         base = os.path.splitext(os.path.basename(file_path))[0]
-        out_path = os.path.join(HEATMAP_DIR, f"{base}_gradcam.png")
+        # Forward slashes so the stored path is URL-friendly for the frontend.
+        out_path = os.path.join(HEATMAP_DIR, f"{base}_gradcam.png").replace("\\", "/")
         Image.fromarray(overlay).save(out_path)
         return {"path": out_path, "method": method}
     except Exception:
