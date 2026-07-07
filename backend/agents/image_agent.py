@@ -167,6 +167,20 @@ def run(file_path: str) -> dict:
         signals.append(deep_auth)
         signals.append(deep_auth)
         out.extra["deep_predictions"] = preds
+
+        # Phase 6 XAI — Grad-CAM on the model's "fake" decision.
+        try:
+            from core.xai import gradcam_heatmap
+            cam = gradcam_heatmap(_load_deep_model(), file_path)
+        except Exception:
+            cam = None
+        if cam:
+            out.extra["gradcam_path"] = cam["path"]
+            out.extra["gradcam_method"] = cam["method"]
+            out.add(Finding("xai_gradcam", "ok",
+                            f"Model-attention heatmap saved ({cam['method']})"))
+        else:
+            out.add(Finding("xai_gradcam", "skipped", "Grad-CAM unavailable"))
     else:
         out.add(Finding("deep_model", "skipped",
                         "Deep classifier not loaded (install torch+transformers or set DEEPFAKE_MODEL_ID)"))

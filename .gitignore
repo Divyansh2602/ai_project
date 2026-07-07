@@ -24,3 +24,6 @@ Thumbs.db
 # Phase 5 — security
 backend/keys/
 backend/heatmaps/
+
+# Phase 6 — generated evidence PDFs
+backend/reports/

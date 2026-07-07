@@ -6,98 +6,97 @@
 > what to do next, and traps that aren't obvious from the code.
 > **Standing rule: update this file at the end of every session** (user request, 2026-07-07).
 >
-> Last session: **2026-07-07** (Phase 5 built+tested; audio bug fixed; ffmpeg installed)
+> Last session: **2026-07-07 (second session)** (repo committed; Phase 6 built+tested)
 
 ---
 
 ## 1. Where the project stands
 
-- **Phases 1–5 done (5/11, ~45%). Phase 6 (XAI + Legal PDF) is next.**
-- Backend pipeline is fully working end-to-end: upload → 4–5 agents → decision engine
-  (verdict + manipulation type + GAN attribution) → Ed25519-signed record → audit log
-  → `/api/verify` re-check. Blockchain anchoring is built but **skipped** until the
-  user deploys the contract (see §4).
-- Frontend (Next.js) is still the Phase 1 scaffold — untouched until Phase 7.
+- **Phases 1–6 done (6/11, ~55%). Phase 7 (Frontend Dashboard) is next.**
+- Backend is feature-complete for the demo loop: upload → 5 agents → decision engine
+  → XAI (Grad-CAM, Shapley, video timeline) → Ed25519-signed record → audit log →
+  `/api/verify` → **downloadable Legal Evidence PDF** (`GET /api/report/{id}/pdf`).
+- Blockchain anchoring still env-gated/skipped until the user deploys the contract (§4).
+- Frontend (Next.js) is still the Phase 1 scaffold — Phase 7 builds it out.
 
-## 2. ⚠️ GIT: almost everything is UNCOMMITTED
+## 2. Git status
 
-`master` has **one commit** (Phase 1 scaffold). All Phase 2–5 code, CLAUDE.md,
-PROJECT_STATE.md, scripts/, this file — all uncommitted. The user hasn't asked for
-commits. **Early next session, offer to commit** (suggest one commit per phase or a
-single "Phases 2–5" commit — user's call). Don't push without asking; no remote
-configured checks done yet.
+Repo is now committed: `969bd45` (Phases 2–5 + docs, single commit per user choice)
+on top of `c544675` (Phase 1). Phase 6 should be committed at the end of the session
+that finishes reading this (or was — check `git log`). **No remote configured; don't
+push without asking.** Before committing docs/scripts, never reintroduce secrets —
+they live only in `backend/.env` (incl. `OBSIDIAN_API_KEY`, moved there this session;
+PROJECT_STATE.md §5.13).
 
-## 3. What the 2026-07-07 session did
+## 3. What the 2026-07-07 (second) session did
 
-**Phase 5 — Security Layer (complete, tested end-to-end):**
-- `backend/agents/security_agent.py` — 5th agent, runs on ALL file types:
-  C2PA manifest verification (c2pa-python 0.36; valid manifest → decision engine
-  fast-tracks verdict to Authentic, score floored at 0.9) + invisible-watermark
-  detection (DWT-DCT; detects `StableDiffusionV1` / `SDV2` payloads → near-certain
-  Fake + generator attribution). Reports `confidence=None` when no provenance data
-  exists so it's excluded from the weighted average (decision engine handles None).
-- `backend/security/signing.py` — Ed25519 record signing. Key auto-generated at
-  `backend/keys/server_signing_key.pem` — **this key EXISTS now (created during
-  tests), is gitignored, and must never be deleted** or old signatures can't verify.
-- `backend/security/blockchain.py` + `backend/contracts/TrustSphereAudit.sol` +
-  `scripts/deploy_contract.py` — Polygon **Amoy** (chain 80002; Mumbai is DEAD,
-  decommissioned 2024). Env-gated; currently returns `skipped` gracefully.
-- `scripts/migrate_phase5.py` — already run against Supabase (idempotent). Added to
-  `audit_logs`: record_signature, signature_algorithm, signature_key_fingerprint,
-  signed_payload (jsonb — exactly what the signature covers), blockchain_network,
-  blockchain_status.
-- `backend/routers/verify.py` — `GET /api/verify/{file_id}`: re-hash file vs stored
-  hash + verify signature + read verdict back from chain. Returns `verified: bool`.
-- Decision engine: `AGENT_WEIGHTS["security"] = 0.25`; None-confidence exclusion;
-  C2PA fast-track; watermark → manipulation candidate + attribution.
-- Test artifacts were cleaned up (test evidence row deleted from Supabase).
+**Housekeeping:**
+- Committed Phases 2–5 as one commit (user chose single commit over per-phase).
+- **Secrets scrubbed before committing**: Supabase password + Obsidian API token
+  removed from PROJECT_STATE.md; token removed from `scripts/obsidian_sync.py`
+  (now loads `OBSIDIAN_API_KEY` from `backend/.env` via explicit-path load_dotenv;
+  exits with a clear message if unset). Verified script still works.
 
-**Bug fix — audio deep model (was PROJECT_STATE §5.6):**
-- Root cause was **missing ffmpeg**, not torch/transformers — HF audio pipeline
-  shells out to ffmpeg for filename inputs; broad try/excepts hid the error.
-- Fix: `audio_agent._deep_score` now decodes via librosa and passes
-  `{"raw": y, "sampling_rate": sr}` to the pipeline; all audio-path exceptions now
-  surface real error text in finding notes / Celery logs.
-- **ffmpeg 8.1.2 installed** (winget, Gyan build) → video→audio-track extraction
-  verified working (all 4 agents ran on a test video; sine-tone audio correctly
-  flagged synthetic at 0.008 authenticity). Shells opened before the install need
-  restarting to see ffmpeg on PATH.
+**Phase 6 — XAI + Legal PDF (complete except LLM summary, tested end-to-end):**
+- `backend/core/xai.py` — the explainability module:
+  - **Grad-CAM** on the image agent's deep classifier ('fake' class target).
+    ViT-aware: target layer found by module-name suffix `layernorm_before`
+    (transformers 5.x moved `vit.encoder.layer[i]` → `vit.layers[i]` — hardcoded
+    paths break, PROJECT_STATE §5.11). CNN branch = last Conv2d. Model-agnostic
+    **occlusion-map fallback** if Grad-CAM fails. Overlay saved as
+    `{base}_gradcam.png` next to the ELA heatmap.
+  - **Shapley attribution** for the metadata agent — its confidence is an
+    unweighted mean of check scores (additive model) so Shapley values are the
+    exact closed form `(score_i − 0.5)/n`. No `shap` package. Stored as
+    `feature_importance` in extras.
+  - **Timeline helpers**: `flagged_segments_from_scores()` merges low-score
+    frames into contiguous tampered segments; matplotlib (Agg) renderers for the
+    timeline + importance charts (rendered at PDF time, not in the worker).
+- `backend/core/pdf_report.py` — Legal Evidence Package (reportlab): identity +
+  SHA-256, verdict (color-coded), manipulation type + attribution, per-agent
+  findings tables, XAI exhibits (ELA, Grad-CAM, importance chart, timeline),
+  chain of custody, blockchain block, Ed25519 signature block. Served by new
+  `GET /api/report/{file_id}/pdf` (routers/report.py); PDFs land in
+  `backend/reports/` (gitignored).
+- **DB**: `agent_results.extras` JSONB added (`scripts/migrate_phase6.py`, already
+  run, idempotent). `core/tasks.py` now persists every agent-output key beyond
+  the core four into extras — frame_scores were previously being **discarded**.
+  JSON report (`GET /api/report/{id}`) now includes extras per agent.
+- Agents integrated: image → gradcam extras + finding; metadata →
+  feature_importance; video → flagged_segments.
+- requirements.txt: + grad-cam, matplotlib, reportlab (installed in venv).
+- **Tested end-to-end**: real Evidence row → `analyze_evidence.apply()` → extras
+  persisted → TestClient GET report JSON + PDF (3 pages, all 6 sections, real
+  ViT Grad-CAM, exhibit images verified visually). Test rows/files cleaned up.
 
-**Docs/sync done this session:**
-- Obsidian: Phases 3, 4, 5 marked ✅ Done; Phase 5 note rewritten (Amoy correction;
-  two on-chain tasks left honestly UNCHECKED pending user wallet — see §4).
-- `scripts/obsidian_sync.py`: added UTF-8 stdout reconfigure (cp1252 console crashed
-  on ✅/→ — fixed permanently).
-- PROJECT_STATE.md + portfolio auto-memory updated to match all of the above.
+**Obsidian synced:** Phase 6 note rewritten & marked ✅ Done; 5/6 tasks ticked,
+LLM-summary task left **unchecked** (deferred by user choice — see §4.2).
 
 ## 4. TODO — next session, in order
 
-1. **Offer to commit the repo** (§2).
-2. **Phase 6 — XAI + Legal PDF** (plan file § Phase 6, Day 18–19):
-   - Grad-CAM heatmaps (image agent's deep model regions)
-   - SHAP feature importance (metadata agent)
-   - Video confidence timeline (frame_scores already exist in video agent output)
-   - **LLM forensic summary via Claude API** → fills `final_verdicts.llm_summary`
-     (currently hardcoded None in `core/tasks.py`). ⚠️ **This was started and
-     rolled back**: user REJECTED the `pip install anthropic` this session (may have
-     just been mid-interrupt for the audio bug — but do NOT assume; confirm before
-     installing). No `ANTHROPIC_API_KEY` anywhere yet (checked env, .env, no ant CLI).
-     Design sketch agreed: env-gated like blockchain (skip → None if no key),
-     `core/llm_report.py`, model `claude-opus-4-8`, never fails the pipeline.
-   - Legal Evidence PDF (reportlab — already the decided choice): SHA-256, chain of
-     custody, blockchain proof link, findings, manipulation type + attribution,
-     heatmaps, signature.
-   - When Phase 6 finishes: Obsidian ritual (§6) on `Phases/Phase 6 - XAI.md`.
+1. **Phase 7 — Frontend Dashboard** (plan file § Phase 7, Day 20–25): Next.js +
+   TailwindCSS + shadcn/ui, dark theme. Pages `/`, `/analyze`, `/result/[id]`.
+   Components incl. HeatmapViewer (ELA + Grad-CAM overlays), ConfidenceChart,
+   VideoTimeline (Recharts — frame_scores/flagged_segments now come from
+   `GET /api/report/{id}` → `agent_results[].extras`), BlockchainProof,
+   DownloadReportButton (hits `/api/report/{id}/pdf`). Frontend needs a static
+   route for heatmap PNGs — currently only paths are stored; add a
+   `/api/heatmap/{file_id}/{kind}` endpoint or StaticFiles mount in FastAPI.
+2. **LLM forensic summary (deferred from Phase 6 by user choice, 2026-07-07):**
+   user explicitly chose "skip for now" this session — **don't build unasked**.
+   Agreed design when they want it: env-gated `core/llm_report.py`, model
+   `claude-opus-4-8`, no key → llm_summary stays None, never fails the pipeline.
+   PDF + JSON already render it when populated. No `ANTHROPIC_API_KEY` exists yet.
 3. **User-only action (remind, don't nag): blockchain go-live** (~5 min):
    throwaway wallet → test POL at faucet.polygon.technology (network: Amoy) →
    `POLYGON_PRIVATE_KEY` in backend/.env → `python scripts\deploy_contract.py` →
-   paste printed address as `TRUSTSPHERE_CONTRACT_ADDRESS`. Then: verify a tx on
+   paste printed address as `TRUSTSPHERE_CONTRACT_ADDRESS`. Then verify a tx on
    amoy.polygonscan.com and tick the 2 unchecked tasks in the Phase 5 Obsidian note.
 4. **Phase 8 (deferred, don't start early):** industrial models — DFDC-winner
    EfficientNet-B7 ensemble + MTCNN/RetinaFace (image/video), AASIST (audio);
-   swap via `DEEPFAKE_MODEL_ID` / `AUDIO_MODEL_ID` env vars. Optional trained
-   classifier heads replacing rule-based `classify_manipulation()` /
-   `attribute_generator()`. GPU ready (RTX 3070 Ti, torch 2.6.0+cu124).
+   swap via `DEEPFAKE_MODEL_ID` / `AUDIO_MODEL_ID`. Also: per-frame video
+   Grad-CAM (noted in Phase 6 Obsidian task), optional trained classifier heads
+   for classify_manipulation()/attribute_generator(). GPU ready (RTX 3070 Ti).
 
 ## 5. Traps that WILL bite (full list: PROJECT_STATE.md §5)
 
@@ -107,26 +106,26 @@ configured checks done yet.
   scripts must set it manually).
 - **Celery on Windows**: `--pool=threads` only.
 - **python-dotenv resolves `.env` from the CALLING FILE's dir, not cwd** — scripts
-  outside `backend/` must `load_dotenv(<explicit path>)` or DATABASE_URL is None
-  ("Could not parse SQLAlchemy URL").
-- **Windows console is cp1252** — scripts printing ✅/→/— need
-  `sys.stdout.reconfigure(encoding="utf-8")` (obsidian_sync.py does this).
-- **PowerShell 5.1 tool calls**: no `&&`; heredocs to python -c mangle quotes —
-  write temp .py files to the scratchpad instead.
-- **`backend/keys/server_signing_key.pem` is precious** (see §3).
-- **DWT-DCT watermark decode fails on smooth/gradient images** — needs texture;
-  use textured/natural images for demos of watermark detection.
-- **ffmpeg**: on PATH only in shells opened after 2026-07-07 install.
+  outside `backend/` must `load_dotenv(<explicit path>)`.
+- **Windows console is cp1252** — scripts printing ✅/→ need
+  `sys.stdout.reconfigure(encoding="utf-8")`.
+- **PowerShell 5.1 tool calls**: no `&&`; write temp .py files instead of heredocs.
+- **`backend/keys/server_signing_key.pem` is precious** — never delete.
+- **transformers 5.x ViT structure** — find Grad-CAM target by name suffix (§3).
+- **reportlab font colors need `#` prefix** or Paragraph parsing crashes.
+- **DWT-DCT watermark decode fails on smooth/gradient images** — use textured
+  images for watermark demos.
+- **ffmpeg**: on PATH only in shells opened after the 2026-07-07 install.
 
 ## 6. Standing user rules (obey without being asked)
 
 1. **Obsidian ritual when a phase completes**: `obsidian_sync.py check` (if OFFLINE →
-   ask user to open Obsidian) → `status "Phases/Phase N - <name>.md" "✅ Done"` →
-   `check-tasks` → tell the user exactly what changed in the vault. Use the script,
-   never hand-written API calls. Only tick tasks that are actually done.
-2. **Keep PROJECT_STATE.md and the auto-memory in sync** as things change
+   ask user to open Obsidian) → update the phase note → tell the user exactly what
+   changed. Use the script, never hand-written API calls. **Only tick tasks that are
+   actually done** (Phase 6 LLM task is intentionally unchecked).
+2. **Keep PROJECT_STATE.md and the auto-memory in sync**
    (auto-memory: `C:\Users\Divyansh Gupta\.claude\projects\C--Users-Divyansh-Gupta-Documents-portfolio\memory\trustsphere-project.md`).
-3. **Update this HANDOFF.md every session** (added 2026-07-07).
+3. **Update this HANDOFF.md every session.**
 4. Before writing code for a new phase: read PROJECT_STATE.md fully + the plan-file
    section for that phase, and **summarize status + plan back to the user in 3–4
    lines first** (they explicitly asked for this pattern).
@@ -140,7 +139,7 @@ configured checks done yet.
 | Full 33-day plan | `C:\Users\Divyansh Gupta\.claude\plans\i-have-a-project-fluttering-charm.md` |
 | Auto-memory (portfolio-keyed) | see §6.2 path |
 | venv python | `.\backend\venv\Scripts\python.exe` (run from repo root or backend/) |
-| Uploads / heatmaps | `backend/uploads/` (currently empty), `backend/heatmaps/` |
+| Uploads / heatmaps / PDFs | `backend/uploads/`, `backend/uploads/heatmaps/`, `backend/reports/` |
 | Signing key | `backend/keys/server_signing_key.pem` (gitignored, do not delete) |
 
 ## 8. Verify-it-still-works quick checks

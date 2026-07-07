@@ -124,4 +124,12 @@ def run(file_path: str) -> dict:
         out.confidence = 0.5
 
     out.extra["raw_tag_count"] = len(tags)
+
+    # Phase 6 XAI — exact Shapley attribution (confidence is an additive mean).
+    try:
+        from core.xai import shapley_attribution
+        out.extra["feature_importance"] = shapley_attribution(out.findings)
+    except Exception:
+        pass
+
     return out.dict()

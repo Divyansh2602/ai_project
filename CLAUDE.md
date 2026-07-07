@@ -9,9 +9,9 @@ session-to-session baton: what just happened, in-flight work, and next steps.
 
 Quick facts:
 - Multi-agent deepfake / synthetic-media forensics system (college project).
-- Phases 1–5 done; **Phase 6 (XAI: Grad-CAM, SHAP, LLM summary, legal PDF) is next**.
+- Phases 1–6 done; **Phase 7 (Frontend Dashboard, Next.js) is next**.
   (Phase 5 note: on-chain anchoring is env-gated & skipped until the user deploys the
-  contract — PROJECT_STATE.md §5.7.)
+  contract — PROJECT_STATE.md §5.7. Phase 6 note: LLM summary deferred by user choice.)
 - Backend: FastAPI + SQLAlchemy + Celery. DB = Supabase (via **session pooler**). Queue = Upstash Redis.
 - Windows + PowerShell. venv at `backend/venv`. Use `.\venv\Scripts\python.exe`.
 ## Obsidian — update it yourself, automatically
@@ -29,4 +29,4 @@ $py = ".\backend\venv\Scripts\python.exe"
 If `check` says OFFLINE, ask the user to open the Obsidian app, then run it. Always
 tell the user what you changed in Obsidian afterward. Full details + all commands: PROJECT_STATE.md §7.
 
-**Pending sync:** none — vault is current through Phase 5 (synced 2026-07-07).
+**Pending sync:** none — vault is current through Phase 6 (synced 2026-07-07).

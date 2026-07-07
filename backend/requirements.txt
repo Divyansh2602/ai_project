@@ -27,3 +27,8 @@ web3
 py-solc-x
 invisible-watermark
 PyWavelets
+
+# Phase 6 — XAI + legal PDF
+grad-cam
+matplotlib
+reportlab

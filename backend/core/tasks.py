@@ -74,12 +74,17 @@ def analyze_evidence(self, evidence_id: str):
         agent_results = _run_agents(evidence.file_type, evidence.file_path)
 
         for result in agent_results:
+            # Phase 6: persist agent-specific extras (frame_scores, gradcam_path,
+            # feature_importance, ...) — everything beyond the core fields.
+            core_keys = {"agent", "confidence", "findings", "heatmap_path"}
+            extras = {k: v for k, v in result.items() if k not in core_keys}
             ar = AgentResult(
                 evidence_id=evidence_id,
                 agent_name=result["agent"],
                 findings=result.get("findings", []),
                 confidence_score=result.get("confidence"),
                 heatmap_path=result.get("heatmap_path"),
+                extras=extras or None,
             )
             db.add(ar)
 

@@ -39,6 +39,7 @@ class AgentResult(Base):
     findings = Column(JSONB, default=dict)
     confidence_score = Column(Float, nullable=True)
     heatmap_path = Column(String(512), nullable=True)
+    extras = Column(JSONB, nullable=True)  # Phase 6: frame_scores, gradcam_path, feature_importance, ...
     created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
 
     evidence = relationship("Evidence", back_populates="agent_results")

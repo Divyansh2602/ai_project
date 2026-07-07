@@ -4,7 +4,7 @@
 > This is the single source of truth for status, how to run things, gotchas, and
 > how to push updates to Obsidian. Keep it updated as phases complete.
 >
-> Last updated: **2026-07-07** · Progress: **5 / 11 phases (~45%)**
+> Last updated: **2026-07-07** · Progress: **6 / 11 phases (~55%)**
 
 ---
 
@@ -45,8 +45,8 @@ auto-memory loaded in the CLI, launch `claude` from *that* directory. This
 | 3 | AI Agents ×4 | ✅ Done (community deep models; industrial upgrade deferred → Phase 8) |
 | 4 | Decision Engine | ✅ Done (verdict + manipulation type + GAN attribution + reasoning) |
 | 5 | Security Layer | ✅ Done (C2PA + watermark agent, Ed25519 signing, Polygon **Amoy** anchor — on-chain write pending user wallet, see §5.7) |
-| 6 | XAI + Legal PDF | ⬜ **NEXT** |
-| 7 | Frontend Dashboard | ⬜ |
+| 6 | XAI + Legal PDF | ✅ Done (Grad-CAM + Shapley + timeline + PDF; **LLM summary deferred by user choice** — env-gated design agreed, see HANDOFF) |
+| 7 | Frontend Dashboard | ⬜ **NEXT** |
 | 7.5 | OSINT Layer | ⬜ |
 | 7.6 | Browser Extension | ⬜ |
 | 8 | Integration + Testing | ⬜ (do the industrial model upgrade here) |
@@ -64,8 +64,11 @@ backend/
 │   └── evidence.py             Evidence, AgentResult, FinalVerdict, AuditLog
 ├── core/
 │   ├── celery_app.py           Celery + Upstash Redis (SSL fix); threads pool
-│   ├── tasks.py                analyze_evidence task; _run_agents; _extract_audio_track
-│   └── decision_engine.py      decide(); classify_manipulation(); attribute_generator()
+│   ├── tasks.py                analyze_evidence task; _run_agents; persists agent extras (P6)
+│   ├── decision_engine.py      decide(); classify_manipulation(); attribute_generator()
+│   ├── xai.py                 ⭐P6 Grad-CAM (ViT-aware + occlusion fallback) · exact Shapley
+│   │                            for metadata · timeline/importance charts (matplotlib Agg)
+│   └── pdf_report.py          ⭐P6 Legal Evidence Package PDF (reportlab)
 ├── agents/
 │   ├── base.py                 AgentOutput, Finding, clamp — shared 0..1 authenticity contract
 │   ├── metadata_agent.py       EXIF/software/timestamp/GPS anomalies
@@ -82,7 +85,7 @@ backend/
 │   ├── upload.py               POST /api/upload
 │   ├── analyze.py              POST /api/analyze/{file_id}
 │   ├── result.py               GET /api/result/{task_id} · GET /api/status/{file_id}
-│   ├── report.py               GET /api/report/{file_id}
+│   ├── report.py               GET /api/report/{file_id} · ⭐P6 GET /api/report/{file_id}/pdf
 │   └── verify.py              ⭐P5 GET /api/verify/{file_id} — file hash + signature + on-chain re-check
 ├── .env                        secrets + config (see gotchas)
 └── requirements.txt
@@ -90,12 +93,16 @@ backend/
 scripts/
 ├── obsidian_sync.py            Obsidian vault helper (see §7)
 ├── migrate_phase5.py           idempotent ALTERs — audit_logs signature/blockchain columns
+├── migrate_phase6.py           idempotent ALTER — agent_results.extras JSONB (already run)
 └── deploy_contract.py          compile + deploy TrustSphereAudit to Polygon Amoy (one-time)
 ```
 
 **DB tables** (in Supabase): `evidence`, `agent_results`, `final_verdicts`, `audit_logs`.
+`agent_results` (Phase 6) includes `extras` (jsonb) — frame_scores, flagged_segments,
+gradcam_path/method, feature_importance, deep_predictions; previously these were discarded.
 `final_verdicts` includes `manipulation_type`, `manipulation_confidence`,
-`gan_attribution`, `gan_confidence`, `reasoning` (jsonb), `llm_summary`.
+`gan_attribution`, `gan_confidence`, `reasoning` (jsonb), `llm_summary` (still None —
+LLM summary deferred by user choice; agreed design in HANDOFF §Phase-6 notes).
 `audit_logs` (Phase 5) includes `record_signature`, `signature_algorithm`,
 `signature_key_fingerprint`, `signed_payload` (jsonb — exactly what the signature covers),
 `blockchain_hash` (tx), `blockchain_network`, `blockchain_status`, `chain_of_custody` (jsonb).
@@ -161,6 +168,17 @@ Thresholds: ≥0.75 Authentic · ≤0.40 Fake · else Inconclusive.
     on first signature (path via `SIGNING_KEY_PATH`). Gitignored. Losing it breaks
     verification of previously signed records — don't delete it.
 
+11. **transformers 5.x moved ViT internals** (`vit.encoder.layer[i]` → `vit.layers[i]`).
+    `core/xai.py` locates the Grad-CAM target layer by module-name suffix
+    (`layernorm_before`) instead of a hardcoded path — keep it that way when upgrading.
+
+12. **reportlab `<font color=...>` needs `#`-prefixed hex** (`color="#d73a49"`);
+    bare hex crashes Paragraph parsing with "Invalid color value".
+
+13. **Secrets live ONLY in `backend/.env`** (gitignored) — incl. `OBSIDIAN_API_KEY`
+    (moved out of scripts/docs before the Phases 2–5 commit). Never paste the DB
+    password or Obsidian token back into committed files.
+
 ---
 
 ## 6. How to run
@@ -218,7 +236,8 @@ self-signed cert (skip verification). Endpoints: `GET/PUT /vault/<url-encoded-pa
 `Decisions/` (Decisions Log, Blockers, Demo Flow, Research Papers, Team Roles), `🏠 Home.md`.
 Vault folder on disk: `C:\Users\Divyansh Gupta\Desktop\TrustSphere AI\`.
 
-**⏳ Pending Obsidian sync:** none — Phases 1–5 all marked ✅ Done in the vault (synced 2026-07-07).
+**⏳ Pending Obsidian sync:** none — Phases 1–6 all marked ✅ Done in the vault (synced 2026-07-07).
+(Phase 6 note: LLM-summary task left honestly unchecked — deferred by user choice.)
 
 ---
 

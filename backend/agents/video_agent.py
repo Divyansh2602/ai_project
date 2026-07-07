@@ -135,4 +135,13 @@ def run(file_path: str) -> dict:
     out.extra["frame_scores"] = frame_scores
     out.extra["flagged_timestamps"] = flagged
     out.extra["fps"] = round(float(fps), 2)
+
+    # Phase 6 XAI — merge low-score frames into contiguous tampered segments
+    # for the confidence timeline (red highlights).
+    try:
+        from core.xai import flagged_segments_from_scores
+        out.extra["flagged_segments"] = flagged_segments_from_scores(frame_scores)
+    except Exception:
+        out.extra["flagged_segments"] = []
+
     return out.dict()
