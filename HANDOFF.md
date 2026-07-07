@@ -72,6 +72,26 @@ PROJECT_STATE.md §5.13).
 **Obsidian synced:** Phase 6 note rewritten & marked ✅ Done; 5/6 tasks ticked,
 LLM-summary task left **unchecked** (deferred by user choice — see §4.2).
 
+**Full-codebase review (same session, commit `8539d2e`) — 4 bugs fixed, all
+regression-tested (re-analysis ×2, hostile-chars PDF, MIME, path separators):**
+- re-analysis IntegrityError (unique final_verdicts/audit_logs) → old rows now
+  cleared at task start; `POST /api/analyze/{id}` works repeatedly.
+- upload 415 on .mov/.mkv/.avi/.wav → real MIME names added (video/quicktime etc.).
+- PDF crashed on findings notes containing `<`/`&` (agents surface raw exception
+  text by design) → all dynamic Paragraph text is now XML-escaped.
+- heatmap paths stored with mixed `\`/`/` on Windows → normalized to `/`.
+- `/api/result` now returns agent `extras` (parity with `/api/report`).
+
+**Known design debts (deliberate, don't "fix" casually):**
+- upload reads the whole file into RAM before the size check (fine at 100 MB cap;
+  revisit streaming at Phase 9 deploy).
+- deep models run on CPU — `pipeline(...)` gets no `device`; GPU wiring is part
+  of the Phase 8 industrial-model upgrade.
+- `_fake_class_index()` / fake-label keyword matching depends on model label
+  names — revisit when swapping models in Phase 8.
+- audio agent `flagged_segments` is always `[]` (windowed audio scoring is a
+  Phase 8 nicety). No API auth (college demo).
+
 ## 4. TODO — next session, in order
 
 1. **Phase 7 — Frontend Dashboard** (plan file § Phase 7, Day 20–25): Next.js +
