@@ -1,10 +1,29 @@
 fastapi
-uvicorn
-celery
-redis
+uvicorn[standard]
+celery[redis]
+redis==6.4.0
 sqlalchemy
-python-dotenv
-psycopg2-binary
 alembic
+psycopg2-binary
+python-dotenv
 python-multipart
 aiofiles
+
+# Phase 3 — forensic agents
+pillow
+opencv-python
+numpy
+scipy
+exifread
+imagehash
+librosa
+torch
+transformers
+
+# Phase 5 — security layer
+c2pa-python
+cryptography
+web3
+py-solc-x
+invisible-watermark
+PyWavelets

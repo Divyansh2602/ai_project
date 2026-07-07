@@ -4,10 +4,17 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+from models.database import engine, Base
+import models.evidence  # register all ORM models with Base
+
+from routers import upload, analyze, result, report, verify
+
+Base.metadata.create_all(bind=engine)
+
 app = FastAPI(
     title="TrustSphere AI",
     description="Digital Forensics Framework for Synthetic Media Detection and Verification",
-    version="1.0.0"
+    version="1.0.0",
 )
 
 app.add_middleware(
@@ -18,9 +25,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(upload.router)
+app.include_router(analyze.router)
+app.include_router(result.router)
+app.include_router(report.router)
+app.include_router(verify.router)
+
+
 @app.get("/")
 def root():
     return {"status": "TrustSphere AI backend running"}
+
 
 @app.get("/health")
 def health():
