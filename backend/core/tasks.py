@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 from .celery_app import celery_app
 from .decision_engine import decide
+from .llm_summary import generate_summary
 from models.database import SessionLocal
 from models.evidence import Evidence, AgentResult, FinalVerdict, AuditLog
 
@@ -97,6 +98,16 @@ def analyze_evidence(self, evidence_id: str):
 
         decision = decide(agent_results, evidence.file_type)
 
+        # Phase 6: optional local-LLM narrative summary (env-gated, fail-safe).
+        llm_summary = generate_summary(
+            decision, agent_results,
+            {
+                "original_filename": evidence.original_filename,
+                "file_type": evidence.file_type,
+                "file_hash": evidence.file_hash,
+            },
+        )
+
         fv = FinalVerdict(
             evidence_id=evidence_id,
             verdict=decision["verdict"],
@@ -106,7 +117,7 @@ def analyze_evidence(self, evidence_id: str):
             gan_attribution=decision["gan_attribution"],
             gan_confidence=decision["gan_confidence"],
             reasoning=decision["reasoning"],
-            llm_summary=None,         # Phase 6
+            llm_summary=llm_summary,
         )
         db.add(fv)
 

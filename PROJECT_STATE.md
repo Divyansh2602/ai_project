@@ -4,7 +4,7 @@
 > This is the single source of truth for status, how to run things, gotchas, and
 > how to push updates to Obsidian. Keep it updated as phases complete.
 >
-> Last updated: **2026-07-07** · Progress: **6 / 11 phases (~55%)**
+> Last updated: **2026-07-10** · Progress: **6 / 11 phases (~55%)**
 
 ---
 
@@ -44,8 +44,8 @@ auto-memory loaded in the CLI, launch `claude` from *that* directory. This
 | 2 | Backend Core | ✅ Done |
 | 3 | AI Agents ×4 | ✅ Done (community deep models; industrial upgrade deferred → Phase 8) |
 | 4 | Decision Engine | ✅ Done (verdict + manipulation type + GAN attribution + reasoning) |
-| 5 | Security Layer | ✅ Done (C2PA + watermark agent, Ed25519 signing, Polygon **Amoy** anchor — on-chain write pending user wallet, see §5.7) |
-| 6 | XAI + Legal PDF | ✅ Done (Grad-CAM + Shapley + timeline + PDF; **LLM summary deferred by user choice** — env-gated design agreed, see HANDOFF) |
+| 5 | Security Layer | ✅ Done (C2PA + watermark agent, Ed25519 signing, Polygon **Amoy** anchor — **LIVE**, contract deployed at `0xe5C0eA5B1070cF5577200ecd310f8cdB5092DE49`, verified with a real on-chain tx) |
+| 6 | XAI + Legal PDF | ✅ Done (Grad-CAM + Shapley + timeline + PDF + **LLM summary — LIVE via local Ollama**, `llama3.1:8b`, verified generating real forensic summaries, see §5.14) |
 | 7 | Frontend Dashboard | ⬜ **NEXT** |
 | 7.5 | OSINT Layer | ⬜ |
 | 7.6 | Browser Extension | ⬜ |
@@ -149,13 +149,13 @@ Thresholds: ≥0.75 Authentic · ≤0.40 Fake · else Inconclusive.
    the install (including a running Celery worker / uvicorn) won't have ffmpeg on PATH —
    restart them.
 
-7. **⏳ Blockchain anchoring is built but NOT yet live (needs the user, one-time):**
-   Polygon **Mumbai is dead** (decommissioned 2024) — we target **Amoy** (chain 80002).
-   Until configured, every analysis records `blockchain_skipped` in chain-of-custody and
-   works fine. To go live: create a throwaway wallet → get test POL at
-   https://faucet.polygon.technology (network: Amoy) → set `POLYGON_PRIVATE_KEY` in
-   `backend/.env` → run `scripts\deploy_contract.py` → paste printed address as
-   `TRUSTSPHERE_CONTRACT_ADDRESS`. Nothing else changes.
+7. **✅ Blockchain anchoring is LIVE (as of 2026-07-09).** Polygon **Mumbai is dead**
+   (decommissioned 2024) — we use **Amoy** (chain 80002). Wallet `0x75222e25...A022`
+   funded with test POL; contract `TrustSphereAudit.sol` deployed at
+   `0xe5C0eA5B1070cF5577200ecd310f8cdB5092DE49`. Every analysis now anchors a real
+   on-chain transaction — verify at
+   https://amoy.polygonscan.com/address/0xe5C0eA5B1070cF5577200ecd310f8cdB5092DE49.
+   `POLYGON_PRIVATE_KEY` and `TRUSTSPHERE_CONTRACT_ADDRESS` are both set in `backend/.env`.
 
 8. **python-dotenv resolves `.env` from the CALLING FILE's directory, not cwd.**
    Scripts outside `backend/` must `load_dotenv(<explicit path to backend/.env>)`
@@ -178,6 +178,18 @@ Thresholds: ≥0.75 Authentic · ≤0.40 Fake · else Inconclusive.
 13. **Secrets live ONLY in `backend/.env`** (gitignored) — incl. `OBSIDIAN_API_KEY`
     (moved out of scripts/docs before the Phases 2–5 commit). Never paste the DB
     password or Obsidian token back into committed files.
+
+14. **✅ Ollama is installed and working (2026-07-10).** Binary at
+    `C:\Users\Divyansh Gupta\AppData\Local\Programs\Ollama\ollama.exe` (not on PATH
+    by default in every shell — use the full path, or open a fresh terminal).
+    Model `llama3.1:8b` pulled (4.9 GB). Runs as a background service automatically
+    (`ollama` + `ollama app` processes) once installed — no need to manually start it.
+    `.env` has `ENABLE_LLM_SUMMARY=1`, `OLLAMA_URL=http://localhost:11434`,
+    `OLLAMA_MODEL=llama3.1:8b`. Verified: `core/llm_summary.py: generate_summary()`
+    produces real, coherent forensic-report paragraphs from live decision data.
+    **Uncommitted:** `core/llm_summary.py` (new), `core/tasks.py` (wired in),
+    `requirements.txt` (added `requests`, removed unused `imagehash`) — commit
+    when ready.
 
 ---
 

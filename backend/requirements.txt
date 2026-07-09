@@ -8,6 +8,7 @@ psycopg2-binary
 python-dotenv
 python-multipart
 aiofiles
+requests
 
 # Phase 3 — forensic agents
 pillow
@@ -15,7 +16,6 @@ opencv-python
 numpy
 scipy
 exifread
-imagehash
 librosa
 torch
 transformers
