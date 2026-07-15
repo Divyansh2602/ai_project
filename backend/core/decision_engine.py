@@ -23,7 +23,6 @@ from agents.base import clamp
 AGENT_WEIGHTS = {
     "metadata": 0.20,
     "image_forensics": 0.30,
-    "video_forensics": 0.30,
     "audio_forensics": 0.20,
     "security": 0.25,     # C2PA + watermark provenance (Phase 5)
 }
@@ -89,7 +88,6 @@ def classify_manipulation(results, file_type):
 
     meta = _find_agent(results, "metadata")
     image = _find_agent(results, "image_forensics")
-    video = _find_agent(results, "video_forensics")
     audio = _find_agent(results, "audio_forensics")
     security = _find_agent(results, "security")
 
@@ -139,19 +137,6 @@ def classify_manipulation(results, file_type):
             else:
                 candidates.append(("Digitally Retouched", 0.55))
                 reasons.append("Photo-editing software recorded in metadata.")
-
-    # ── Video deepfake / face swap ──
-    if video:
-        frame = _find_check(video, "frame_analysis")
-        dup = _find_check(video, "duplicate_frames")
-        scene = _find_check(video, "scene_discontinuity")
-        if _is_suspicious(frame):
-            conf = 1.0 - (frame.get("score") or 0.5)
-            candidates.append(("Face Swap / Deepfake Video", clamp(conf)))
-            reasons.append("Per-frame forensics indicate manipulated video content.")
-        if _is_suspicious(dup) or _is_suspicious(scene):
-            candidates.append(("Spliced / Edited Video", 0.5))
-            reasons.append("Temporal anomalies (duplicate frames or abrupt cuts) detected.")
 
     # ── Audio voice clone ──
     if audio:

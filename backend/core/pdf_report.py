@@ -6,7 +6,7 @@ Builds a court-admissible-style forensic report with reportlab:
   - Manipulation type + generator attribution
   - Per-agent findings tables
   - XAI exhibits: ELA heatmap, Grad-CAM heatmap, metadata feature-importance
-    chart, video confidence timeline (tampered segments in red)
+    chart
   - Chain of custody log + blockchain anchor proof
   - Ed25519 record signature block (algorithm, key fingerprint, signature)
 
@@ -175,15 +175,6 @@ def build_pdf(evidence, verdict, agent_results, audit) -> str:
                 if img:
                     exhibits.append(("Exhibit — metadata feature importance "
                                      "(exact Shapley contributions; green → authentic, red → fake)", img))
-        fs = extras.get("frame_scores")
-        if fs:
-            chart_path = os.path.join(REPORT_DIR, f"tmp_{evidence.id}_timeline.png")
-            segs = extras.get("flagged_segments") or []
-            if xai.render_timeline_chart(fs, segs, chart_path):
-                img = _image_if_exists(chart_path, max_w=14 * cm, max_h=6 * cm)
-                if img:
-                    exhibits.append(("Exhibit — video confidence timeline "
-                                     "(per-frame authenticity; flagged segments shaded red)", img))
 
     if exhibits:
         story.append(Paragraph("4. Explainability Exhibits (XAI)", ss["SectionH"]))

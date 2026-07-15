@@ -8,7 +8,6 @@ Layers, each degrades gracefully:
   2. Deep synthetic-speech classifier (HuggingFace Wav2Vec2) — optional,
      lazily loaded. Skipped if torch/transformers unavailable.
 
-For video files, the caller extracts the audio track first (see tasks.py).
 Output includes `flagged_segments` (time ranges) for the UI.
 """
 import os

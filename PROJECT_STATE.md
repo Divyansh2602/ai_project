@@ -4,7 +4,14 @@
 > This is the single source of truth for status, how to run things, gotchas, and
 > how to push updates to Obsidian. Keep it updated as phases complete.
 >
-> Last updated: **2026-07-10** · Progress: **6 / 11 phases (~55%)**
+> Last updated: **2026-07-15** · Progress: **6 / 11 phases (~55%)**
+>
+> **Scope change (2026-07-15): VIDEO support removed.** The project now covers
+> **images, audio, and documents only** — video deepfake analysis was dropped
+> (too heavy). `video_agent.py` deleted; upload rejects video MIME types; the
+> decision engine, XAI timeline, and PDF video exhibit are gone. ffmpeg is no
+> longer required by the backend. `"video"` remains in the `file_type_enum` DB
+> type for legacy rows only (never inserted anymore).
 
 ---
 
@@ -73,7 +80,6 @@ backend/
 │   ├── base.py                 AgentOutput, Finding, clamp — shared 0..1 authenticity contract
 │   ├── metadata_agent.py       EXIF/software/timestamp/GPS anomalies
 │   ├── image_agent.py          ELA (+heatmap PNG) · FFT fingerprint · deep deepfake model
-│   ├── video_agent.py          per-frame FFT · duplicate frames · scene cuts · frame_scores
 │   ├── audio_agent.py          librosa spectral · deep synthetic-speech model
 │   └── security_agent.py      ⭐P5 C2PA manifest check + invisible-watermark (SD) — runs on ALL file types
 ├── security/
@@ -108,7 +114,7 @@ LLM summary deferred by user choice; agreed design in HANDOFF §Phase-6 notes).
 `blockchain_hash` (tx), `blockchain_network`, `blockchain_status`, `chain_of_custody` (jsonb).
 
 **Confidence convention across all agents:** `0.0 = definitely fake, 1.0 = definitely authentic`.
-Decision engine weight-averages: image 30% · video 30% · audio 20% · metadata 20% · security 25%.
+Decision engine weight-averages: image 30% · audio 20% · metadata 20% · security 25%.
 The security agent reports `confidence=None` (excluded from the average) when there is no
 provenance data either way; a valid C2PA manifest **fast-tracks the verdict to Authentic**.
 Thresholds: ≥0.75 Authentic · ≤0.40 Fake · else Inconclusive.
@@ -138,7 +144,10 @@ Thresholds: ≥0.75 Authentic · ≤0.40 Fake · else Inconclusive.
 
 5. **Celery on Windows** uses `worker_pool="threads"` (prefork doesn't work on Win).
 
-6. **~~Known bug~~ FIXED (2026-07-07):** the audio deep model silently returned `skipped`.
+6. **ffmpeg no longer required (2026-07-15):** it was only used to extract the
+   audio track from **video** files, which are no longer supported. The audio
+   agent decodes with librosa (no ffmpeg). Historical note below kept for context.
+   **~~Known bug~~ FIXED (2026-07-07):** the audio deep model silently returned `skipped`.
    Root cause: **ffmpeg is not installed** — the HF audio pipeline shells out to ffmpeg
    when given a filename. Fix: `audio_agent._deep_score` now decodes with librosa and
    feeds the raw array to the pipeline (no ffmpeg needed), and all audio try/excepts now

@@ -11,8 +11,8 @@ Three explainers, each degrades gracefully and never raises out of this module:
      unweighted mean of per-check scores, i.e. an additive model, for which
      Shapley values have the exact closed form (score_i - baseline) / n.
      No `shap` package needed; the values are exact, not sampled.
-  3. Chart renderers (matplotlib/Agg) for the legal PDF: video confidence
-     timeline with tampered segments in red, and a feature-importance bar chart.
+  3. Chart renderer (matplotlib/Agg) for the legal PDF: a metadata
+     feature-importance bar chart.
 """
 import logging
 import os
@@ -197,32 +197,6 @@ def _plt():
     return plt
 
 
-def render_timeline_chart(frame_scores: list[dict], flagged_segments: list[dict],
-                          out_path: str) -> str | None:
-    """Video confidence timeline PNG: authenticity vs time, tampering in red."""
-    try:
-        plt = _plt()
-        ts = [f["t"] for f in frame_scores]
-        scores = [f["score"] for f in frame_scores]
-
-        fig, ax = plt.subplots(figsize=(7.2, 2.6), dpi=150)
-        ax.plot(ts, scores, color="#1f6feb", linewidth=1.6)
-        ax.axhline(0.45, color="#999999", linewidth=0.8, linestyle="--")
-        for seg in flagged_segments:
-            ax.axvspan(seg["start"], seg["end"], color="#d73a49", alpha=0.25)
-        ax.set_xlabel("time (s)")
-        ax.set_ylabel("authenticity")
-        ax.set_ylim(0, 1)
-        ax.set_title("Per-frame authenticity (flagged segments in red)", fontsize=9)
-        fig.tight_layout()
-        fig.savefig(out_path)
-        plt.close(fig)
-        return out_path
-    except Exception:
-        logger.warning("timeline chart failed", exc_info=True)
-        return None
-
-
 def render_importance_chart(attribution: list[dict], out_path: str) -> str | None:
     """Horizontal bar chart of metadata Shapley contributions."""
     try:
@@ -244,23 +218,3 @@ def render_importance_chart(attribution: list[dict], out_path: str) -> str | Non
     except Exception:
         logger.warning("importance chart failed", exc_info=True)
         return None
-
-
-def flagged_segments_from_scores(frame_scores: list[dict],
-                                 threshold: float = 0.45) -> list[dict]:
-    """Merge consecutive low-authenticity frames into contiguous segments."""
-    segments = []
-    current = None
-    for f in frame_scores:
-        if f["score"] < threshold:
-            if current is None:
-                current = {"start": f["t"], "end": f["t"], "min_score": f["score"]}
-            else:
-                current["end"] = f["t"]
-                current["min_score"] = min(current["min_score"], f["score"])
-        elif current is not None:
-            segments.append(current)
-            current = None
-    if current is not None:
-        segments.append(current)
-    return segments

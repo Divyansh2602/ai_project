@@ -6,7 +6,36 @@
 > what to do next, and traps that aren't obvious from the code.
 > **Standing rule: update this file at the end of every session** (user request, 2026-07-07).
 >
-> Last session: **2026-07-07 (second session)** (repo committed; Phase 6 built+tested)
+> Last session: **2026-07-15** (scope change: video removed — see §0)
+
+---
+
+## 0. Latest session (2026-07-15) — SCOPE CHANGE: video removed
+
+**The project now handles images, audio, and documents only.** Video deepfake
+analysis was dropped by user decision (too heavy). Also note: the LLM forensic
+summary is now **LIVE** via local Ollama (`llama3.1:8b`) — the "deferred" notes
+lower in this file (§3, §4.2) are historical; treat PROJECT_STATE.md / MASTER_HANDOFF.md
+as current.
+
+What changed this session:
+- Deleted `backend/agents/video_agent.py`.
+- `routers/upload.py`: removed the `video` MIME group — uploads of video now 415.
+- `core/tasks.py`: removed the `video` routing branch and the ffmpeg
+  `_extract_audio_track` helper (+ now-unused `subprocess`/`tempfile`/`os` imports).
+- `core/decision_engine.py`: removed the `video_forensics` weight (0.30) and the
+  video manipulation-type block. Weights now image 30 · audio 20 · metadata 20 · security 25.
+- `core/xai.py`: removed `render_timeline_chart` + `flagged_segments_from_scores`
+  (video-only, now dead).
+- `core/pdf_report.py`: removed the video confidence-timeline exhibit.
+- `agents/audio_agent.py`: dropped the "extract track from video" docstring line.
+- `models/evidence.py`: `"video"` kept in `file_type_enum` for legacy rows only
+  (dropping a native PG enum value is destructive; commented in-file).
+- **ffmpeg is no longer needed** by the backend at all.
+- Demo video files (`backend/uploads/demo_video_*.mp4`) left on disk (untracked/
+  gitignored) — harmless; delete manually if desired.
+- Docs updated (this file, PROJECT_STATE.md, MASTER_HANDOFF.md, CLAUDE.md).
+- Verified: all changed files compile; `decide()` smoke-tested on an image result set.
 
 ---
 

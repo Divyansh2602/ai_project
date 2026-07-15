@@ -4,7 +4,20 @@
 > (new account, new machine, or both) so it has full context in one read — no
 > memory system required. Read this before touching any code.
 >
-> Last compiled: **2026-07-13** · Progress: **6 / 11 phases (~55%)**
+> Last compiled: **2026-07-13** (scope note added 2026-07-15) · Progress: **6 / 11 phases (~55%)**
+
+---
+
+## 0. SCOPE CHANGE (2026-07-15): video removed
+
+**The system now handles images, audio, and documents only.** Video deepfake
+analysis was dropped by user decision (too heavy). This supersedes every "video"
+mention below. Concretely: `video_agent.py` is deleted, upload rejects video
+MIME types (415), the decision engine has no `video_forensics` weight, and the
+XAI video timeline + PDF video exhibit are gone. ffmpeg is no longer required.
+`"video"` stays in the `file_type_enum` DB type for legacy rows only. Some prose
+further down (tech-stack table, team roles, demo assets) still mentions video —
+read it as historical.
 
 ---
 
@@ -47,7 +60,7 @@ uses standard cryptography (Ed25519, C2PA, Polygon blockchain) instead.
 |---|---|---|---|
 | 1 | Project Setup | ✅ Done | Supabase + Upstash cloud, venv, Next.js scaffold |
 | 2 | Backend Core | ✅ Done | FastAPI, 4 DB tables, upload/analyze/result/report, Celery |
-| 3 | AI Agents ×5 | ✅ Done | Metadata, Image, Video, Audio + Security (added Ph.5) |
+| 3 | AI Agents ×4 | ✅ Done | Metadata, Image, Audio + Security (added Ph.5); Video removed 2026-07-15 |
 | 4 | Decision Engine | ✅ Done | Weighted verdict + manipulation type + GAN attribution |
 | 5 | Security Layer | ✅ Done | C2PA + watermark, Ed25519 signing, Polygon Amoy anchor — **LIVE** |
 | 6 | XAI + Legal PDF | ✅ Done | Grad-CAM, exact Shapley, timeline, PDF, **local Ollama LLM summary — LIVE** |
@@ -85,7 +98,6 @@ backend/
 │   ├── base.py                 AgentOutput, Finding, clamp — shared 0..1 authenticity contract
 │   ├── metadata_agent.py       EXIF/software/timestamp/GPS anomalies — images only (see §9 gap)
 │   ├── image_agent.py          ELA (+heatmap PNG) · FFT fingerprint · deep deepfake model (ViT)
-│   ├── video_agent.py          per-frame FFT · duplicate frames · scene cuts · frame_scores
 │   ├── audio_agent.py          librosa spectral · deep synthetic-speech model (Wav2Vec2)
 │   └── security_agent.py       C2PA manifest check + invisible-watermark (SD) — runs on ALL file types
 ├── security/
@@ -124,9 +136,10 @@ Evidence PDF → everything persisted to Supabase Postgres (`final_verdicts`,
 | file_type | Agents that run |
 |---|---|
 | image | metadata, image, **security** |
-| video | metadata, video, audio (extracted track via ffmpeg), **security** |
 | audio | metadata, audio, **security** |
 | document | metadata **(EXIF-only — see gap in §9)**, **security** |
+
+(`video` removed 2026-07-15 — no longer accepted at upload.)
 
 ### Database (Supabase Postgres)
 - `evidence` — file_id, file_type, upload_time, status, file_path, file_hash
@@ -135,7 +148,7 @@ Evidence PDF → everything persisted to Supabase Postgres (`final_verdicts`,
 - `audit_logs` — record_signature, signature_algorithm, signature_key_fingerprint, signed_payload (jsonb), blockchain_hash (tx), blockchain_network, blockchain_status, chain_of_custody (jsonb)
 
 **Confidence convention across all agents:** `0.0 = definitely fake, 1.0 = definitely authentic`.
-Decision engine weights: image 30% · video 30% · audio 20% · metadata 20% · security 25%
+Decision engine weights: image 30% · audio 20% · metadata 20% · security 25%
 (security excluded from the average entirely when it has no provenance signal
 either way, rather than counted as neutral 0.5). A valid C2PA manifest
 fast-tracks the verdict to Authentic (floored at 0.9). Thresholds: ≥0.75

@@ -1,7 +1,4 @@
 import logging
-import os
-import subprocess
-import tempfile
 from datetime import datetime, timezone
 
 logger = logging.getLogger(__name__)
@@ -12,28 +9,8 @@ from .llm_summary import generate_summary
 from models.database import SessionLocal
 from models.evidence import Evidence, AgentResult, FinalVerdict, AuditLog
 
-from agents import metadata_agent, image_agent, video_agent, audio_agent, security_agent
+from agents import metadata_agent, image_agent, audio_agent, security_agent
 from security import signing, blockchain
-
-
-def _extract_audio_track(video_path: str) -> str | None:
-    """Pull the audio track out of a video with ffmpeg, if present."""
-    try:
-        out_path = os.path.join(tempfile.gettempdir(),
-                                f"ts_audio_{os.path.basename(video_path)}.wav")
-        result = subprocess.run(
-            ["ffmpeg", "-y", "-i", video_path, "-vn", "-ac", "1", "-ar", "16000", out_path],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=120,
-        )
-        if result.returncode == 0 and os.path.exists(out_path) and os.path.getsize(out_path) > 0:
-            return out_path
-        logger.warning("audio track extraction failed for %s (ffmpeg exit %s)",
-                       video_path, result.returncode)
-    except FileNotFoundError:
-        logger.warning("ffmpeg not installed — skipping audio analysis for video %s", video_path)
-    except Exception:
-        logger.warning("audio track extraction failed for %s", video_path, exc_info=True)
-    return None
 
 
 def _run_agents(file_type: str, file_path: str) -> list[dict]:
@@ -41,16 +18,6 @@ def _run_agents(file_type: str, file_path: str) -> list[dict]:
     if file_type == "image":
         results.append(metadata_agent.run(file_path))
         results.append(image_agent.run(file_path))
-    elif file_type == "video":
-        results.append(metadata_agent.run(file_path))
-        results.append(video_agent.run(file_path))
-        audio_path = _extract_audio_track(file_path)
-        if audio_path:
-            results.append(audio_agent.run(audio_path))
-            try:
-                os.remove(audio_path)
-            except OSError:
-                pass
     elif file_type == "audio":
         results.append(metadata_agent.run(file_path))
         results.append(audio_agent.run(file_path))
