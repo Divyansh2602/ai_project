@@ -1,0 +1,112 @@
+{
+ "file_id": "4eee82c3-723f-4662-9945-f800c40b191a",
+ "filename": "6_document_TAMPERED.pdf",
+ "file_type": "document",
+ "file_hash": "32158592a696d870c445bee8655d15c18bc9850e6a2e6fb765847cd5c2f37dc2",
+ "upload_time": "2026-10-23T16:43:05.904145",
+ "verdict": {
+  "label": "Inconclusive",
+  "overall_score": 0.45,
+  "manipulation_type": null,
+  "manipulation_confidence": 0.0,
+  "gan_attribution": null,
+  "gan_confidence": 0.0,
+  "reasoning": [
+   "Overall authenticity score 0.45 \u2192 Inconclusive."
+  ],
+  "llm_summary": null,
+  "timestamp": "2026-10-23T16:43:05.926084"
+ },
+ "agent_results": [
+  {
+   "agent_name": "metadata",
+   "confidence_score": 0.45,
+   "findings": [
+    {
+     "check": "camera_info",
+     "status": "suspicious",
+     "note": "No camera make/model \u2014 common in AI-generated or re-encoded images",
+     "score": 0.35
+    },
+    {
+     "check": "software",
+     "status": "ok",
+     "note": "No editing software tag",
+     "score": 0.6
+    },
+    {
+     "check": "timestamps",
+     "status": "suspicious",
+     "note": "No EXIF timestamps present",
+     "score": 0.4
+    }
+   ],
+   "heatmap_path": null,
+   "extras": {
+    "raw_tag_count": 0,
+    "feature_importance": [
+     {
+      "feature": "camera_info",
+      "note": "No camera make/model \u2014 common in AI-generated or re-encoded images",
+      "score": 0.35,
+      "contribution": -0.05,
+      "direction": "fake"
+     },
+     {
+      "feature": "software",
+      "note": "No editing software tag",
+      "score": 0.6,
+      "contribution": 0.0333,
+      "direction": "authentic"
+     },
+     {
+      "feature": "timestamps",
+      "note": "No EXIF timestamps present",
+      "score": 0.4,
+      "contribution": -0.0333,
+      "direction": "fake"
+     }
+    ]
+   }
+  },
+  {
+   "agent_name": "security",
+   "confidence_score": null,
+   "findings": [
+    {
+     "check": "c2pa_manifest",
+     "status": "ok",
+     "note": "No C2PA content credentials embedded (typical for most media).",
+     "score": null
+    }
+   ],
+   "heatmap_path": null,
+   "extras": null
+  }
+ ],
+ "audit": {
+  "blockchain_hash": null,
+  "chain_of_custody": [
+   {
+    "event": "uploaded",
+    "timestamp": "2026-10-23T16:43:05.904145"
+   },
+   {
+    "event": "analyzed",
+    "timestamp": "2026-10-23T16:43:05.923514+00:00"
+   },
+   {
+    "event": "signed",
+    "timestamp": "2026-10-23T16:43:05.923644+00:00",
+    "key_fingerprint": "6217864d3e24af8f2157b4800b3b29c95f497c141297c36aae97212c7b77f184"
+   },
+   {
+    "event": "blockchain_skipped",
+    "timestamp": "2026-10-23T16:43:05.923657+00:00",
+    "network": "polygon-amoy",
+    "tx_hash": null,
+    "detail": "POLYGON_PRIVATE_KEY not set \u2014 anchoring disabled"
+   }
+  ]
+ }
+}

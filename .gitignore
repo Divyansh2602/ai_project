@@ -27,3 +27,9 @@ backend/heatmaps/
 
 # Phase 6 — generated evidence PDFs
 backend/reports/
+
+# Local mode
+backend/*.db
+backend/*.db-shm
+backend/*.db-wal
+backend/uploads/

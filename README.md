@@ -4,7 +4,7 @@
 
 TrustSphere AI takes an **image, audio clip, or document** and determines whether it is authentic or AI-manipulated — and goes further than a simple fake/real score. It explains **how** it was faked (face swap, voice clone, GAN/AI-generated), estimates **which generator** likely produced it, and packages the result into a **court-admissible evidence report**: a cryptographically signed, blockchain-anchored PDF with visual explanations.
 
-> College project (VIT). Currently **6 of 11 phases complete (~55%)** — backend is feature-complete and demoable end-to-end; the frontend dashboard is next.
+> College project (VIT). The backend pipeline is feature-complete, and a **full web app** (upload, live analysis, reports, history, evidence verification) is now served by the backend itself at `/app/`.
 
 ---
 
@@ -61,7 +61,7 @@ trustsphere-ai/
 │   ├── models/                 SQLAlchemy models (evidence, agent_results, verdicts, audit_logs)
 │   ├── routers/                upload · analyze · result · report · verify
 │   └── requirements.txt
-├── frontend/                   Next.js dashboard (Phase 7 — in progress)
+├── frontend/                   Next.js scaffold (the working web app is backend/static, served at /app/)
 ├── scripts/                    DB migrations · contract deploy · Obsidian sync
 └── README.md
 ```
@@ -137,7 +137,32 @@ OLLAMA_MODEL=llama3.1:8b
 
 Interactive API docs (no frontend needed): **http://localhost:8000/docs**
 
-### 4. Frontend (in progress)
+### Web app (one command)
+
+```bash
+cd backend
+python -m uvicorn main:app --port 8000        # or double-click START_APP.bat on Windows
+```
+
+Open **http://127.0.0.1:8000/app/**. Pages: **Analyze** (upload an image, audio clip, PDF or DOCX), a per-file **report**
+(verdict gauge, agent breakdown with ELA and Grad-CAM heatmaps, Shapley contributions, evidence chain with live
+re-verification, chain of custody, evidence PDF), **History** of past analyses, and **How it works**.
+
+**Local mode.** With `DATABASE_URL=sqlite:///./trustsphere.db` and `CELERY_ALWAYS_EAGER=true` in `backend/.env` the app needs
+no PostgreSQL, no Redis and no Celery worker. With a PostgreSQL URL and Redis it runs exactly as before (JSONB columns on
+PostgreSQL, Celery worker). The default is the original configuration; local mode is opt-in through those two variables.
+
+Sample screenshots and results: [docs/screenshots](docs/screenshots) and [docs/RESULTS.md](docs/RESULTS.md).
+
+| | |
+|---|---|
+| ![Analyze](docs/screenshots/01-analyze.png) **Analyze** | ![File selected](docs/screenshots/02-analyze-file-selected.png) **File selected** |
+| ![Image report](docs/screenshots/03-report-image.png) **Image report**: ELA and Grad-CAM heatmaps | ![Fake audio](docs/screenshots/04-report-audio-fake.png) **Audio report**: fake clip |
+| ![Authentic audio](docs/screenshots/05-report-audio-authentic.png) **Audio report**: authentic clip | ![Document](docs/screenshots/06-report-document.png) **Document report** |
+| ![History](docs/screenshots/07-history.png) **History** | ![How it works](docs/screenshots/08-how-it-works.png) **How it works** |
+| ![Evidence PDF audio](docs/screenshots/09-evidence-pdf-audio-page1.png) **Evidence PDF** (audio) | ![Evidence PDF image](docs/screenshots/10-evidence-pdf-image-page1.png) **Evidence PDF** (image) |
+
+### 4. Next.js frontend (scaffold, optional)
 
 ```bash
 cd frontend
@@ -158,6 +183,7 @@ npm run dev
 | `GET`  | `/api/report/{file_id}` | Full JSON report |
 | `GET`  | `/api/report/{file_id}/pdf` | Download the Legal Evidence PDF |
 | `GET`  | `/api/verify/{file_id}` | Re-verify file hash + signature + on-chain record |
+| `GET`  | `/api/evidence` | List stored analyses with their verdicts (History page) |
 
 ---
 
