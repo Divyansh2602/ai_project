@@ -38,3 +38,7 @@ celery_app.conf.update(
     worker_pool="threads",
     worker_concurrency=4,
 )
+
+# Local mode: CELERY_ALWAYS_EAGER=true runs tasks inline, so no Redis and no worker process are needed.
+if os.getenv("CELERY_ALWAYS_EAGER", "").lower() == "true":
+    celery_app.conf.update(task_always_eager=True, task_eager_propagates=True)

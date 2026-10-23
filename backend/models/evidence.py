@@ -1,9 +1,12 @@
 import uuid
 from datetime import datetime, timezone
-from sqlalchemy import Column, String, Float, DateTime, ForeignKey, Text, Enum as SAEnum
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy import Column, String, Float, DateTime, ForeignKey, Text, JSON, Enum as SAEnum
+from sqlalchemy.dialects.postgresql import UUID, JSONB as _PG_JSONB
 from sqlalchemy.orm import relationship
 from .database import Base
+
+# Native JSONB on PostgreSQL (unchanged); plain JSON on SQLite so the app also runs without a database server.
+JSONB = JSON().with_variant(_PG_JSONB(), "postgresql")
 
 
 def _uuid():
