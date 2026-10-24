@@ -331,7 +331,26 @@ def lit_review(D):
         "compression, because a pasted region carries the statistics of its source image [5]. Error level analysis (ELA), introduced for practical image forensics by Krawetz [10], re-saves an image "
         "as JPEG at a known quality and displays the difference, so that regions with a different compression history stand out.")
     D.p("Deep learning replaced hand-crafted features in most recent work. Salloum et al. [6] trained a multi-task fully convolutional network on CASIA v2.0 to predict both the spliced region and its "
-        "boundary, and tested it on CASIA v1.0, Columbia and other sets; this train-on-CASIA, test-elsewhere protocol is the one later adopted by [5]. The five base papers of this project are summarised below.")
+        "boundary, and tested it on CASIA v1.0, Columbia and other sets; this train-on-CASIA, test-elsewhere protocol is the one later adopted by [5].")
+    D.p("Early passive methods rely on physical traces of the imaging pipeline. Resampling after scaling or rotation leaves periodic correlations between neighbouring pixels [15]. The colour-filter-array interpolation "
+        "of a camera leaves correlations that a pasted region tends to lack [16], and sensor pattern noise works as a camera fingerprint whose absence from a region points to tampering [17]. Mahdian and Saic look for "
+        "regions whose noise level differs from the rest of the image [18]. For JPEG images, JPEG ghosts reveal a region that was first compressed at another quality [19], and Bianchi and Piva estimate a tampering "
+        "probability for each 8 × 8 block under double compression [20]. Copy-move forgery was first attacked by matching overlapping blocks [21]; keypoint methods based on SIFT also recover the geometric transformation "
+        "of the copied region [22], and Christlein et al. compared fifteen feature sets inside one common pipeline [23]. Splicebuster models co-occurrences of noise residuals and segments the image without training on "
+        "forged examples [24]. The residual filters of the rich models of Fridrich and Kodovský, designed for steganalysis [25], are the basis of the SRM input used for Columbia in this work.")
+    D.p("Deep networks learn such traces from data. Bayar and Stamm constrain the first convolutional layer so that it suppresses image content and learns prediction-error filters [26]. Zhou et al. combine an RGB stream and "
+        "a noise stream in a Faster R-CNN [27], and Huh et al. train on real photographs with EXIF metadata to predict whether two patches come from the same image, with no forged examples [28]. BusterNet separates "
+        "the source and target regions of a copy-move forgery [29]; ManTra-Net learns from many manipulation types and treats localisation as anomaly detection [30]; RRU-Net adds residual propagation and feedback to a U-Net [31]; "
+        "and PSCC-Net predicts masks progressively at several scales [32]. MVSS-Net supervises edge, noise and image-level outputs together [33], CAT-Net learns from JPEG DCT coefficients as well as pixels [34], "
+        "ObjectFormer pairs RGB and high-frequency features in a transformer [35], and TruFor adds a learned noise fingerprint and a map of how reliable the result is [36]. Most of these works are judged on pixel-level "
+        "localisation. The detector in this project answers the image-level question, authentic or tampered, which is also the question the base papers [1] to [4] answer.")
+    D.p("Surveys of the field are given in [37] to [40]: Verdoliva covers media forensics including deepfakes [37], Qureshi and Deriche catalogue pixel-based blind methods [38], Stamm et al. summarise the first decade of "
+        "information forensics [39], and Warif et al. review copy-move detection [40]. Muhammad et al. separate authentic from tampered images by applying a steerable pyramid transform and local binary patterns to the chrominance "
+        "channels [41]. Besides CASIA [7] and the Columbia splicing set [8], the benchmark datasets in this literature include the Columbia set of authentic and spliced image blocks [42], CoMoFoD [43], COVERAGE [44] and "
+        "the Dresden image database [45]. The building blocks of this project are standard: residual networks [46] and vision transformers [47] are the usual alternatives to the EfficientNet backbone [9], the localiser "
+        "follows the U-Net encoder-decoder layout [48], and training uses AdamW [49]. On the evidence side, Hasan and Salah proposed Ethereum smart contracts that track where a piece of media came from through the hashes of "
+        "the stored files [50]; this project anchors a SHA-256 hash of the analysed image in a similar way, and adds the signature and chain of custody around it.")
+    D.p("The five base papers of this project are summarised next.")
     D.h3("Base paper 1: local optimal oriented pattern with deep features and an SVM [1]")
     D.p("Ranjan et al. combine a local optimal oriented texture descriptor (a centre-symmetric local binary pattern variant) with ResNet-50 features and classify with an SVM. They evaluate on the Columbia "
         "splicing dataset, CASIA v2.0 and a subset of the Dresden image database with stratified 5-fold cross-validation and report an average accuracy of 95.20%. Their review table lists earlier Columbia "
@@ -504,7 +523,7 @@ def build_body(D, doc_root):
     D.bullets([
         "**Error level analysis:** the image is re-saved at JPEG quality 90 and the amplified difference is saved as a heatmap.",
         "**Frequency analysis:** the ratio of high-frequency energy in the Fourier spectrum.",
-        "**Grad-CAM:** model attention from a pre-trained deepfake classifier, shown next to the ELA map.",
+        "**Grad-CAM [11]:** model attention from a pre-trained deepfake classifier, shown next to the ELA map.",
         "**Trained manipulation detector (this work):** described below. When it is installed, the three heuristics remain in the report as supporting evidence but are not scored.",
     ])
     D.p("**Detector input.** The image is re-saved as JPEG at quality 70, 85 and 95. For each quality the absolute difference to the original is computed, converted to grey scale, amplified and stored as one channel, giving a "
@@ -517,13 +536,13 @@ def build_body(D, doc_root):
         "(a validation part of the training data; the held-out test part was not used). Three-quality ELA with B0 gave the best validation accuracy and AUC and was fixed before any cross-validation. A six-channel variant that "
         "adds the RGB image to the error maps was tried on one fold and was clearly worse, so it was stopped and is not used.")
     D.h3("5.1.4 Provenance agent")
-    D.p("The provenance agent checks for embedded C2PA content credentials and for invisible watermarks written by AI image generators. A valid manifest fast-tracks an image to Authentic; a failed manifest or a generator watermark "
+    D.p("The provenance agent checks for embedded C2PA content credentials [14] and for invisible watermarks written by AI image generators. A valid manifest fast-tracks an image to Authentic; a failed manifest or a generator watermark "
         "is reported as suspicious and appears in the reasoning. Most images carry neither, in which case the agent reports no signal and is left out of the weighted average.")
     D.h3("5.1.5 Decision engine")
     D.p("The engine computes the weighted mean of the agent scores, applies the verdict thresholds (Authentic at or above 0.75, Fake at or below 0.40, Inconclusive between), and writes a list of reasons. When the trained detector "
         "flags the image, the manipulation type is reported as Image Splicing / Tampering. The Inconclusive band is deliberate: it sends borderline images to a person.")
     D.h3("5.1.6 Evidence layer")
-    D.p("The analysed file is hashed with SHA-256. A canonical record (file hash, verdict, score, agent scores, time) is signed with an Ed25519 key; the public key fingerprint is stored with the record. The chain of custody "
+    D.p("The analysed file is hashed with SHA-256. A canonical record (file hash, verdict, score, agent scores, time) is signed with an Ed25519 key [13]; the public key fingerprint is stored with the record. The chain of custody "
         "lists upload, analysis, signing and anchoring events. If a wallet is configured, the file hash and verdict are written to a smart contract on Polygon Amoy and can be read back for verification. The evidence PDF "
         "contains the identification, the verdict and reasoning, every agent's findings, the explainability exhibits, the chain of custody and the signature.")
     D.h3("5.1.7 Web application")
@@ -688,6 +707,42 @@ REFS = [
     'ductai199x, "image-manipulation-dataset-compilation," Hugging Face dataset, https://huggingface.co/datasets/ductai199x/image-manipulation-dataset-compilation.',
     'D. J. Bernstein, N. Duif, T. Lange, P. Schwabe and B.-Y. Yang, "High-speed high-security signatures," Journal of Cryptographic Engineering, vol. 2, no. 2, pp. 77-89, 2012.',
     'Coalition for Content Provenance and Authenticity, "C2PA technical specification," https://c2pa.org.',
+    'A. C. Popescu and H. Farid, "Exposing digital forgeries by detecting traces of resampling," IEEE Transactions on Signal Processing, vol. 53, no. 2, pp. 758-767, 2005.',
+    'A. C. Popescu and H. Farid, "Exposing digital forgeries in color filter array interpolated images," IEEE Transactions on Signal Processing, vol. 53, no. 10, pp. 3948-3959, 2005.',
+    'J. Lukáš, J. Fridrich and M. Goljan, "Digital camera identification from sensor pattern noise," IEEE Transactions on Information Forensics and Security, vol. 1, no. 2, pp. 205-214, 2006, doi: 10.1109/TIFS.2006.873602.',
+    'B. Mahdian and S. Saic, "Using noise inconsistencies for blind image forensics," Image and Vision Computing, vol. 27, no. 10, pp. 1497-1503, 2009, doi: 10.1016/j.imavis.2009.02.001.',
+    'H. Farid, "Exposing digital forgeries from JPEG ghosts," IEEE Transactions on Information Forensics and Security, vol. 4, no. 1, pp. 154-160, 2009, doi: 10.1109/TIFS.2008.2012215.',
+    'T. Bianchi and A. Piva, "Image forgery localization via block-grained analysis of JPEG artifacts," IEEE Transactions on Information Forensics and Security, vol. 7, no. 3, pp. 1003-1017, 2012, doi: 10.1109/TIFS.2012.2187516.',
+    'J. Fridrich, D. Soukal and J. Lukáš, "Detection of copy-move forgery in digital images," in Proc. Digital Forensic Research Workshop, Cleveland, OH, USA, 2003.',
+    'I. Amerini, L. Ballan, R. Caldelli, A. Del Bimbo and G. Serra, "A SIFT-based forensic method for copy-move attack detection and transformation recovery," IEEE Transactions on Information Forensics and Security, vol. 6, no. 3, pp. 1099-1110, 2011, doi: 10.1109/TIFS.2011.2129512.',
+    'V. Christlein, C. Riess, J. Jordan, C. Riess and E. Angelopoulou, "An evaluation of popular copy-move forgery detection approaches," IEEE Transactions on Information Forensics and Security, vol. 7, no. 6, pp. 1841-1854, 2012, doi: 10.1109/TIFS.2012.2218597.',
+    'D. Cozzolino, G. Poggi and L. Verdoliva, "Splicebuster: A new blind image splicing detector," in Proc. IEEE International Workshop on Information Forensics and Security (WIFS), 2015, pp. 1-6, doi: 10.1109/WIFS.2015.7368565.',
+    'J. Fridrich and J. Kodovský, "Rich models for steganalysis of digital images," IEEE Transactions on Information Forensics and Security, vol. 7, no. 3, pp. 868-882, 2012, doi: 10.1109/TIFS.2012.2190402.',
+    'B. Bayar and M. C. Stamm, "Constrained convolutional neural networks: A new approach towards general purpose image manipulation detection," IEEE Transactions on Information Forensics and Security, vol. 13, no. 11, pp. 2691-2706, 2018.',
+    'P. Zhou, X. Han, V. I. Morariu and L. S. Davis, "Learning rich features for image manipulation detection," in Proc. IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2018, pp. 1053-1061, doi: 10.1109/CVPR.2018.00116.',
+    'M. Huh, A. Liu, A. Owens and A. A. Efros, "Fighting fake news: Image splice detection via learned self-consistency," in Proc. European Conference on Computer Vision (ECCV), 2018, pp. 101-117.',
+    'Y. Wu, W. Abd-Almageed and P. Natarajan, "BusterNet: Detecting copy-move image forgery with source/target localization," in Proc. European Conference on Computer Vision (ECCV), 2018, pp. 168-184.',
+    'Y. Wu, W. AbdAlmageed and P. Natarajan, "ManTra-Net: Manipulation tracing network for detection and localization of image forgeries with anomalous features," in Proc. IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2019, pp. 9543-9552, doi: 10.1109/CVPR.2019.00977.',
+    'X. Bi, Y. Wei, B. Xiao and W. Li, "RRU-Net: The ringed residual U-Net for image splicing forgery detection," in Proc. IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW), 2019, doi: 10.1109/CVPRW.2019.00010.',
+    'X. Liu, Y. Liu, J. Chen and X. Liu, "PSCC-Net: Progressive spatio-channel correlation network for image manipulation detection and localization," IEEE Transactions on Circuits and Systems for Video Technology, vol. 32, no. 11, pp. 7505-7517, 2022, doi: 10.1109/TCSVT.2022.3189545.',
+    'X. Chen, C. Dong, J. Ji, J. Cao and X. Li, "Image manipulation detection by multi-view multi-scale supervision," in Proc. IEEE/CVF International Conference on Computer Vision (ICCV), 2021, pp. 14185-14193.',
+    'M.-J. Kwon, S.-H. Nam, I.-J. Yu, H.-K. Lee and C. Kim, "Learning JPEG compression artifacts for image manipulation detection and localization," International Journal of Computer Vision, vol. 130, 2022, doi: 10.1007/s11263-022-01617-5.',
+    'J. Wang, Z. Wu, J. Chen, X. Han, A. Shrivastava, S.-N. Lim and Y.-G. Jiang, "ObjectFormer for image manipulation detection and localization," in Proc. IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2022, pp. 2364-2373, doi: 10.1109/CVPR52688.2022.00240.',
+    'F. Guillaro, D. Cozzolino, A. Sud, N. Dufour and L. Verdoliva, "TruFor: Leveraging all-round clues for trustworthy image forgery detection and localization," in Proc. IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2023, pp. 20606-20615, doi: 10.1109/CVPR52729.2023.01974.',
+    'L. Verdoliva, "Media forensics and deepfakes: An overview," IEEE Journal of Selected Topics in Signal Processing, vol. 14, no. 5, pp. 910-932, 2020, doi: 10.1109/JSTSP.2020.3002101.',
+    'M. A. Qureshi and M. Deriche, "A bibliography of pixel-based blind image forgery detection techniques," Signal Processing: Image Communication, vol. 39, pp. 46-74, 2015.',
+    'M. C. Stamm, M. Wu and K. J. R. Liu, "Information forensics: An overview of the first decade," IEEE Access, vol. 1, pp. 167-200, 2013, doi: 10.1109/ACCESS.2013.2260814.',
+    'N. B. A. Warif, A. W. A. Wahab, M. Y. I. Idris, R. Ramli, R. Salleh, S. Shamshirband and K.-K. R. Choo, "Copy-move forgery detection: Survey, challenges and future directions," Journal of Network and Computer Applications, vol. 75, pp. 259-278, 2016, doi: 10.1016/j.jnca.2016.09.008.',
+    'G. Muhammad, M. H. Al-Hammadi, M. Hussain and G. Bebis, "Image forgery detection using steerable pyramid transform and local binary pattern," Machine Vision and Applications, vol. 25, no. 4, pp. 985-995, 2014, doi: 10.1007/s00138-013-0547-4.',
+    'T.-T. Ng and S.-F. Chang, "A data set of authentic and spliced image blocks," Columbia University, ADVENT Technical Report 203-2004-3, June 2004.',
+    'D. Tralić, I. Župančić, S. Grgić and M. Grgić, "CoMoFoD - New database for copy-move forgery detection," in Proc. 55th International Symposium ELMAR, Zadar, Croatia, 2013, pp. 49-54.',
+    'B. Wen, Y. Zhu, R. Subramanian, T.-T. Ng, X. Shen and S. Winkler, "COVERAGE - A novel database for copy-move forgery detection," in Proc. IEEE International Conference on Image Processing (ICIP), 2016, pp. 161-165.',
+    'T. Gloe and R. Böhme, "The \'Dresden Image Database\' for benchmarking digital image forensics," in Proc. ACM Symposium on Applied Computing (SAC), 2010, pp. 1584-1590.',
+    'K. He, X. Zhang, S. Ren and J. Sun, "Deep residual learning for image recognition," in Proc. IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016, pp. 770-778.',
+    'A. Dosovitskiy et al., "An image is worth 16x16 words: Transformers for image recognition at scale," in Proc. International Conference on Learning Representations (ICLR), 2021.',
+    'O. Ronneberger, P. Fischer and T. Brox, "U-Net: Convolutional networks for biomedical image segmentation," in Proc. Medical Image Computing and Computer-Assisted Intervention (MICCAI), 2015, pp. 234-241.',
+    'I. Loshchilov and F. Hutter, "Decoupled weight decay regularization," in Proc. International Conference on Learning Representations (ICLR), 2019.',
+    'H. R. Hasan and K. Salah, "Combating deepfake videos using blockchain and smart contracts," IEEE Access, vol. 7, pp. 41596-41606, 2019.',
 ]
 
 ABBREV = [("API", "Application Programming Interface"), ("AUC", "Area Under the Curve"), ("C2PA", "Coalition for Content Provenance and Authenticity"),
