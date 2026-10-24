@@ -26,8 +26,7 @@ async function loadBadges() {
 /* ───────────── helpers ───────────── */
 const AGENTS = {
   metadata: ["Metadata", "EXIF fields, editing or generator software tags, timestamp and GPS anomalies."],
-  image_forensics: ["Image forensics", "Error-level analysis, frequency fingerprint and a deep deepfake classifier."],
-  audio_forensics: ["Audio forensics", "Spectral analysis and a deep synthetic-speech classifier."],
+  image_forensics: ["Image forensics", "A trained EfficientNet-B0 detector on multi-quality error-level maps; ELA, frequency analysis and Grad-CAM are shown as supporting evidence."],
   security: ["Provenance (C2PA and watermark)", "Content-credential validation and invisible AI-generator watermark detection."],
 };
 const agentName = (n) => (AGENTS[n] ? AGENTS[n][0] : n);
@@ -56,12 +55,12 @@ function gaugeSvg(score01) {
 /* ───────────── Analyze page ───────────── */
 const STAGES = [
   ["Upload and hash", "SHA-256 of the exact bytes; the original is kept as evidence."],
-  ["Forensic agents", "Metadata, image or audio forensics, and provenance run on the file."],
+  ["Forensic agents", "Metadata, image forensics and provenance run on the file."],
   ["Decision engine", "Agent scores are weighted and fused into one verdict."],
   ["Sign", "Ed25519 signature over the canonical record."],
   ["Anchor", "Verdict and file hash written to the Polygon Amoy contract when configured."],
 ];
-const ACCEPT = ".jpg,.jpeg,.png,.webp,.gif,.bmp,.wav,.mp3,.flac,.ogg,.m4a,.aac,.pdf,.docx";
+const ACCEPT = ".jpg,.jpeg,.png,.webp,.gif,.bmp,.tif,.tiff";
 
 function stageHtml(states) {
   return `<ol class="stages">${STAGES.map((s, i) => `<li class="${states[i] || ""}"><div class="n">${states[i] === "done" ? "&#10003;" : i + 1}</div>
@@ -72,7 +71,7 @@ function analyzePage() {
   $("#view").innerHTML = `
   <div class="page-head"><div class="eyebrow">Analyze</div>
     <h1>Is this file authentic or manipulated?</h1>
-    <p>Upload an image, audio clip or document. Independent forensic agents score it, a decision engine fuses the scores into a
+    <p>Upload an image. Independent forensic agents score it, a decision engine fuses the scores into a
     verdict, and the record is hashed, signed and, when configured, anchored on a public blockchain.</p></div>
   <div class="grid g-upload">
     <section class="card">
@@ -84,7 +83,7 @@ function analyzePage() {
         <input id="file" type="file" accept="${ACCEPT}" hidden>
       </div>
       <div class="types">
-        <span class="chip">Images: JPG, PNG, WebP, GIF, BMP</span><span class="chip">Audio: WAV, MP3, FLAC, OGG, M4A</span><span class="chip">Documents: PDF, DOCX</span>
+        <span class="chip">JPG</span><span class="chip">PNG</span><span class="chip">WebP</span><span class="chip">GIF</span><span class="chip">BMP</span><span class="chip">TIFF</span>
       </div>
       <div class="preview hidden" id="preview"><img id="prevImg" alt="" class="hidden"><div class="meta" id="fileNote"></div></div>
       <div style="margin-top:16px"><button class="btn" id="run" disabled>Run analysis</button></div>
@@ -175,12 +174,9 @@ function agentCard(a, rep) {
     if (ex.gradcam_path) figs.push(`<figure><img src="${esc(urlOf(ex.gradcam_path))}" alt="Model attention"><figcaption><b>Model attention (${esc(ex.gradcam_method || "Grad-CAM")})</b><br>Where the deep classifier looked.</figcaption></figure>`);
   }
   if (figs.length) body += `<div class="figs">${figs.join("")}</div>`;
-  if (rep.file_type === "audio" && a.agent_name === "audio_forensics") body += `<audio controls src="${evidenceUrl(rep)}"></audio>`;
   body += findingsTable(a);
   if (ex.deep_predictions && ex.deep_predictions.length)
     body += `<div class="small muted" style="margin-top:8px">Classifier output: ${ex.deep_predictions.map((p) => `${esc(p.label)} ${pct(p.score, 1)}`).join(" &middot; ")}</div>`;
-  if (Array.isArray(ex.flagged_segments) && ex.flagged_segments.length)
-    body += `<div class="small muted" style="margin-top:8px">Flagged audio segments: ${ex.flagged_segments.slice(0, 8).map((s) => typeof s === "object" ? `${Number(s.start ?? s[0] ?? 0).toFixed(1)}&ndash;${Number(s.end ?? s[1] ?? 0).toFixed(1)} s` : esc(s)).join(", ")}</div>`;
   body += importanceChart(ex.feature_importance);
   return `<div class="agent"><div class="agent-h"><h3>${esc(meta[0])}</h3>
       ${conf == null ? '<span class="excl">no authenticity signal (excluded from the weighted verdict)</span>' : `<span class="pill neutral">authenticity ${pct(conf, 1)}</span>`}</div>
@@ -251,7 +247,7 @@ async function historyPage() {
 
 /* ───────────── How it works ───────────── */
 function pipelinePage() {
-  const W = [["Image forensics", 0.30], ["Provenance", 0.25], ["Audio forensics", 0.20], ["Metadata", 0.20]];
+  const W = [["Image forensics", 0.30], ["Provenance", 0.25], ["Metadata", 0.20]];
   $("#view").innerHTML = `
   <div class="page-head"><div class="eyebrow">How it works</div><h1>From upload to signed verdict</h1>
     <p>Each file type is routed to the agents that apply to it. Agents that have no signal for a file are excluded from the weighted verdict instead of voting on missing evidence.</p></div>

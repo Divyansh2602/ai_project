@@ -8,7 +8,7 @@ tampering or synthetic generation:
   - Timestamp inconsistencies (DateTimeOriginal vs DateTimeDigitized vs file mtime)
   - No EXIF block at all on a JPEG (often re-encoded / generated)
 
-Lightweight — no ML. Runs on images and documents.
+Lightweight — no ML. Runs on images.
 """
 import os
 from datetime import datetime

@@ -23,7 +23,6 @@ from agents.base import clamp
 AGENT_WEIGHTS = {
     "metadata": 0.20,
     "image_forensics": 0.30,
-    "audio_forensics": 0.20,
     "security": 0.25,     # C2PA + watermark provenance (Phase 5)
 }
 
@@ -88,7 +87,6 @@ def classify_manipulation(results, file_type):
 
     meta = _find_agent(results, "metadata")
     image = _find_agent(results, "image_forensics")
-    audio = _find_agent(results, "audio_forensics")
     security = _find_agent(results, "security")
 
     # ── Provenance signals (Phase 5) — near-decisive when present ──
@@ -106,22 +104,30 @@ def classify_manipulation(results, file_type):
 
     # ── AI-generated (GAN/diffusion) — deep model + FFT fingerprint on images ──
     if image:
+        trained = _find_check(image, "trained_detector")
+        if trained is not None:
+            conf = 1.0 - (trained.get("score") if trained.get("score") is not None else 0.5)
+            if _is_suspicious(trained):
+                candidates.append(("Image Splicing / Tampering", clamp(conf)))
+                reasons.append(f"Trained manipulation detector flagged the image (p={conf:.2f}).")
         deep = _find_check(image, "deep_model")
         fft = _find_check(image, "fft")
         ela = _find_check(image, "ela")
 
-        if _is_suspicious(deep):
+        heuristics = trained is None      # the trained detector governs; the weak heuristics only label images when it is absent
+
+        if heuristics and _is_suspicious(deep):
             conf = 1.0 - (deep.get("score") or 0.5)
             candidates.append(("GAN / AI-Generated Image", clamp(conf)))
             reasons.append(f"Deep classifier flagged synthetic imagery (p={conf:.2f}).")
 
-        if _is_suspicious(fft):
+        if heuristics and _is_suspicious(fft):
             conf = 1.0 - (fft.get("score") or 0.5)
             candidates.append(("GAN / AI-Generated Image", clamp(conf * 0.8)))
             reasons.append("Frequency-domain fingerprint consistent with generative models.")
 
         # Localized ELA anomalies point to splicing / copy-move rather than full synthesis.
-        if _is_suspicious(ela):
+        if heuristics and _is_suspicious(ela):
             conf = 1.0 - (ela.get("score") or 0.5)
             candidates.append(("Spliced / Copy-Move Forgery", clamp(conf)))
             reasons.append("Error-level analysis shows inconsistent compression regions (splice).")
@@ -137,19 +143,6 @@ def classify_manipulation(results, file_type):
             else:
                 candidates.append(("Digitally Retouched", 0.55))
                 reasons.append("Photo-editing software recorded in metadata.")
-
-    # ── Audio voice clone ──
-    if audio:
-        spec = _find_check(audio, "spectral")
-        deep = _find_check(audio, "deep_model")
-        if _is_suspicious(deep):
-            conf = 1.0 - (deep.get("score") or 0.5)
-            candidates.append(("Voice Clone / Synthetic Speech", clamp(conf)))
-            reasons.append("Synthetic-speech classifier flagged the audio track.")
-        elif _is_suspicious(spec):
-            conf = 1.0 - (spec.get("score") or 0.5)
-            candidates.append(("Voice Clone / Synthetic Speech", clamp(conf * 0.8)))
-            reasons.append("Spectral profile atypical for natural human speech.")
 
     if not candidates:
         return None, 0.0, reasons

@@ -1,0 +1,5 @@
+{
+  "detectors": [
+    {"file": "casia_v2_effnet_b0.pt", "name": "EfficientNet-B0 on multi-quality ELA, trained on CASIA v2.0"}
+  ]
+}

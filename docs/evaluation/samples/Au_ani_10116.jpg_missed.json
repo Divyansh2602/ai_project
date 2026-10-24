@@ -1,0 +1,138 @@
+{
+ "file": "Au_ani_10116.jpg.png",
+ "subset": "Authentic",
+ "truth": "Authentic",
+ "outcome": "missed or Inconclusive",
+ "decision": {
+  "verdict": "Fake",
+  "overall_score": 0.1925,
+  "manipulation_type": "Image Splicing / Tampering",
+  "manipulation_confidence": 0.9792,
+  "gan_attribution": null,
+  "gan_confidence": 0.0,
+  "reasoning": [
+   "Overall authenticity score 0.19 \u2192 Fake.",
+   "Trained manipulation detector flagged the image (p=0.98)."
+  ]
+ },
+ "agents": [
+  {
+   "agent": "metadata",
+   "confidence": 0.45,
+   "findings": [
+    {
+     "check": "camera_info",
+     "status": "suspicious",
+     "note": "No camera make/model \u2014 common in AI-generated or re-encoded images",
+     "score": 0.35
+    },
+    {
+     "check": "software",
+     "status": "ok",
+     "note": "No editing software tag",
+     "score": 0.6
+    },
+    {
+     "check": "timestamps",
+     "status": "suspicious",
+     "note": "No EXIF timestamps present",
+     "score": 0.4
+    }
+   ],
+   "raw_tag_count": 2,
+   "feature_importance": [
+    {
+     "feature": "camera_info",
+     "note": "No camera make/model \u2014 common in AI-generated or re-encoded images",
+     "score": 0.35,
+     "contribution": -0.05,
+     "direction": "fake"
+    },
+    {
+     "feature": "software",
+     "note": "No editing software tag",
+     "score": 0.6,
+     "contribution": 0.0333,
+     "direction": "authentic"
+    },
+    {
+     "feature": "timestamps",
+     "note": "No EXIF timestamps present",
+     "score": 0.4,
+     "contribution": -0.0333,
+     "direction": "fake"
+    }
+   ]
+  },
+  {
+   "agent": "image_forensics",
+   "confidence": 0.0208,
+   "findings": [
+    {
+     "check": "ela",
+     "status": "suspicious",
+     "note": "Mean error level 19.29 (heatmap saved) [supporting evidence, not scored: the trained detector governs this verdict]",
+     "score": 0.35686734517415364
+    },
+    {
+     "check": "fft",
+     "status": "ok",
+     "note": "High-frequency energy ratio 0.642 [supporting evidence, not scored: the trained detector governs this verdict]",
+     "score": 1.0
+    },
+    {
+     "check": "deep_model",
+     "status": "suspicious",
+     "note": "Deepfake classifier authenticity 0.278 [supporting evidence, not scored: the trained detector governs this verdict]",
+     "score": 0.27788931131362915
+    },
+    {
+     "check": "xai_gradcam",
+     "status": "ok",
+     "note": "Model-attention heatmap saved (gradcam)",
+     "score": null
+    },
+    {
+     "check": "trained_detector",
+     "status": "suspicious",
+     "note": "Trained manipulation detector: probability of manipulation 0.979 (average over 3 crops)",
+     "score": 0.020797550678253174
+    }
+   ],
+   "deep_predictions": [
+    {
+     "label": "Deepfake",
+     "score": 0.7221106886863708
+    },
+    {
+     "label": "Realism",
+     "score": 0.27788928151130676
+    }
+   ],
+   "gradcam_path": "C:/Users/DIVYAN~1/AppData/Local/Temp/ts_eval_ko8qhe6r/heatmaps/Au_ani_10116.jpg_gradcam.png",
+   "gradcam_method": "gradcam",
+   "trained_detector": {
+    "p_manipulated": 0.9792,
+    "model": "hold-out detector (80% of CASIA v2.0)"
+   }
+  },
+  {
+   "agent": "security",
+   "confidence": null,
+   "findings": [
+    {
+     "check": "c2pa_manifest",
+     "status": "ok",
+     "note": "No C2PA content credentials embedded (typical for most media).",
+     "score": null
+    },
+    {
+     "check": "invisible_watermark",
+     "status": "ok",
+     "note": "No known AI-generator watermark detected.",
+     "score": null
+    }
+   ]
+  }
+ ]
+}

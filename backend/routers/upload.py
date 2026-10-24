@@ -14,11 +14,7 @@ UPLOAD_DIR = Path(os.getenv("UPLOAD_DIR", "uploads"))
 MAX_FILE_SIZE = int(os.getenv("MAX_FILE_SIZE", 104857600))  # 100 MB
 
 ALLOWED_TYPES = {
-    "image": ["image/jpeg", "image/png", "image/webp", "image/gif", "image/bmp"],
-    "audio": ["audio/mpeg", "audio/wav", "audio/x-wav", "audio/ogg", "audio/flac",
-              "audio/mp4"],
-    "document": ["application/pdf", "application/msword",
-                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+    "image": ["image/jpeg", "image/png", "image/webp", "image/gif", "image/bmp", "image/tiff"],
 }
 
 

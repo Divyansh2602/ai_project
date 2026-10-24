@@ -18,10 +18,8 @@ class Evidence(Base):
 
     id = Column(UUID(as_uuid=False), primary_key=True, default=_uuid)
     original_filename = Column(String(255), nullable=False)
-    # "video" is retained only for legacy rows; video is no longer accepted at
-    # upload (removed 2026-07-15). Dropping a value from a native PG enum is a
-    # destructive migration with no upside, so the value stays in the type.
-    file_type = Column(SAEnum("image", "video", "audio", "document", name="file_type_enum"), nullable=False)
+    # TrustSphere analyses images only.
+    file_type = Column(SAEnum("image", name="file_type_enum"), nullable=False)
     file_path = Column(String(512), nullable=False)
     file_hash = Column(String(64), nullable=False)
     status = Column(

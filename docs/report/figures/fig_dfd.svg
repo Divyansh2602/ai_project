@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1340" height="640" viewBox="0 0 1340 640" font-family="Arial, Helvetica, sans-serif">
+<rect width="1340" height="640" fill="white"/>
+<text x="670.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#0f1b2d">Data-flow diagram, level 1</text>
+<rect x="40" y="262" width="130" height="64" fill="#fdf1d6" stroke="#b7791f" stroke-width="2"/>
+<text x="105" y="300" text-anchor="middle" font-size="16" font-weight="bold" fill="#0f1b2d">Analyst</text>
+<ellipse cx="330" cy="294" rx="98" ry="58" fill="#e2f0ff" stroke="#0b3b6f" stroke-width="2"/>
+<text x="330" y="284" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f1b2d">1.0</text>
+<text x="330" y="304" text-anchor="middle" font-size="14" fill="#0f1b2d">Ingest and</text>
+<text x="330" y="322" text-anchor="middle" font-size="14" fill="#0f1b2d">hash</text>
+<ellipse cx="620" cy="294" rx="98" ry="58" fill="#e2f0ff" stroke="#0b3b6f" stroke-width="2"/>
+<text x="620" y="284" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f1b2d">2.0</text>
+<text x="620" y="308" text-anchor="middle" font-size="14" fill="#0f1b2d">Forensic agents</text>
+<ellipse cx="910" cy="294" rx="98" ry="58" fill="#e2f0ff" stroke="#0b3b6f" stroke-width="2"/>
+<text x="910" y="284" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f1b2d">3.0</text>
+<text x="910" y="308" text-anchor="middle" font-size="14" fill="#0f1b2d">Decision engine</text>
+<ellipse cx="1200" cy="294" rx="98" ry="58" fill="#e2f0ff" stroke="#0b3b6f" stroke-width="2"/>
+<text x="1200" y="284" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f1b2d">4.0</text>
+<text x="1200" y="304" text-anchor="middle" font-size="14" fill="#0f1b2d">Sign, anchor</text>
+<text x="1200" y="322" text-anchor="middle" font-size="14" fill="#0f1b2d">and report</text>
+<line x1="520" y1="112" x2="720" y2="112" stroke="#0b3b6f" stroke-width="2"/><line x1="520" y1="158" x2="720" y2="158" stroke="#0b3b6f" stroke-width="2"/><text x="620.0" y="141" text-anchor="middle" font-size="14.5" fill="#0f1b2d">D2  Trained model weights</text>
+<line x1="810" y1="520" x2="1010" y2="520" stroke="#0b3b6f" stroke-width="2"/><line x1="810" y1="566" x2="1010" y2="566" stroke="#0b3b6f" stroke-width="2"/><text x="910.0" y="549" text-anchor="middle" font-size="14.5" fill="#0f1b2d">D1  Evidence store</text>
+<polyline points="170,294 221,294" fill="none" stroke="#5b6b80" stroke-width="1.8"/>
+<polygon points="232,294 219,288.5 219,299.5" fill="#5b6b80"/>
+<text x="201" y="282" text-anchor="middle" font-size="13" fill="#5b6b80">image file</text>
+<polyline points="428,294 511,294" fill="none" stroke="#5b6b80" stroke-width="1.8"/>
+<polygon points="522,294 509,288.5 509,299.5" fill="#5b6b80"/>
+<text x="475" y="282" text-anchor="middle" font-size="13" fill="#5b6b80">image</text>
+<polyline points="718,294 801,294" fill="none" stroke="#5b6b80" stroke-width="1.8"/>
+<polygon points="812,294 799,288.5 799,299.5" fill="#5b6b80"/>
+<text x="765" y="282" text-anchor="middle" font-size="13" fill="#5b6b80">agent scores</text>
+<polyline points="1008,294 1091,294" fill="none" stroke="#5b6b80" stroke-width="1.8"/>
+<polygon points="1102,294 1089,288.5 1089,299.5" fill="#5b6b80"/>
+<text x="1055" y="282" text-anchor="middle" font-size="13" fill="#5b6b80">verdict</text>
+<polyline points="620,158 620,225" fill="none" stroke="#5b6b80" stroke-width="1.8" stroke-dasharray="7 5"/>
+<polygon points="620,236 614.5,223 625.5,223" fill="#5b6b80"/>
+<text x="630" y="202" text-anchor="start" font-size="13" fill="#5b6b80">weights</text>
+<polyline points="330,352 330,543 797,543" fill="none" stroke="#5b6b80" stroke-width="1.8"/>
+<polygon points="808,543 795,537.5 795,548.5" fill="#5b6b80"/>
+<text x="560" y="534" text-anchor="middle" font-size="13" fill="#5b6b80">original file and SHA-256</text>
+<polyline points="1200,352 1200,543 1023,543" fill="none" stroke="#5b6b80" stroke-width="1.8"/>
+<polygon points="1012,543 1025,537.5 1025,548.5" fill="#5b6b80"/>
+<text x="1106" y="534" text-anchor="middle" font-size="13" fill="#5b6b80">signed record</text>
+<polyline points="1200,236 1200,84 105,84 105,249" fill="none" stroke="#5b6b80" stroke-width="1.8"/>
+<polygon points="105,260 99.5,247 110.5,247" fill="#5b6b80"/>
+<text x="650" y="74" text-anchor="middle" font-size="13" fill="#5b6b80">report, evidence PDF, verification</text>
+</svg>

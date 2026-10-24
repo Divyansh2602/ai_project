@@ -1,0 +1,371 @@
+{
+ "CASIA v2.0, random 5-fold": {
+  "mean_fold_accuracy": 0.9553027726339393,
+  "std_fold_accuracy": 0.008645343382289943,
+  "folds": [
+   0.9592,
+   0.9539,
+   0.9681,
+   0.9415,
+   0.9538
+  ],
+  "pooled": {
+   "n": 2819,
+   "accuracy": 0.9553032990422136,
+   "precision": 0.9516003122560499,
+   "recall": 0.9501169134840218,
+   "specificity": 0.9596354166666666,
+   "f1": 0.950858034321373,
+   "balanced_accuracy": 0.9548761650753442,
+   "roc_auc": 0.9916577357755261,
+   "eer": 0.045779443524292085,
+   "confusion": [
+    [
+     1474,
+     62
+    ],
+    [
+     64,
+     1219
+    ]
+   ]
+  },
+  "input": "multiq",
+  "epochs": 12
+ },
+ "CASIA v2.0, source-disjoint 5-fold": {
+  "mean_fold_accuracy": 0.9531738533439149,
+  "std_fold_accuracy": 0.007983100697092753,
+  "folds": [
+   0.9397,
+   0.9628,
+   0.9539,
+   0.9592,
+   0.9503
+  ],
+  "pooled": {
+   "n": 2819,
+   "accuracy": 0.9531748847108904,
+   "precision": 0.9527930763178599,
+   "recall": 0.9438815276695246,
+   "specificity": 0.9609375,
+   "f1": 0.9483163664839468,
+   "balanced_accuracy": 0.9524095138347624,
+   "roc_auc": 0.9932731614542738,
+   "eer": 0.04467449946414653,
+   "confusion": [
+    [
+     1476,
+     60
+    ],
+    [
+     72,
+     1211
+    ]
+   ]
+  },
+  "input": "multiq",
+  "epochs": 12
+ },
+ "Columbia, whole-image, ELA input": {
+  "mean_fold_accuracy": 0.875951293759513,
+  "std_fold_accuracy": 0.04272332187023865,
+  "folds": [
+   0.9589,
+   0.8493,
+   0.8493,
+   0.8472,
+   0.875
+  ],
+  "pooled": {
+   "n": 363,
+   "accuracy": 0.8760330578512396,
+   "precision": 0.8426395939086294,
+   "recall": 0.9222222222222223,
+   "specificity": 0.8306010928961749,
+   "f1": 0.8806366047745359,
+   "balanced_accuracy": 0.8764116575591986,
+   "roc_auc": 0.9609896782027929,
+   "eer": 0.11848816029143894,
+   "confusion": [
+    [
+     152,
+     31
+    ],
+    [
+     14,
+     166
+    ]
+   ]
+  },
+  "input": "multiq",
+  "epochs": 12
+ },
+ "Columbia, whole-image, SRM input": {
+  "mean_fold_accuracy": 0.8649162861491628,
+  "std_fold_accuracy": 0.05117684578919633,
+  "folds": [
+   0.9589,
+   0.8219,
+   0.8493,
+   0.875,
+   0.8194
+  ],
+  "pooled": {
+   "n": 363,
+   "accuracy": 0.8650137741046832,
+   "precision": 0.8195121951219512,
+   "recall": 0.9333333333333333,
+   "specificity": 0.7978142076502732,
+   "f1": 0.8727272727272727,
+   "balanced_accuracy": 0.8655737704918033,
+   "roc_auc": 0.9490285367334548,
+   "eer": 0.14877049180327867,
+   "confusion": [
+    [
+     146,
+     37
+    ],
+    [
+     12,
+     168
+    ]
+   ]
+  },
+  "input": "srm",
+  "epochs": 15
+ },
+ "Columbia, patch-based, SRM input": {
+  "mean_fold_accuracy": 0.9725266362252665,
+  "std_fold_accuracy": 0.021172850127179645,
+  "folds": [
+   0.9726,
+   0.9315,
+   0.9863,
+   0.9861,
+   0.9861
+  ],
+  "pooled": {
+   "n": 363,
+   "accuracy": 0.9724517906336089,
+   "precision": 0.967032967032967,
+   "recall": 0.9777777777777777,
+   "specificity": 0.9672131147540983,
+   "f1": 0.9723756906077348,
+   "balanced_accuracy": 0.9724954462659381,
+   "roc_auc": 0.987173649058895,
+   "eer": 0.024772313296903492,
+   "confusion": [
+    [
+     177,
+     6
+    ],
+    [
+     4,
+     176
+    ]
+   ]
+  },
+  "input": "srm (patches)",
+  "epochs": 2500
+ },
+ "Columbia, patch-based, SRM input, scene-disjoint": {
+  "mean_fold_accuracy": 0.9692237636344384,
+  "std_fold_accuracy": 0.024317840955115518,
+  "folds": [
+   0.9296,
+   1.0,
+   0.9737,
+   0.9571,
+   0.9857
+  ],
+  "pooled": {
+   "n": 363,
+   "accuracy": 0.9696969696969697,
+   "precision": 0.9668508287292817,
+   "recall": 0.9722222222222222,
+   "specificity": 0.9672131147540983,
+   "f1": 0.9695290858725762,
+   "balanced_accuracy": 0.9697176684881603,
+   "roc_auc": 0.979933211900425,
+   "eer": 0.02755009107468126,
+   "confusion": [
+    [
+     177,
+     6
+    ],
+    [
+     5,
+     175
+    ]
+   ]
+  },
+  "input": "srm (patches)",
+  "epochs": 2500
+ },
+ "localizer": {
+  "protocol": "train on CASIA v2.0, test on Columbia (as GIFT, Chen et al. 2026)",
+  "epochs": 14,
+  "threshold_from_casia_validation": 0.35,
+  "casia_validation": {
+   "set": "CASIA v2.0 validation (held out, source-disjoint)",
+   "n_tampered": 185,
+   "threshold": 0.35,
+   "pixel_f1_mean_per_image": 0.7553527921279046,
+   "pixel_f1_pooled": 0.8889308729571698,
+   "pixel_f1_best_threshold": 0.8889308729571698,
+   "best_threshold": 0.35,
+   "pixel_auc": 0.9568685200654327,
+   "image_auc_from_map": 0.9868376851427699
+  },
+  "columbia": {
+   "set": "Columbia (cross-dataset, never used in training)",
+   "n_tampered": 180,
+   "threshold": 0.35,
+   "pixel_f1_mean_per_image": 0.3884890139127058,
+   "pixel_f1_pooled": 0.43303881000388467,
+   "pixel_f1_best_threshold": 0.4817564458979427,
+   "best_threshold": 0.05,
+   "pixel_auc": 0.6743172342006416,
+   "image_auc_from_map": 0.7993928354584092
+  },
+  "gift_reported": {
+   "columbia_f1": {
+    "GIFT": 0.6497,
+    "E-GIFT": 0.6558,
+    "MFCN": 0.604,
+    "Edge-enhanced MFCN": 0.6117,
+    "SFCN": 0.582
+   },
+   "casia_v1_f1": {
+    "GIFT": 0.5728,
+    "E-GIFT": 0.621
+   },
+   "casia_v1_auc": {
+    "GIFT": 0.888,
+    "E-GIFT": 0.883,
+    "EVP": 0.862
+   }
+  }
+ },
+ "pipeline_holdout": {
+  "n": 588,
+  "n_authentic": 301,
+  "n_fake": 287,
+  "coverage_decided": 0.9047619047619048,
+  "accuracy_on_decided": 0.9793233082706767,
+  "accuracy_strict": 0.8860544217687075,
+  "forced_two_way": {
+   "n": 588,
+   "accuracy": 0.9642857142857143,
+   "precision": 0.965034965034965,
+   "recall": 0.9616724738675958,
+   "specificity": 0.9667774086378738,
+   "f1": 0.963350785340314,
+   "balanced_accuracy": 0.9642249412527348,
+   "roc_auc": 0.9943046986236356,
+   "eer": 0.030548577911028274,
+   "confusion": [
+    [
+     291,
+     10
+    ],
+    [
+     11,
+     276
+    ]
+   ]
+  },
+  "confusion_engine": [
+   [
+    251,
+    8,
+    42
+   ],
+   [
+    3,
+    270,
+    14
+   ]
+  ],
+  "thresholds": [
+   0.75,
+   0.4
+  ],
+  "false_positive_rate": 0.026578073089700997,
+  "false_negative_rate": 0.010452961672473868,
+  "detector_alone": {
+   "n": 588,
+   "accuracy": 0.9625850340136054,
+   "precision": 0.9649122807017544,
+   "recall": 0.9581881533101045,
+   "specificity": 0.9667774086378738,
+   "f1": 0.9615384615384616,
+   "balanced_accuracy": 0.9624827809739891,
+   "roc_auc": 0.9942989107157327,
+   "eer": 0.030548577911028274,
+   "confusion": [
+    [
+     291,
+     10
+    ],
+    [
+     12,
+     275
+    ]
+   ]
+  },
+  "by_subset": {
+   "Authentic": {
+    "n": 301,
+    "correct": 0.8338870431893688,
+    "inconclusive": 0.13953488372093023,
+    "wrong": 0.026578073089700997
+   },
+   "Tampered: splicing (Tp_D)": {
+    "n": 287,
+    "correct": 0.9407665505226481,
+    "inconclusive": 0.04878048780487805,
+    "wrong": 0.010452961672473868
+   }
+  }
+ },
+ "pooled_casia_columbia_random": {
+  "n": 3182,
+  "accuracy": 0.957259585166562
+ },
+ "pooled_casia_columbia_group": {
+  "n": 3182,
+  "accuracy": 0.9550597108736644
+ },
+ "_figs": [
+  [
+   "CASIA v2.0, random 5-fold",
+   "cv_casia_v2_random.png"
+  ],
+  [
+   "CASIA v2.0, source-disjoint 5-fold",
+   "cv_casia_v2_group.png"
+  ],
+  [
+   "Columbia, whole-image, ELA input",
+   "cv_columbia_random.png"
+  ],
+  [
+   "Columbia, whole-image, SRM input",
+   "cv_columbia_random_srm.png"
+  ],
+  [
+   "Columbia, patch-based, SRM input",
+   "cv_columbia_random_patch_srm.png"
+  ],
+  [
+   "Columbia, patch-based, SRM input, scene-disjoint",
+   "cv_columbia_group_patch_srm.png"
+  ],
+  [
+   "pipeline",
+   "pipeline_holdout.png"
+  ]
+ ]
+}

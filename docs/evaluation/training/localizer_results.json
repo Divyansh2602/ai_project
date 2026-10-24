@@ -1,0 +1,45 @@
+{
+ "protocol": "train on CASIA v2.0, test on Columbia (as GIFT, Chen et al. 2026)",
+ "epochs": 14,
+ "threshold_from_casia_validation": 0.35,
+ "casia_validation": {
+  "set": "CASIA v2.0 validation (held out, source-disjoint)",
+  "n_tampered": 185,
+  "threshold": 0.35,
+  "pixel_f1_mean_per_image": 0.7553527921279046,
+  "pixel_f1_pooled": 0.8889308729571698,
+  "pixel_f1_best_threshold": 0.8889308729571698,
+  "best_threshold": 0.35,
+  "pixel_auc": 0.9568685200654327,
+  "image_auc_from_map": 0.9868376851427699
+ },
+ "columbia": {
+  "set": "Columbia (cross-dataset, never used in training)",
+  "n_tampered": 180,
+  "threshold": 0.35,
+  "pixel_f1_mean_per_image": 0.3884890139127058,
+  "pixel_f1_pooled": 0.43303881000388467,
+  "pixel_f1_best_threshold": 0.4817564458979427,
+  "best_threshold": 0.05,
+  "pixel_auc": 0.6743172342006416,
+  "image_auc_from_map": 0.7993928354584092
+ },
+ "gift_reported": {
+  "columbia_f1": {
+   "GIFT": 0.6497,
+   "E-GIFT": 0.6558,
+   "MFCN": 0.604,
+   "Edge-enhanced MFCN": 0.6117,
+   "SFCN": 0.582
+  },
+  "casia_v1_f1": {
+   "GIFT": 0.5728,
+   "E-GIFT": 0.621
+  },
+  "casia_v1_auc": {
+   "GIFT": 0.888,
+   "E-GIFT": 0.883,
+   "EVP": 0.862
+  }
+ }
+}

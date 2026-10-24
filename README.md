@@ -1,216 +1,166 @@
-# 🔬 TrustSphere AI
+# TrustSphere AI
 
-**Autonomous Deepfake Detection & Digital Evidence Verification using Multi-Agent Forensic Analysis**
+**Autonomous image-forgery detection and digital evidence verification using multi-agent forensic analysis**
 
-TrustSphere AI takes an **image, audio clip, or document** and determines whether it is authentic or AI-manipulated — and goes further than a simple fake/real score. It explains **how** it was faked (face swap, voice clone, GAN/AI-generated), estimates **which generator** likely produced it, and packages the result into a **court-admissible evidence report**: a cryptographically signed, blockchain-anchored PDF with visual explanations.
+TrustSphere AI takes an **image**, decides whether it is authentic or manipulated, explains why, and packages the
+result as a tamper-evident **evidence report**: SHA-256 hash, Ed25519 signature, chain of custody, optional
+Polygon Amoy anchor, and a PDF with the heatmaps.
 
-> College project (VIT). The backend pipeline is feature-complete, and a **full web app** (upload, live analysis, reports, history, evidence verification) is now served by the backend itself at `/app/`.
-
----
-
-## What it does
-
-Upload a file → multiple forensic agents independently score it → a decision engine fuses the scores into a verdict → the record is signed and anchored on-chain → an explainable legal PDF is generated.
-
-- **Verdict:** Authentic / Fake / Inconclusive, with an overall authenticity score.
-- **How it was faked:** manipulation type (GAN/AI-generated, voice clone, splice, retouch, C2PA-tamper).
-- **Which AI made it:** best-guess generator attribution (watermark + frequency fingerprint).
-- **Explainability:** Grad-CAM heatmaps (where the model looked) and exact Shapley attribution (which metadata fields mattered).
-- **Tamper-proof evidence:** Ed25519 digital signature + a real transaction anchored on the Polygon (Amoy) blockchain.
-- **Legal report:** a multi-page PDF with findings, heatmaps, chain of custody, blockchain proof, and a plain-English AI-generated summary.
-
-### Supported file types
-✅ Images &nbsp; ✅ Audio &nbsp; ✅ Documents &nbsp; — ❌ Video (removed; too heavy for this project's scope)
+> College project (VIT). Image-only: the earlier audio and document branches were dropped on purpose.
+> A full web app (upload, live analysis, reports, history, evidence verification) is served by the backend at `/app/`.
 
 ---
 
-## The forensic agents
+## How it works
 
-| Agent | What it checks |
-|---|---|
-| **Metadata** | EXIF, editing/generator software tags, timestamp & GPS anomalies |
-| **Image** | Error-Level Analysis (ELA) + FFT frequency fingerprint + a deep ViT deepfake classifier |
-| **Audio** | librosa spectral analysis + a Wav2Vec2-based synthetic-speech classifier |
-| **Security** | C2PA content-credential validation + invisible-watermark detection (runs on every file) |
+```
+image ─► Metadata agent ──────┐
+     ├─► Image forensics agent ├─► Decision engine ─► verdict ─► evidence record ─► PDF
+     └─► Security agent ───────┘   (weighted fusion)             (hash, signature, custody, anchor)
+```
 
-The agents run sequentially inside one Celery task; the decision engine weight-fuses their scores (image 30% · audio 20% · metadata 20% · security 25%). A valid C2PA manifest fast-tracks a file to *Authentic*.
+| Agent | What it does | Weight |
+|---|---|---|
+| **Metadata** | EXIF, editing-software tags, timestamp and GPS anomalies | 0.20 |
+| **Image forensics** | A **trained EfficientNet-B0 on multi-quality ELA maps** decides. ELA, FFT spectrum, Grad-CAM and a Hugging Face deepfake classifier are shown as supporting evidence | 0.30 |
+| **Security / provenance** | C2PA content credentials, invisible watermark | 0.25 |
+
+Agents that have nothing to say (confidence `None`) are left out of the fusion. Verdict bands: **Authentic** at or
+above 0.75, **Fake** at or below 0.40, otherwise **Inconclusive** (sent to human review).
+
+### The trained detector
+
+- Input: error-level analysis at JPEG quality 70, 85 and 95 stacked as three channels, native-resolution 224 x 224 crops (up to 6 per image, logits averaged).
+- Backbone: `efficientnet_b0` (timm, ImageNet-pretrained), AdamW, OneCycle, 12 epochs, mixed precision.
+- Input, backbone and learning rate were chosen on a development split of CASIA v2.0 only; the reported numbers below come from out-of-fold or held-out predictions, never from that split.
+- Columbia (only 363 images) is handled by a **patch-based** detector on SRM high-pass residuals (128 px patches labelled from the ground-truth masks, image score = mean of the top 5% patch probabilities).
 
 ---
 
-## Tech stack
+## Results
 
-**Backend:** Python · FastAPI · SQLAlchemy · Celery
-**Data/Queue:** Supabase PostgreSQL (session pooler) · Upstash Redis
-**AI/ML:** HuggingFace Transformers (ViT + Wav2Vec2 classifiers) · OpenCV · librosa · Grad-CAM · closed-form Shapley
-**Security:** Ed25519 signing (`cryptography`) · C2PA · invisible-watermark · web3.py + Solidity on **Polygon Amoy**
-**Explainability & Reports:** matplotlib · reportlab (PDF) · local **Ollama** (`llama3.1:8b`) for the AI summary — free & fully offline
-**Frontend (in progress):** Next.js · TailwindCSS · shadcn/ui (dark theme)
+Everything is produced by code in this repository; see [docs/evaluation/EVALUATION.md](docs/evaluation/EVALUATION.md) for all tables, confusion matrices, ROC curves and the comparison with the base papers.
 
----
+| Experiment | Accuracy | ROC AUC | EER |
+|---|---|---|---|
+| CASIA v2.0, random 5-fold CV | 95.53% | 0.9917 | 4.58% |
+| CASIA v2.0, source-disjoint 5-fold CV (a tampered image stays with its source) | 95.32% | 0.9933 | 4.47% |
+| Columbia, patch-based, random 5-fold CV | 97.25% | 0.9872 | 2.48% |
+| Columbia, patch-based, scene-disjoint 5-fold CV (30 scenes, each kept in one fold) | 96.97% | 0.9799 | 2.76% |
+| Columbia, whole-image (ELA) 5-fold CV | 87.60% | 0.9610 | 11.85% |
+| Full pipeline (real agents + decision engine) on 588 held-out CASIA images, forced two-way call | 96.43% | 0.9943 | 3.05% |
 
-## Project structure
+Full pipeline, three-way verdict on the same 588 held-out images: 90.5% of images get a decision; accuracy on decided
+images 97.9%; Inconclusive counted as wrong 88.6%.
 
-```
-trustsphere-ai/
-├── backend/
-│   ├── main.py                 FastAPI app; wires routers
-│   ├── agents/                 metadata · image · audio · security forensic agents
-│   ├── core/                   celery, tasks, decision_engine, xai, pdf_report, llm_summary
-│   ├── security/               Ed25519 signing · Polygon blockchain anchoring
-│   ├── contracts/              TrustSphereAudit.sol
-│   ├── models/                 SQLAlchemy models (evidence, agent_results, verdicts, audit_logs)
-│   ├── routers/                upload · analyze · result · report · verify
-│   └── requirements.txt
-├── frontend/                   Next.js scaffold (the working web app is backend/static, served at /app/)
-├── scripts/                    DB migrations · contract deploy · Obsidian sync
-└── README.md
-```
+**Limits, stated plainly**
+
+- Pixel localisation trained on CASIA and tested on Columbia reaches pixel F1 0.433, below the 0.65 that the GIFT paper reports; the localiser works on CASIA (F1 0.889) but does not transfer to Columbia's uncompressed photographs.
+- Several published CASIA v2.0 results are higher than ours (96 to 99%). The comparison table in EVALUATION.md lists them.
+- Columbia has only 363 images, so the fold-to-fold spread is several points. The patch-based threshold is set from the other folds' out-of-fold scores, which came from models that saw the test fold; the threshold-free AUC (0.98 scene-disjoint) is the safer figure. The deployed app uses the CASIA detector; the Columbia models are for evaluation.
+- All datasets are splicing/copy-move forgery sets. AI-generated images are not what this detector was trained on; the Hugging Face classifier is supporting evidence only.
+
+Datasets (both from the Hugging Face compilation `ductai199x/image-manipulation-dataset-compilation`): CASIA v2.0 (1,536 authentic + 1,283 tampered) and Columbia (183 authentic + 180 spliced).
 
 ---
 
-## Getting started
-
-### Prerequisites
-- Python 3.11+
-- Node.js + npm (for the frontend)
-- [Ollama](https://ollama.com) with the `llama3.1:8b` model pulled (for the AI summary)
-- A Supabase project and an Upstash Redis instance (free tiers work)
-
-### 1. Backend setup
-
-```bash
-cd backend
-python -m venv venv
-# Windows:
-.\venv\Scripts\Activate.ps1
-# macOS/Linux:
-# source venv/bin/activate
-
-pip install -r requirements.txt
-```
-
-### 2. Configure environment
-
-Create `backend/.env` (this file is gitignored — **never commit real secrets**). Template:
-
-```env
-# Database — Supabase session pooler (URL-encode special chars in the password)
-DATABASE_URL=postgresql://<user>:<password>@<host>.pooler.supabase.com:5432/postgres
-
-# Redis — Upstash
-REDIS_URL=rediss://default:<token>@<host>.upstash.io:6379
-
-# App
-SECRET_KEY=<random-secret>
-UPLOAD_DIR=uploads
-MAX_FILE_SIZE=104857600
-
-# AI models (HuggingFace)
-DEEPFAKE_MODEL_ID=prithivMLmods/Deep-Fake-Detector-v2-Model
-AUDIO_MODEL_ID=MelodyMachine/Deepfake-audio-detection-V2
-HF_HUB_DISABLE_XET=1
-
-# Security / blockchain (Polygon Amoy testnet)
-SIGNING_KEY_PATH=keys/server_signing_key.pem
-POLYGON_RPC_URL=https://rpc-amoy.polygon.technology
-POLYGON_CHAIN_ID=80002
-POLYGON_PRIVATE_KEY=<throwaway-wallet-key-funded-with-test-POL>
-TRUSTSPHERE_CONTRACT_ADDRESS=<deployed-contract-address>
-
-# LLM summary (local Ollama)
-ENABLE_LLM_SUMMARY=1
-OLLAMA_URL=http://localhost:11434
-OLLAMA_MODEL=llama3.1:8b
-```
-
-> The Ed25519 signing key auto-generates at `backend/keys/server_signing_key.pem` on first run. **Never delete it** — it's required to verify previously signed records.
-
-### 3. Run
-
-```bash
-# API server
-.\venv\Scripts\python.exe -m uvicorn main:app --reload --port 8000
-
-# In a second terminal — Celery worker (Windows uses the threads pool)
-.\venv\Scripts\python.exe -m celery -A core.celery_app.celery_app worker --pool=threads -l info
-```
-
-Interactive API docs (no frontend needed): **http://localhost:8000/docs**
-
-### Web app (one command)
-
-```bash
-cd backend
-python -m uvicorn main:app --port 8000        # or double-click START_APP.bat on Windows
-```
-
-Open **http://127.0.0.1:8000/app/**. Pages: **Analyze** (upload an image, audio clip, PDF or DOCX), a per-file **report**
-(verdict gauge, agent breakdown with ELA and Grad-CAM heatmaps, Shapley contributions, evidence chain with live
-re-verification, chain of custody, evidence PDF), **History** of past analyses, and **How it works**.
-
-**Local mode.** With `DATABASE_URL=sqlite:///./trustsphere.db` and `CELERY_ALWAYS_EAGER=true` in `backend/.env` the app needs
-no PostgreSQL, no Redis and no Celery worker. With a PostgreSQL URL and Redis it runs exactly as before (JSONB columns on
-PostgreSQL, Celery worker). The default is the original configuration; local mode is opt-in through those two variables.
-
-Sample screenshots and results: [docs/screenshots](docs/screenshots) and [docs/RESULTS.md](docs/RESULTS.md).
+## Screenshots
 
 | | |
 |---|---|
 | ![Analyze](docs/screenshots/01-analyze.png) **Analyze** | ![File selected](docs/screenshots/02-analyze-file-selected.png) **File selected** |
-| ![Image report](docs/screenshots/03-report-image.png) **Image report**: ELA and Grad-CAM heatmaps | ![Fake audio](docs/screenshots/04-report-audio-fake.png) **Audio report**: fake clip |
-| ![Authentic audio](docs/screenshots/05-report-audio-authentic.png) **Audio report**: authentic clip | ![Document](docs/screenshots/06-report-document.png) **Document report** |
+| ![Tampered report](docs/screenshots/03-report-tampered-1.png) **Tampered image: Fake** | ![Tampered report 2](docs/screenshots/04-report-tampered-2.png) **Tampered image, second sample** |
+| ![Authentic](docs/screenshots/05-report-authentic.png) **Authentic image: Authentic** | ![Inconclusive](docs/screenshots/06-report-inconclusive.png) **Sent to human review: Inconclusive** |
 | ![History](docs/screenshots/07-history.png) **History** | ![How it works](docs/screenshots/08-how-it-works.png) **How it works** |
-| ![Evidence PDF audio](docs/screenshots/09-evidence-pdf-audio-page1.png) **Evidence PDF** (audio) | ![Evidence PDF image](docs/screenshots/10-evidence-pdf-image-page1.png) **Evidence PDF** (image) |
-
-### 4. Next.js frontend (scaffold, optional)
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
+| ![Evidence PDF tampered](docs/screenshots/09-evidence-pdf-tampered-page1.png) **Evidence PDF** (tampered) | ![Evidence PDF authentic](docs/screenshots/10-evidence-pdf-authentic-page1.png) **Evidence PDF** (authentic) |
 
 ---
 
-## API overview
+## Run it
+
+### One command (Windows)
+
+Double-click `START_APP.bat`, or:
+
+```bash
+cd backend
+python -m uvicorn main:app --port 8000
+```
+
+Open **http://127.0.0.1:8000/app/**. API docs: **http://127.0.0.1:8000/docs**.
+
+### Setup
+
+```bash
+cd backend
+python -m venv venv
+# Windows: .\venv\Scripts\Activate.ps1     macOS/Linux: source venv/bin/activate
+pip install -r requirements.txt
+```
+
+The trained weights are in `backend/models/trained/` (about 16 MB each), so no training is needed to run the app.
+The Hugging Face deepfake classifier (supporting evidence) downloads on the first run.
+
+### Configuration (`backend/.env`, never committed)
+
+Local mode needs no PostgreSQL, Redis or Celery worker:
+
+```env
+DATABASE_URL=sqlite:///./trustsphere.db
+CELERY_ALWAYS_EAGER=true
+```
+
+Full mode (PostgreSQL + Redis + Celery worker) uses `DATABASE_URL=postgresql://...`, `REDIS_URL=...` and
+`python -m celery -A core.celery_app.celery_app worker --pool=threads -l info`. See `backend/.env.example` for every variable, including the
+optional Polygon Amoy anchoring (`POLYGON_PRIVATE_KEY` must be a throwaway test wallet) and the local Ollama summary.
+
+The Ed25519 signing key is generated at `backend/keys/` on first run. Do not delete it: it verifies earlier records.
+
+### Reproduce the numbers
+
+```bash
+# 5-fold CV on CASIA v2.0 (random and source-disjoint) and Columbia
+python training/train_image_detector.py --dataset casia_v2 --protocol random --input multiq --epochs 12 --lr 4e-4 --final
+python training/train_image_detector.py --dataset casia_v2 --protocol group --input multiq --epochs 12 --lr 4e-4
+python training/train_patch_detector.py --dataset columbia --protocol random --input srm --tag patch_srm --final
+python training/train_patch_detector.py --dataset columbia --protocol group --input srm --tag patch_srm
+python training/train_localizer.py
+
+# tables, confusion matrices, ROC curves and the pipeline hold-out
+python scripts/evaluate_images.py
+
+# end-to-end test of upload -> analysis -> report -> PDF -> verification
+python scripts/e2e_test.py
+```
+
+Datasets are read from the folder set in `training/common.py` (`TRUSTSPHERE_DATA` environment variable).
+
+---
+
+## API
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| `POST` | `/api/upload` | Upload a file → creates an evidence record, queues analysis |
+| `POST` | `/api/upload` | Upload an image (JPEG, PNG, TIFF, WebP, BMP) |
 | `POST` | `/api/analyze/{file_id}` | (Re)run the forensic pipeline |
-| `GET`  | `/api/result/{task_id}` | Poll analysis result |
-| `GET`  | `/api/status/{file_id}` | Evidence status |
-| `GET`  | `/api/report/{file_id}` | Full JSON report |
-| `GET`  | `/api/report/{file_id}/pdf` | Download the Legal Evidence PDF |
-| `GET`  | `/api/verify/{file_id}` | Re-verify file hash + signature + on-chain record |
-| `GET`  | `/api/evidence` | List stored analyses with their verdicts (History page) |
+| `GET` | `/api/result/{task_id}` | Poll an analysis task |
+| `GET` | `/api/report/{file_id}` | Full JSON report |
+| `GET` | `/api/report/{file_id}/pdf` | Evidence PDF |
+| `GET` | `/api/verify/{file_id}` | Re-verify hash, signature and anchor |
+| `GET` | `/api/evidence` | Stored analyses (History page) |
+
+## Project structure
+
+```
+backend/      FastAPI app, agents, decision engine, evidence layer, web app (static/), trained weights (models/trained/)
+training/     dataset indexing, detector, patch detector and localiser training
+scripts/      evaluation, end-to-end test, report and diagram builders, contract deploy
+docs/         evaluation (tables, figures, raw outputs), screenshots, project report (docx/pdf)
+frontend/     original Next.js scaffold (the working web app is backend/static)
+```
+
+Project report (Word + PDF): [docs/report/](docs/report).
 
 ---
 
-## Roadmap
-
-| Phase | Status |
-|---|---|
-| 1 — Project Setup | ✅ Done |
-| 2 — Backend Core | ✅ Done |
-| 3 — AI Agents (×4) | ✅ Done |
-| 4 — Decision Engine | ✅ Done |
-| 5 — Security Layer (signing + blockchain) | ✅ Done (live on Polygon Amoy) |
-| 6 — Explainability + Legal PDF | ✅ Done (Grad-CAM, Shapley, Ollama summary) |
-| **7 — Frontend Dashboard** | 🔜 **Next** |
-| 7.5 — OSINT Layer | ⬜ Planned |
-| 7.6 — Browser Extension | ⬜ Planned |
-| 8 — Integration + Testing (industrial models) | ⬜ Planned |
-| 9 — Deployment | ⬜ Planned |
-
----
-
-## Notes
-
-- **No quantum components** — dropped early as infeasible; the system uses standard cryptography (Ed25519, C2PA, Polygon).
-- **Manipulation-type and GAN-attribution are rule-based** for now; trained classifier heads are planned for Phase 8 alongside an industrial model upgrade.
-- Only the SHA-256 hash + verdict + timestamps go **on-chain** — the media and detailed findings stay in the database.
-
----
-
-*Academic project — for research and educational use.*
+*Academic project, for research and educational use.*

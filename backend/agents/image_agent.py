@@ -187,4 +187,22 @@ def run(file_path: str) -> dict:
                         "Deep classifier not loaded (install torch+transformers or set DEEPFAKE_MODEL_ID)"))
 
     out.confidence = clamp(sum(signals) / len(signals)) if signals else 0.5
+
+    # Layer 0 — trained splicing / manipulation detector (EfficientNet-B0 on multi-quality ELA maps, trained on CASIA v2.0 and Columbia).
+    # When it is installed it governs the verdict; the heuristic layers above stay in the report as supporting evidence.
+    try:
+        from core import trained_detector
+        trained = trained_detector.predict(file_path)
+    except Exception:
+        trained = None
+    if trained is not None:
+        auth = clamp(1.0 - trained["p_fake"])
+        out.add(Finding("trained_detector", "suspicious" if auth < 0.5 else "ok",
+                        f"Trained manipulation detector: probability of manipulation {trained['p_fake']:.3f} "
+                        f"(average over {trained['crops']} crops)", score=auth))
+        out.extra["trained_detector"] = {"p_manipulated": round(trained["p_fake"], 4), "model": trained["model"]}
+        out.confidence = auth
+        for f in out.findings:
+            if f["check"] in ("ela", "fft", "deep_model") and f["status"] != "skipped":
+                f["note"] += " [supporting evidence, not scored: the trained detector governs this verdict]"
     return out.dict()

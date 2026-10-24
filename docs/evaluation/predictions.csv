@@ -1,0 +1,589 @@
+file,subset,label,verdict,score,p_manipulated,manipulation_type
+Au_ani_00024.jpg.png,Authentic,0,Authentic,0.7796,0.0007000000000000339,
+Au_ani_00026.jpg.png,Authentic,0,Authentic,0.7759,0.006900000000000017,
+Au_ani_00030.jpg.png,Authentic,0,Authentic,0.7799,9.999999999998899e-05,
+Au_ani_00031.jpg.png,Authentic,0,Authentic,0.7783,0.0029000000000000137,
+Au_ani_00033.jpg.png,Authentic,0,Authentic,0.7607,0.03210000000000002,
+Au_ani_00040.jpg.png,Authentic,0,Authentic,0.7786,0.0022999999999999687,
+Au_ani_00045.jpg.png,Authentic,0,Authentic,0.7514,0.047599999999999976,
+Au_ani_00046.jpg.png,Authentic,0,Inconclusive,0.7118,0.11360000000000003,
+Au_ani_00050.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_00057.jpg.png,Authentic,0,Authentic,0.7798,0.00029999999999996696,
+Au_ani_00060.jpg.png,Authentic,0,Inconclusive,0.5476,0.38739999999999997,
+Au_ani_00064.jpg.png,Authentic,0,Authentic,0.7713,0.014499999999999957,
+Au_ani_00066.jpg.png,Authentic,0,Authentic,0.778,0.0032999999999999696,
+Au_ani_00068.jpg.png,Authentic,0,Authentic,0.7799,9.999999999998899e-05,
+Au_ani_00070.jpg.png,Authentic,0,Inconclusive,0.7443,0.0595,
+Au_ani_00071.jpg.png,Authentic,0,Authentic,0.7796,0.0006000000000000449,
+Au_ani_00074.jpg.png,Authentic,0,Authentic,0.7799,9.999999999998899e-05,
+Au_ani_00077.jpg.png,Authentic,0,Fake,0.2538,0.877,Image Splicing / Tampering
+Au_ani_00079.jpg.png,Authentic,0,Authentic,0.7799,0.00019999999999997797,
+Au_ani_00100.jpg.png,Authentic,0,Inconclusive,0.6685,0.18589999999999995,
+Au_ani_10001.jpg.png,Authentic,0,Authentic,0.7646,0.025699999999999945,
+Au_ani_10105.jpg.png,Authentic,0,Inconclusive,0.409,0.6184000000000001,Image Splicing / Tampering
+Au_ani_10107.jpg.png,Authentic,0,Inconclusive,0.7429,0.061899999999999955,
+Au_ani_10111.jpg.png,Authentic,0,Inconclusive,0.4609,0.5318,Image Splicing / Tampering
+Au_ani_10116.jpg.png,Authentic,0,Fake,0.1925,0.9792,Image Splicing / Tampering
+Au_ani_10119.jpg.png,Authentic,0,Fake,0.2717,0.8471,Image Splicing / Tampering
+Au_ani_10120.jpg.png,Authentic,0,Fake,0.3035,0.7941,Image Splicing / Tampering
+Au_ani_10125.jpg.png,Authentic,0,Authentic,0.7689,0.01849999999999996,
+Au_ani_10132.jpg.png,Authentic,0,Authentic,0.7792,0.0013999999999999568,
+Au_ani_10159.jpg.png,Authentic,0,Inconclusive,0.6842,0.15969999999999995,
+Au_ani_10160.jpg.png,Authentic,0,Authentic,0.7711,0.014900000000000024,
+Au_ani_10165.jpg.png,Authentic,0,Inconclusive,0.6011,0.29810000000000003,
+Au_ani_10170.jpg.png,Authentic,0,Authentic,0.7665,0.022499999999999964,
+Au_ani_10172.jpg.png,Authentic,0,Fake,0.3404,0.7327,Image Splicing / Tampering
+Au_ani_10182.jpg.png,Authentic,0,Inconclusive,0.7476,0.05400000000000005,
+Au_ani_10185.jpg.png,Authentic,0,Inconclusive,0.7495,0.050899999999999945,
+Au_ani_10191.jpg.png,Authentic,0,Authentic,0.7743,0.009499999999999953,
+Au_ani_10193.jpg.png,Authentic,0,Authentic,0.755,0.04159999999999997,
+Au_ani_10200.jpg.png,Authentic,0,Inconclusive,0.7256,0.0907,
+Au_ani_10207.jpg.png,Authentic,0,Inconclusive,0.7047,0.12549999999999994,
+Au_ani_10208.jpg.png,Authentic,0,Inconclusive,0.6977,0.1372,
+Au_ani_10209.jpg.png,Authentic,0,Authentic,0.7774,0.0042999999999999705,
+Au_ani_10215.jpg.png,Authentic,0,Inconclusive,0.7408,0.06540000000000001,
+Au_ani_10217.jpg.png,Authentic,0,Inconclusive,0.7069,0.12190000000000001,
+Au_ani_20004.jpg.png,Authentic,0,Authentic,0.7637,0.027100000000000013,
+Au_ani_20006.jpg.png,Authentic,0,Inconclusive,0.7384,0.06930000000000003,
+Au_ani_20010.jpg.png,Authentic,0,Fake,0.1935,0.9775,Image Splicing / Tampering
+Au_ani_20012.jpg.png,Authentic,0,Authentic,0.7799,0.00019999999999997797,
+Au_ani_20020.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_20024.jpg.png,Authentic,0,Inconclusive,0.7234,0.09440000000000004,
+Au_ani_20027.jpg.png,Authentic,0,Authentic,0.7693,0.017800000000000038,
+Au_ani_20029.jpg.png,Authentic,0,Inconclusive,0.5262,0.42300000000000004,
+Au_ani_20039.jpg.png,Authentic,0,Inconclusive,0.7162,0.10640000000000005,
+Au_ani_20043.jpg.png,Authentic,0,Inconclusive,0.7317,0.08050000000000002,
+Au_ani_20048.jpg.png,Authentic,0,Fake,0.3404,0.7327,Image Splicing / Tampering
+Au_ani_20054.jpg.png,Authentic,0,Authentic,0.7691,0.018100000000000005,
+Au_ani_20062.jpg.png,Authentic,0,Inconclusive,0.7484,0.05269999999999997,
+Au_ani_20070.jpg.png,Authentic,0,Inconclusive,0.7352,0.07469999999999999,
+Au_ani_30001.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30002.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30003.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30006.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30008.jpg.png,Authentic,0,Authentic,0.7793,0.0010999999999999899,
+Au_ani_30009.jpg.png,Authentic,0,Authentic,0.7664,0.022700000000000053,
+Au_ani_30010.jpg.png,Authentic,0,Authentic,0.7797,0.0004999999999999449,
+Au_ani_30019.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30024.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30025.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30027.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30034.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30045.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30047.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30053.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30054.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30055.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30056.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30057.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30064.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30069.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30070.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30071.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30077.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30084.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30085.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30086.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30096.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30097.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30114.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30117.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30119.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30123.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30125.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30130.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30132.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30135.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30136.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30141.jpg.png,Authentic,0,Authentic,0.7757,0.007099999999999995,
+Au_ani_30153.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30156.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30167.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30181.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30182.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30183.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30185.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30186.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30217.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30222.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30230.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30232.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30235.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30238.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30241.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30246.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30247.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30251.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30255.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30257.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30258.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30270.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30273.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30275.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30282.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30284.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30285.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30286.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30288.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30291.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30296.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30302.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30305.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30310.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30313.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30314.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30316.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30317.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30323.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30333.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30340.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30354.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30373.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30381.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30382.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30383.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30395.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30404.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30407.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30413.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30415.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30418.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30436.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30444.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30446.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30447.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30448.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30455.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30460.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30468.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30470.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30475.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30477.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30480.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30483.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30484.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30491.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30495.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30509.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30511.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30520.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30521.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30527.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30532.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30539.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30541.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30562.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30564.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30565.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30572.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30576.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30577.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30584.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30592.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30603.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30608.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30609.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30628.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30634.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30635.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30639.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30642.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30651.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30653.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30655.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30665.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30676.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30677.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30679.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30681.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30689.jpg.png,Authentic,0,Authentic,0.7762,0.006299999999999972,
+Au_ani_30696.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30697.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30700.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30703.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30704.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30707.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30708.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30710.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30713.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30730.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30737.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30739.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30740.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30744.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30750.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30755.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30757.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30758.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30760.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30761.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30764.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_ani_30788.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_00010.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_00013.jpg.png,Authentic,0,Authentic,0.7799,0.00019999999999997797,
+Au_arc_00014.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_00017.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_00021.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_00023.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_00028.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_00041.jpg.png,Authentic,0,Authentic,0.7688,0.01870000000000005,
+Au_arc_00067.jpg.png,Authentic,0,Inconclusive,0.6161,0.2731,
+Au_arc_00068.jpg.png,Authentic,0,Authentic,0.7795,0.0008000000000000229,
+Au_arc_00070.jpg.png,Authentic,0,Authentic,0.7754,0.007600000000000051,
+Au_arc_00076.jpg.png,Authentic,0,Authentic,0.7798,0.00029999999999996696,
+Au_arc_00080.jpg.png,Authentic,0,Inconclusive,0.5378,0.40359999999999996,
+Au_arc_00082.jpg.png,Authentic,0,Authentic,0.7796,0.0006000000000000449,
+Au_arc_00088.jpg.png,Authentic,0,Authentic,0.7728,0.01200000000000001,
+Au_arc_00094.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_10104.jpg.png,Authentic,0,Authentic,0.7736,0.010600000000000054,
+Au_arc_10122.bmp.png,Authentic,0,Inconclusive,0.7461,0.056499999999999995,
+Au_arc_20006.jpg.png,Authentic,0,Inconclusive,0.7483,0.05279999999999996,
+Au_arc_20008.jpg.png,Authentic,0,Inconclusive,0.6707,0.18210000000000004,
+Au_arc_20013.jpg.png,Authentic,0,Authentic,0.7658,0.023599999999999954,
+Au_arc_20018.jpg.png,Authentic,0,Inconclusive,0.6853,0.15780000000000005,
+Au_arc_20031.jpg.png,Authentic,0,Authentic,0.7541,0.043200000000000016,
+Au_arc_20034.jpg.png,Authentic,0,Authentic,0.7661,0.0232,
+Au_arc_20035.jpg.png,Authentic,0,Inconclusive,0.7169,0.10509999999999997,
+Au_arc_20041.jpg.png,Authentic,0,Inconclusive,0.6655,0.19079999999999997,
+Au_arc_20045.jpg.png,Authentic,0,Inconclusive,0.6547,0.20879999999999999,
+Au_arc_20047.jpg.png,Authentic,0,Authentic,0.7684,0.019299999999999984,
+Au_arc_20057.jpg.png,Authentic,0,Inconclusive,0.6591,0.2015,
+Au_arc_20060.jpg.png,Authentic,0,Authentic,0.7597,0.03380000000000005,
+Au_arc_20063.jpg.png,Authentic,0,Fake,0.3617,0.6971,Image Splicing / Tampering
+Au_arc_20066.jpg.png,Authentic,0,Authentic,0.7727,0.0121,
+Au_arc_20068.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_20077.jpg.png,Authentic,0,Inconclusive,0.6043,0.29279999999999995,
+Au_arc_20083.jpg.png,Authentic,0,Inconclusive,0.7347,0.07550000000000001,
+Au_arc_20085.jpg.png,Authentic,0,Inconclusive,0.7181,0.10309999999999997,
+Au_arc_20086.jpg.png,Authentic,0,Inconclusive,0.609,0.28500000000000003,
+Au_arc_20089.jpg.png,Authentic,0,Inconclusive,0.6083,0.2862,
+Au_arc_20091.jpg.png,Authentic,0,Inconclusive,0.7419,0.0635,
+Au_arc_20093.jpg.png,Authentic,0,Authentic,0.7774,0.0042999999999999705,
+Au_arc_20098.jpg.png,Authentic,0,Inconclusive,0.6032,0.2946,
+Au_arc_30001.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30003.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30004.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30020.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30027.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30030.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30031.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30039.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30050.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30053.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30058.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30060.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30061.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30077.jpg.png,Authentic,0,Authentic,0.7796,0.0006000000000000449,
+Au_arc_30079.jpg.png,Authentic,0,Authentic,0.7703,0.016199999999999992,
+Au_arc_30087.jpg.png,Authentic,0,Authentic,0.7799,0.00019999999999997797,
+Au_arc_30092.jpg.png,Authentic,0,Authentic,0.7783,0.0028000000000000247,
+Au_arc_30096.jpg.png,Authentic,0,Authentic,0.7744,0.009299999999999975,
+Au_arc_30098.jpg.png,Authentic,0,Authentic,0.7799,0.00019999999999997797,
+Au_arc_30104.jpg.png,Authentic,0,Inconclusive,0.5908,0.3154,
+Au_arc_30106.jpg.png,Authentic,0,Authentic,0.7798,0.00029999999999996696,
+Au_arc_30108.jpg.png,Authentic,0,Authentic,0.7797,0.0004999999999999449,
+Au_arc_30110.jpg.png,Authentic,0,Authentic,0.7798,0.00029999999999996696,
+Au_arc_30130.jpg.png,Authentic,0,Authentic,0.7742,0.009700000000000042,
+Au_arc_30131.jpg.png,Authentic,0,Authentic,0.7787,0.0020999999999999908,
+Au_arc_30135.jpg.png,Authentic,0,Authentic,0.7794,0.0010000000000000009,
+Au_arc_30143.jpg.png,Authentic,0,Authentic,0.777,0.0050000000000000044,
+Au_arc_30146.jpg.png,Authentic,0,Authentic,0.7639,0.026900000000000035,
+Au_arc_30147.jpg.png,Authentic,0,Authentic,0.7791,0.0014999999999999458,
+Au_arc_30148.jpg.png,Authentic,0,Authentic,0.7784,0.0027000000000000357,
+Au_arc_30150.jpg.png,Authentic,0,Inconclusive,0.7375,0.07089999999999996,
+Au_arc_30155.jpg.png,Authentic,0,Authentic,0.7768,0.00539999999999996,
+Au_arc_30156.jpg.png,Authentic,0,Authentic,0.7796,0.0007000000000000339,
+Au_arc_30165.jpg.png,Authentic,0,Authentic,0.7798,0.00029999999999996696,
+Au_arc_30176.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30177.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30178.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30189.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30191.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Au_arc_30194.jpg.png,Authentic,0,Authentic,0.78,0.0,
+Tp_D_CNN_M_N_ani00057_ani00055_11149.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1978,0.9704,Image Splicing / Tampering
+Tp_D_CNN_M_N_nat00041_nat10123_11439.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CNN_M_N_sec00011_cha00085_11227.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1884,0.986,Image Splicing / Tampering
+Tp_D_CNN_M_N_sec10110_sec10101_10298.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2117,0.9472,Image Splicing / Tampering
+Tp_D_CNN_S_B_sec00023_sec00022_00044.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CNN_S_N_art00001_ani00074_10442.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CNN_S_N_art00011_art00014_11841.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1825,0.9959,Image Splicing / Tampering
+Tp_D_CNN_S_N_art00096_cha00063_10305.tif.png,Tampered: splicing (Tp_D),1,Fake,0.3629,0.6952,Image Splicing / Tampering
+Tp_D_CNN_S_N_cha00044_cha00043_00364.tif.png,Tampered: splicing (Tp_D),1,Inconclusive,0.555,0.375,
+Tp_D_CNN_S_N_cha10117_nat00059_12169.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_CNN_S_N_cha10117_nat10124_12167.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_CNN_S_N_cha10117_nat10139_12166.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_CNN_S_N_ind00005_ind00014_00424.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1811,0.9982,Image Splicing / Tampering
+Tp_D_CNN_S_N_txt00052_txt00051_10377.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1817,0.9971,Image Splicing / Tampering
+Tp_D_CRD_M_N_nat00048_nat00049_11067.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2467,0.8888,Image Splicing / Tampering
+Tp_D_CRD_S_B_ani00071_ani00064_00191.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRD_S_N_cha10211_cha10159_12333.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_CRD_S_N_ind00005_ind00084_11751.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2125,0.9459,Image Splicing / Tampering
+Tp_D_CRD_S_N_ind00029_ind00088_00444.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRD_S_O_ani10111_ani10103_10635.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1803,0.9995,Image Splicing / Tampering
+Tp_D_CRN_L_N_nat00085_nat00086_10069.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1841,0.9932,Image Splicing / Tampering
+Tp_D_CRN_M_B_ani00046_ani00001_10100.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_M_B_sec00085_arc00065_11450.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1818,0.997,Image Splicing / Tampering
+Tp_D_CRN_M_N_ani00100_ani10101_10089.tif.png,Tampered: splicing (Tp_D),1,Inconclusive,0.4624,0.5293,Image Splicing / Tampering
+Tp_D_CRN_M_N_ani10105_ani00100_10086.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2011,0.9649,Image Splicing / Tampering
+Tp_D_CRN_M_N_ani10116_ani00100_11643.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1859,0.9902,Image Splicing / Tampering
+Tp_D_CRN_M_N_ani10119_ani00100_11641.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2827,0.8289,Image Splicing / Tampering
+Tp_D_CRN_M_N_ani10120_ani00100_11639.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2638,0.8604,Image Splicing / Tampering
+Tp_D_CRN_M_N_ani10120_sec00098_11632.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2213,0.9311,Image Splicing / Tampering
+Tp_D_CRN_M_N_arc00088_arc00064_10394.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_M_N_art00067_ani00093_11801.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.3067,0.7888,Image Splicing / Tampering
+Tp_D_CRN_M_N_art00067_ani00095_11803.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2123,0.9462,Image Splicing / Tampering
+Tp_D_CRN_M_N_art00067_ani00096_11802.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_M_N_art00067_nat00013_11804.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_M_N_art00067_nat00059_11805.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_M_N_art00067_nat00095_11807.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_CRN_M_N_art00067_nat10122_11806.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_CRN_M_N_art10112_cha00086_11672.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1912,0.9813,Image Splicing / Tampering
+Tp_D_CRN_M_N_art10115_cha00086_11526.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.185,0.9916,Image Splicing / Tampering
+Tp_D_CRN_M_N_cha00050_cha00026_11787.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9997,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat00041_nat00061_11438.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9994,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat00083_ani00001_10097.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat00083_ani10101_10096.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat00085_nat00073_10591.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1819,0.9968,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat00086_nat00085_10068.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat10116_cha00026_11674.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1813,0.9978,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat10131_nat00059_11908.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1827,0.9955,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat10131_nat00095_11907.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9997,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat10131_nat10124_11906.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9994,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat10149_nat00013_12004.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat10154_nat10138_12076.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1916,0.9807,Image Splicing / Tampering
+Tp_D_CRN_M_N_nat10154_nat10140_12075.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1822,0.9963,Image Splicing / Tampering
+Tp_D_CRN_M_N_pla00010_pla00020_10001.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_M_N_pla00046_pla00025_10994.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_M_N_txt00063_txt00017_10835.jpg.png,Tampered: splicing (Tp_D),1,Inconclusive,0.4269,0.5885,Image Splicing / Tampering
+Tp_D_CRN_M_O_ani00030_ani00079_10003.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1803,0.9995,Image Splicing / Tampering
+Tp_D_CRN_M_O_ani00071_ani00013_10002.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_S_B_art20030_art20032_02494.tif.png,Tampered: splicing (Tp_D),1,Inconclusive,0.4995,0.4675,
+Tp_D_CRN_S_B_ind00029_art00030_20103.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_S_B_nat00030_arc00029_20104.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_S_B_pla00071_pla00070_11214.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_S_B_sec00050_sec00055_11246.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1909,0.9819,Image Splicing / Tampering
+Tp_D_CRN_S_N_ani00050_ani00019_11856.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1809,0.9985,Image Splicing / Tampering
+Tp_D_CRN_S_N_ani10116_sec00098_11616.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1898,0.9837,Image Splicing / Tampering
+Tp_D_CRN_S_N_ani10120_ani00100_11618.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1958,0.9736,Image Splicing / Tampering
+Tp_D_CRN_S_N_ani10120_sec00098_11614.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2622,0.863,Image Splicing / Tampering
+Tp_D_CRN_S_N_ani10182_ani10206_12423.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1827,0.9955,Image Splicing / Tampering
+Tp_D_CRN_S_N_ani10191_ani10190_12437.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1811,0.9982,Image Splicing / Tampering
+Tp_D_CRN_S_N_art00011_art00092_11840.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_S_N_art00067_art00092_11808.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_S_N_art00081_ani00098_00491.tif.png,Tampered: splicing (Tp_D),1,Inconclusive,0.5032,0.46130000000000004,
+Tp_D_CRN_S_N_art10111_art10112_11563.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1951,0.9748,Image Splicing / Tampering
+Tp_D_CRN_S_N_cha00029_art00013_00501.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_S_N_cha00053_art00014_11817.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_S_N_cha00067_art00014_11821.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_CRN_S_N_cha10117_nat10123_12168.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1911,0.9815,Image Splicing / Tampering
+Tp_D_NNN_M_N_txt00040_txt00042_10007.tif.png,Tampered: splicing (Tp_D),1,Authentic,0.7658,0.023599999999999954,
+Tp_D_NNN_M_N_txt00065_txt00066_10008.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1819,0.9969,Image Splicing / Tampering
+Tp_D_NNN_M_O_arc00041_nat00097_00261.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_M_O_sec20056_sec20042_01646.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9997,Image Splicing / Tampering
+Tp_D_NNN_S_B_arc00023_cha00023_20092.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_S_B_arc20098_arc20030_02198.tif.png,Tampered: splicing (Tp_D),1,Inconclusive,0.4792,0.5013000000000001,Image Splicing / Tampering
+Tp_D_NNN_S_B_art00032_nat00003_00510.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1972,0.9714,Image Splicing / Tampering
+Tp_D_NNN_S_B_art20029_art20034_02336.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2909,0.8152,Image Splicing / Tampering
+Tp_D_NNN_S_B_cha00029_pla00030_20105.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_S_B_ind00070_cha00089_00471.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_S_B_ind00079_ind00080_00477.tif.png,Tampered: splicing (Tp_D),1,Fake,0.3003,0.7995,Image Splicing / Tampering
+Tp_D_NNN_S_B_sec00011_cha00051_00371.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_S_B_sec00091_cha00085_00111.tif.png,Tampered: splicing (Tp_D),1,Inconclusive,0.617,0.27170000000000005,
+Tp_D_NNN_S_B_sec10001_arc00020_20006.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.359,0.7017,Image Splicing / Tampering
+Tp_D_NNN_S_N_ani10191_ani10200_12436.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_NNN_S_N_ani10193_ani10195_12442.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2094,0.951,Image Splicing / Tampering
+Tp_D_NNN_S_N_ani10200_ani10199_12409.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1859,0.9901,Image Splicing / Tampering
+Tp_D_NNN_S_N_arc00017_ani00058_00237.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_S_N_art10111_ani00100_11620.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1925,0.9791,Image Splicing / Tampering
+Tp_D_NNN_S_N_cha00061_cha00043_11021.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_NNN_S_N_cha10134_pla00049_12203.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1846,0.9924,Image Splicing / Tampering
+Tp_D_NNN_S_N_ind00019_ind00020_00435.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_S_N_ind00067_ind00066_00469.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1835,0.9942,Image Splicing / Tampering
+Tp_D_NNN_S_N_ind00070_ind00074_10930.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.181,0.9984,Image Splicing / Tampering
+Tp_D_NNN_S_N_ind00097_ind00098_10661.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9996,Image Splicing / Tampering
+Tp_D_NNN_S_N_nat00010_cha00063_00630.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_S_N_nat00041_art00020_11441.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_S_N_nat00041_nat00061_11433.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9994,Image Splicing / Tampering
+Tp_D_NNN_S_N_nat10163_sec00097_12090.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1812,0.998,Image Splicing / Tampering
+Tp_D_NNN_S_N_nat20016_nat20015_01520.tif.png,Tampered: splicing (Tp_D),1,Fake,0.245,0.8917,Image Splicing / Tampering
+Tp_D_NNN_S_N_nat20082_nat20090_01586.tif.png,Tampered: splicing (Tp_D),1,Inconclusive,0.5255,0.4242,
+Tp_D_NNN_S_N_pla00044_pla00022_10973.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_S_N_pla00088_ani00100_00610.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_S_N_sec00011_cha00050_00370.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_NNN_S_N_sec00023_sec00022_10805.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_NNN_S_N_sec00027_sec00026_10771.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_NNN_S_N_sec00054_sec00055_00075.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1903,0.9829,Image Splicing / Tampering
+Tp_D_NNN_S_N_sec00054_sec00055_11341.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NNN_S_N_sec00097_ani00079_00710.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_NNN_S_N_txt00085_txt00086_10821.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2947,0.8089,Image Splicing / Tampering
+Tp_D_NNN_S_N_txt00086_txt00085_10820.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1888,0.9854,Image Splicing / Tampering
+Tp_D_NNN_S_O_sec20092_sec20085_01682.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRD_L_B_arc00028_ani00001_00248.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9994,Image Splicing / Tampering
+Tp_D_NRD_M_B_arc20063_arc20001_02483.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRD_M_N_arc00010_nat00062_11177.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1974,0.971,Image Splicing / Tampering
+Tp_D_NRD_M_O_arc20060_arc20059_01700.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2167,0.9388,Image Splicing / Tampering
+Tp_D_NRD_S_B_ani20039_nat20042_02443.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2104,0.9494,Image Splicing / Tampering
+Tp_D_NRD_S_B_arc20047_nat20042_02476.tif.png,Tampered: splicing (Tp_D),1,Inconclusive,0.6535,0.2108,
+Tp_D_NRD_S_B_cha00089_ani00013_00409.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1809,0.9985,Image Splicing / Tampering
+Tp_D_NRD_S_B_sec00016_cha00055_00037.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRD_S_N_ani00026_cha00047_00146.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRD_S_N_art00031_ani00058_00509.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRD_S_N_art00070_art00092_11822.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRD_S_N_art10014_art10011_20095.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2377,0.9039,Image Splicing / Tampering
+Tp_D_NRD_S_N_cha00097_ani00077_00417.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRD_S_N_sec00011_sec00016_00031.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9993,Image Splicing / Tampering
+Tp_D_NRD_S_N_sec00060_cha00028_00081.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_L_N_cha00097_cha00085_10173.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_NRN_L_N_nat00062_nat00059_11108.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9996,Image Splicing / Tampering
+Tp_D_NRN_M_B_arc00076_arc00069_11190.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.201,0.965,Image Splicing / Tampering
+Tp_D_NRN_M_B_arc00076_nat00086_11193.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1993,0.9678,Image Splicing / Tampering
+Tp_D_NRN_M_B_arc00094_nat00097_11203.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1863,0.9895,Image Splicing / Tampering
+Tp_D_NRN_M_B_art10114_pla00050_11598.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1832,0.9947,Image Splicing / Tampering
+Tp_D_NRN_M_B_cha00097_art00021_11420.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1806,0.999,Image Splicing / Tampering
+Tp_D_NRN_M_B_nat00041_arc00065_11444.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_B_nat00041_art00096_11443.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9993,Image Splicing / Tampering
+Tp_D_NRN_M_B_nat00044_art00021_11431.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_B_nat10154_nat10159_12077.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1978,0.9703,Image Splicing / Tampering
+Tp_D_NRN_M_B_nat10155_nat10164_12115.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2107,0.9488,Image Splicing / Tampering
+Tp_D_NRN_M_B_sec00085_art00025_11457.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_NRN_M_B_sec00085_cha00072_11458.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1862,0.9896,Image Splicing / Tampering
+Tp_D_NRN_M_N_ani00045_ani00043_11140.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1946,0.9757,Image Splicing / Tampering
+Tp_D_NRN_M_N_ani00046_ani00059_11143.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9993,Image Splicing / Tampering
+Tp_D_NRN_M_N_ani00046_ani00096_11136.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9997,Image Splicing / Tampering
+Tp_D_NRN_M_N_ani00057_ani00019_11861.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.3031,0.7948999999999999,Image Splicing / Tampering
+Tp_D_NRN_M_N_arc00010_nat00062_11176.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1805,0.9992,Image Splicing / Tampering
+Tp_D_NRN_M_N_arc00023_nat00099_10061.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_N_art00011_art00010_11831.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_NRN_M_N_art10105_cha00062_11601.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1807,0.9988,Image Splicing / Tampering
+Tp_D_NRN_M_N_art10105_cha10110_11594.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1811,0.9981,Image Splicing / Tampering
+Tp_D_NRN_M_N_art10112_sec00098_11671.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2063,0.9561,Image Splicing / Tampering
+Tp_D_NRN_M_N_art10115_cha00063_11528.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_NRN_M_N_art10115_cha00067_11527.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1816,0.9974,Image Splicing / Tampering
+Tp_D_NRN_M_N_art10115_cha10110_11536.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9996,Image Splicing / Tampering
+Tp_D_NRN_M_N_cha00024_cha00085_10322.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_N_cha00024_nat00099_10323.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_NRN_M_N_cha00024_txt00098_10324.tif.png,Tampered: splicing (Tp_D),1,Fake,0.181,0.9984,Image Splicing / Tampering
+Tp_D_NRN_M_N_cha00050_cha00028_11786.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9994,Image Splicing / Tampering
+Tp_D_NRN_M_N_cha00050_cha00063_10301.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_N_cha00057_ani00005_10117.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9996,Image Splicing / Tampering
+Tp_D_NRN_M_N_cha10122_nat10124_12156.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1987,0.9689,Image Splicing / Tampering
+Tp_D_NRN_M_N_cha10122_nat10139_12158.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1807,0.9989,Image Splicing / Tampering
+Tp_D_NRN_M_N_cha10122_nat10144_12155.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1813,0.9979,Image Splicing / Tampering
+Tp_D_NRN_M_N_cha10173_cha00070_12276.jpg.png,Tampered: splicing (Tp_D),1,Inconclusive,0.6566,0.2057,
+Tp_D_NRN_M_N_cha10173_cha10174_12275.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.3612,0.698,Image Splicing / Tampering
+Tp_D_NRN_M_N_ind00014_ind00055_10910.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_N_ind00040_cha00036_11778.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9994,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat00044_art00025_11432.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat00083_ani00037_10055.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9997,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat00086_ani00031_10146.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat00099_art00096_11447.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat00099_nat00023_10348.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10110_cha00031_11367.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1807,0.9988,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10110_cha00052_11366.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1811,0.9982,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10110_cha00062_11383.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1814,0.9977,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10110_cha00070_11373.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1817,0.9971,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10110_cha00086_11370.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1852,0.9913,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10114_cha00052_11365.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10114_cha00070_11481.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10116_cha00027_11675.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1901,0.9831,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10116_cha00028_11676.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1806,0.999,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10116_cha00029_11673.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1807,0.9989,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10116_cha00031_11368.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1817,0.9972,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10116_cha00050_11677.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1811,0.9982,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10116_cha00052_11369.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1805,0.9991,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10116_cha00067_11374.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9996,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10116_cha00070_11372.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9994,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10116_cha00071_11730.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1803,0.9995,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10126_cha00063_11652.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1852,0.9913,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10126_cha10110_11535.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1849,0.9918,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10131_nat10132_11904.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9993,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10131_nat10132_11905.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10133_nat00013_11910.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1816,0.9974,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10134_nat00095_11912.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1838,0.9936,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10134_nat10124_11913.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1831,0.9948,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10138_nat00095_11940.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1833,0.9945,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10149_nat00060_12003.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1823,0.9962,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10150_nat00013_12031.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1907,0.9821,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10150_nat00060_12032.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1924,0.9794,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10150_nat00095_12034.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.181,0.9984,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10150_nat10124_12033.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1822,0.9964,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10150_nat10125_12036.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9996,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10150_nat10147_12029.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1916,0.9807,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10150_nat10156_12030.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1832,0.9946,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10154_nat10160_12074.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2131,0.9449,Image Splicing / Tampering
+Tp_D_NRN_M_N_nat10155_nat10123_12116.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1858,0.9903,Image Splicing / Tampering
+Tp_D_NRN_M_N_pla10115_cha00085_10124.tif.png,Tampered: splicing (Tp_D),1,Fake,0.212,0.9467,Image Splicing / Tampering
+Tp_D_NRN_M_N_pla10115_pla10114_10395.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2726,0.8457,Image Splicing / Tampering
+Tp_D_NRN_M_N_pla10115_txt00065_10125.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2578,0.8704000000000001,Image Splicing / Tampering
+Tp_D_NRN_M_N_pla10115_txt00068_10126.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2488,0.8853,Image Splicing / Tampering
+Tp_D_NRN_M_N_pla10115_txt00068_10127.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2669,0.8552,Image Splicing / Tampering
+Tp_D_NRN_M_N_sec00016_cha00070_11398.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_N_sec00069_art00028_11278.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1803,0.9995,Image Splicing / Tampering
+Tp_D_NRN_M_N_sec00076_pla00050_10389.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_N_sec00087_cha00070_11469.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9993,Image Splicing / Tampering
+Tp_D_NRN_M_N_sec00087_nat00062_11410.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1811,0.9981,Image Splicing / Tampering
+Tp_D_NRN_M_N_sec00090_sec00098_10336.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_N_sec10101_art00098_10346.tif.png,Tampered: splicing (Tp_D),1,Fake,0.3814,0.6643,Image Splicing / Tampering
+Tp_D_NRN_M_N_txt00065_sec00077_10391.tif.png,Tampered: splicing (Tp_D),1,Fake,0.3171,0.7715,Image Splicing / Tampering
+Tp_D_NRN_M_O_ani10105_ani10104_10022.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2387,0.9022,Image Splicing / Tampering
+Tp_D_NRN_M_O_arc00023_arc00008_10010.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_M_O_arc00082_arc00069_10012.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9996,Image Splicing / Tampering
+Tp_D_NRN_M_O_arc00082_art00096_11519.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_NRN_M_O_sec10101_sec10107_10024.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9994,Image Splicing / Tampering
+Tp_D_NRN_S_B_ani00066_ani00013_00186.tif.png,Tampered: splicing (Tp_D),1,Inconclusive,0.4062,0.623,Image Splicing / Tampering
+Tp_D_NRN_S_B_ani10209_ani10210_12372.jpg.png,Tampered: splicing (Tp_D),1,Authentic,0.7579,0.036900000000000044,
+Tp_D_NRN_S_B_arc00076_ani00077_00296.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2093,0.9512,Image Splicing / Tampering
+Tp_D_NRN_S_B_arc00080_ani00005_00300.tif.png,Tampered: splicing (Tp_D),1,Inconclusive,0.5179,0.43689999999999996,
+Tp_D_NRN_S_B_arc00094_ani00100_00314.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_NRN_S_B_art00030_cha00027_00508.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_B_art00044_ind00098_00490.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1886,0.9857,Image Splicing / Tampering
+Tp_D_NRN_S_B_art00059_cha00063_01401.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_B_art00078_art00068_01393.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9997,Image Splicing / Tampering
+Tp_D_NRN_S_B_art00096_ani00070_01385.tif.png,Tampered: splicing (Tp_D),1,Inconclusive,0.4022,0.6295999999999999,Image Splicing / Tampering
+Tp_D_NRN_S_B_ind00007_cha00040_00425.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2053,0.9578,Image Splicing / Tampering
+Tp_D_NRN_S_B_ind00019_ind00020_20016.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_B_ind00063_ani00069_00466.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_B_ind10001_ind10002_20009.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1911,0.9815,Image Splicing / Tampering
+Tp_D_NRN_S_B_nat00083_sec00063_00997.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1852,0.9914,Image Splicing / Tampering
+Tp_D_NRN_S_B_pla00086_ani00058_00608.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_B_sec00081_cha00065_00101.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_NRN_S_B_sec00083_ani00070_00722.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_B_sec00085_ani00077_00721.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani00024_ani00021_00144.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9997,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani00033_ani00032_10233.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani00033_ani00034_10236.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani00045_ani00077_00165.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani00050_ani00051_11132.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani00050_ani00055_10225.tif.png,Tampered: splicing (Tp_D),1,Fake,0.1804,0.9994,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani00060_ani00059_11128.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1918,0.9804,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani10119_ani10118_11612.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.3029,0.7952,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani10120_ani10119_11610.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2534,0.8776,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani10160_ani10200_12483.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2189,0.9352,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani10172_ani10166_12450.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2003,0.9661,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani10193_ani10194_12443.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2185,0.9358,Image Splicing / Tampering
+Tp_D_NRN_S_N_ani10209_ani10214_12381.jpg.png,Tampered: splicing (Tp_D),1,Authentic,0.753,0.04500000000000004,
+Tp_D_NRN_S_N_ani10215_ani00081_12382.jpg.png,Tampered: splicing (Tp_D),1,Inconclusive,0.5711,0.34819999999999995,
+Tp_D_NRN_S_N_arc00013_ani00005_00233.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_arc00013_arc00020_11702.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1802,0.9996,Image Splicing / Tampering
+Tp_D_NRN_S_N_arc00013_sec00045_11700.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_arc00021_ani00058_00241.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_arc00023_ani00031_00243.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_arc00082_art00025_11518.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9998,Image Splicing / Tampering
+Tp_D_NRN_S_N_art00001_ani00068_00494.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_art00021_ani00005_00503.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_art00021_art00092_11725.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1803,0.9995,Image Splicing / Tampering
+Tp_D_NRN_S_N_art00030_art00055_10471.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_art00051_ani00098_01406.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_art00051_art00010_01025.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_art00096_art00092_11726.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.212,0.9466,Image Splicing / Tampering
+Tp_D_NRN_S_N_art00096_cha00089_00492.tif.png,Tampered: splicing (Tp_D),1,Fake,0.2696,0.8507,Image Splicing / Tampering
+Tp_D_NRN_S_N_art10105_ani10123_11599.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1924,0.9793,Image Splicing / Tampering
+Tp_D_NRN_S_N_art10105_pla00049_11595.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1889,0.9852,Image Splicing / Tampering
+Tp_D_NRN_S_N_art10112_ani10123_11684.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2055,0.9575,Image Splicing / Tampering
+Tp_D_NRN_S_N_art10112_art00092_11781.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.2431,0.8949,Image Splicing / Tampering
+Tp_D_NRN_S_N_cha00024_ani00005_00344.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_cha00029_ani10123_11687.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_cha00029_pla00033_10991.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_cha00030_ani00079_00350.tif.png,Tampered: splicing (Tp_D),1,Fake,0.18,1.0,Image Splicing / Tampering
+Tp_D_NRN_S_N_cha00030_pla00033_10990.jpg.png,Tampered: splicing (Tp_D),1,Fake,0.1801,0.9999,Image Splicing / Tampering
+Tp_D_NRN_S_N_cha00032_ani00013_00352.tif.png,Tampered: splicing (Tp_D),1,Fake,0.245,0.8917,Image Splicing / Tampering

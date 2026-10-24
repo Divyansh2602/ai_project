@@ -16,7 +16,6 @@ opencv-python
 numpy
 scipy
 exifread
-librosa
 torch
 transformers
 

@@ -9,23 +9,17 @@ from .llm_summary import generate_summary
 from models.database import SessionLocal
 from models.evidence import Evidence, AgentResult, FinalVerdict, AuditLog
 
-from agents import metadata_agent, image_agent, audio_agent, security_agent
+from agents import metadata_agent, image_agent, security_agent
 from security import signing, blockchain
 
 
 def _run_agents(file_type: str, file_path: str) -> list[dict]:
-    results = []
-    if file_type == "image":
-        results.append(metadata_agent.run(file_path))
-        results.append(image_agent.run(file_path))
-    elif file_type == "audio":
-        results.append(metadata_agent.run(file_path))
-        results.append(audio_agent.run(file_path))
-    else:  # document
-        results.append(metadata_agent.run(file_path))
-    # Provenance checks (C2PA + watermark) run on every file type.
-    results.append(security_agent.run(file_path))
-    return results
+    """TrustSphere analyses images only: metadata, image forensics and provenance (C2PA + watermark)."""
+    return [
+        metadata_agent.run(file_path),
+        image_agent.run(file_path),
+        security_agent.run(file_path),
+    ]
 
 
 @celery_app.task(bind=True, name="core.tasks.analyze_evidence")

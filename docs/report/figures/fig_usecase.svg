@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="706" viewBox="0 0 1180 706" font-family="Arial, Helvetica, sans-serif">
+<rect width="1180" height="706" fill="white"/>
+<text x="590.0" y="38" text-anchor="middle" font-size="22" font-weight="bold" fill="#0f1b2d">Use-case diagram</text>
+<rect x="325" y="64" width="530" height="622" rx="14" fill="#fbfcfe" stroke="#0b3b6f" stroke-width="2"/>
+<text x="590" y="92" text-anchor="middle" font-size="16" font-weight="bold" fill="#0b3b6f">TrustSphere AI</text>
+<line x1="150" y1="366.0" x2="375" y2="140" stroke="#9aa7b8" stroke-width="1.6"/>
+<line x1="150" y1="366.0" x2="375" y2="218" stroke="#9aa7b8" stroke-width="1.6"/>
+<line x1="150" y1="366.0" x2="375" y2="296" stroke="#9aa7b8" stroke-width="1.6"/>
+<line x1="1030" y1="366.0" x2="805" y2="296" stroke="#9aa7b8" stroke-width="1.6"/>
+<line x1="150" y1="366.0" x2="375" y2="374" stroke="#9aa7b8" stroke-width="1.6"/>
+<line x1="150" y1="366.0" x2="375" y2="452" stroke="#9aa7b8" stroke-width="1.6"/>
+<line x1="1030" y1="366.0" x2="805" y2="452" stroke="#9aa7b8" stroke-width="1.6"/>
+<line x1="150" y1="366.0" x2="375" y2="530" stroke="#9aa7b8" stroke-width="1.6"/>
+<line x1="1030" y1="366.0" x2="805" y2="530" stroke="#9aa7b8" stroke-width="1.6"/>
+<line x1="150" y1="366.0" x2="375" y2="608" stroke="#9aa7b8" stroke-width="1.6"/>
+<ellipse cx="590" cy="140" rx="215" ry="32" fill="#e2f0ff" stroke="#0b3b6f" stroke-width="1.8"/>
+<text x="590" y="145" text-anchor="middle" font-size="15" fill="#0f1b2d">Upload an image</text>
+<ellipse cx="590" cy="218" rx="215" ry="32" fill="#e2f0ff" stroke="#0b3b6f" stroke-width="1.8"/>
+<text x="590" y="223" text-anchor="middle" font-size="15" fill="#0f1b2d">Review an image from the Chrome extension</text>
+<ellipse cx="590" cy="296" rx="215" ry="32" fill="#e2f0ff" stroke="#0b3b6f" stroke-width="1.8"/>
+<text x="590" y="301" text-anchor="middle" font-size="15" fill="#0f1b2d">View verdict and score</text>
+<ellipse cx="590" cy="374" rx="215" ry="32" fill="#e2f0ff" stroke="#0b3b6f" stroke-width="1.8"/>
+<text x="590" y="379" text-anchor="middle" font-size="15" fill="#0f1b2d">Inspect heatmaps (ELA, Grad-CAM)</text>
+<ellipse cx="590" cy="452" rx="215" ry="32" fill="#e2f0ff" stroke="#0b3b6f" stroke-width="1.8"/>
+<text x="590" y="457" text-anchor="middle" font-size="15" fill="#0f1b2d">Download evidence PDF</text>
+<ellipse cx="590" cy="530" rx="215" ry="32" fill="#e2f0ff" stroke="#0b3b6f" stroke-width="1.8"/>
+<text x="590" y="535" text-anchor="middle" font-size="15" fill="#0f1b2d">Verify signature and file integrity</text>
+<ellipse cx="590" cy="608" rx="215" ry="32" fill="#e2f0ff" stroke="#0b3b6f" stroke-width="1.8"/>
+<text x="590" y="613" text-anchor="middle" font-size="15" fill="#0f1b2d">Browse analysis history</text>
+<circle cx="110" cy="328.0" r="15" fill="white" stroke="#b7791f" stroke-width="2.4"/>
+<line x1="110" y1="343.0" x2="110" y2="388.0" stroke="#b7791f" stroke-width="2.4"/>
+<line x1="86" y1="358.0" x2="134" y2="358.0" stroke="#b7791f" stroke-width="2.4"/>
+<line x1="110" y1="388.0" x2="90" y2="424.0" stroke="#b7791f" stroke-width="2.4"/>
+<line x1="110" y1="388.0" x2="130" y2="424.0" stroke="#b7791f" stroke-width="2.4"/>
+<text x="110" y="450.0" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f1b2d">Analyst /</text>
+<text x="110" y="469.0" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f1b2d">investigator</text>
+<circle cx="1070" cy="328.0" r="15" fill="white" stroke="#b7791f" stroke-width="2.4"/>
+<line x1="1070" y1="343.0" x2="1070" y2="388.0" stroke="#b7791f" stroke-width="2.4"/>
+<line x1="1046" y1="358.0" x2="1094" y2="358.0" stroke="#b7791f" stroke-width="2.4"/>
+<line x1="1070" y1="388.0" x2="1050" y2="424.0" stroke="#b7791f" stroke-width="2.4"/>
+<line x1="1070" y1="388.0" x2="1090" y2="424.0" stroke="#b7791f" stroke-width="2.4"/>
+<text x="1070" y="450.0" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f1b2d">Verifier /</text>
+<text x="1070" y="469.0" text-anchor="middle" font-size="15" font-weight="bold" fill="#0f1b2d">auditor</text>
+</svg>
