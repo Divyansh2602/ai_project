@@ -89,6 +89,8 @@ python -m uvicorn main:app --port 8000
 
 Open **http://127.0.0.1:8000/app/**. API docs: **http://127.0.0.1:8000/docs**.
 
+Demonstration script, cell-by-cell explanation of every result, all approaches and which was best: [docs/DEMO_GUIDE.md](docs/DEMO_GUIDE.md).
+
 ### Results notebook (VS Code / Jupyter)
 
 `TrustSphere_Results.ipynb` shows every result for a demonstration: accuracy table, confusion matrices, ROC and precision-recall curves,
