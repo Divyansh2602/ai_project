@@ -46,6 +46,27 @@ PH = M["pipeline_holdout"]
 LZ = M.get("localizer")
 HO = json.loads((EV / "training" / "holdout_casia_v2_group.json").read_text(encoding="utf-8"))["metrics"]
 
+import report_text as RT   # plain wording, team and guide details
+
+N = dict(
+    cr=f"{CR['mean_fold_accuracy'] * 100:.2f}", cg=f"{CG['mean_fold_accuracy'] * 100:.2f}", n=PH["n"], ho=pc(HO["accuracy"]),
+    cov=pc(PH["coverage_decided"], 1), cov0=pc(PH["coverage_decided"], 0), acc_dec=pc(PH["accuracy_on_decided"], 1), strict=pc(PH["accuracy_strict"], 1),
+    forced=pc(PH["forced_two_way"]["accuracy"]), forced_auc=f"{PH['forced_two_way']['roc_auc']:.4f}",
+    fp=pc(PH["false_positive_rate"], 1), fn=pc(PH["false_negative_rate"], 1),
+    ce=f"{CE['mean_fold_accuracy'] * 100:.2f}" if CE else "", cp=pc(CP["pooled"]["accuracy"]) if CP else "", cpg=pc(CPG["pooled"]["accuracy"]) if CPG else "",
+    loc_a=f"{LZ['casia_validation']['pixel_f1_pooled']:.2f}", loc_c=f"{LZ['columbia']['pixel_f1_pooled']:.2f}", loc_best=f"{LZ['columbia']['pixel_f1_best_threshold']:.2f}")
+_USED = set()
+
+
+def plain(text):
+    """Replace a generated paragraph by its plain wording from report_text.py (matched on the first characters)."""
+    key = text.replace("**", "").replace("__", "")
+    for start, new in RT.OVERRIDES:
+        if key.startswith(start):
+            _USED.add(start)
+            return new(N) if callable(new) else new
+    return text
+
 
 # ── low-level docx helpers ──────────────────────────────────────────────────────────────────
 def has_sectpr(p):
@@ -163,13 +184,13 @@ class Doc:
         self.para(text, 12, True, align="left", before=6, after=3, keep_next=True)
 
     def p(self, text):
-        self.para(text, 12)
+        self.para(plain(text), 12)
 
     def bullets(self, items, numbered=False):
         for k, t in enumerate(items, 1):
             p = self.para("", 12, align="justify", after=3, indent=0.9)
             p.paragraph_format.first_line_indent = Cm(-0.6)
-            self.runs(p, (f"{k}.  " if numbered else "•  ") + t)
+            self.runs(p, (f"{k}.  " if numbered else "•  ") + plain(t))
 
     def caption(self, text, before=3, after=10):
         self.para(text, 10, align="center", before=before, after=after, line=1.0)
@@ -299,29 +320,7 @@ def stack(paths, out_path, gap=14):
 
 # ── content ───────────────────────────────────────────────────────────────────────────────────
 def abstract_text():
-    col = ""
-    if CE and CP:
-        col = (f" Columbia is harder: its photographs are uncompressed, and a whole-image detector reaches only {CE['mean_fold_accuracy'] * 100:.2f}% ± {CE['std_fold_accuracy'] * 100:.2f}%. "
-               f"A patch-based variant on noise-residual input reaches {pc(CP['pooled']['accuracy'])} with a random split and "
-               + (f"{pc(CPG['pooled']['accuracy'])} (AUC {CPG['pooled']['roc_auc']:.3f}) when every scene is kept in one fold. " if CPG else "a lower figure when scenes are kept apart. "))
-    elif CE:
-        col = f" On the uncompressed Columbia photographs a whole-image detector is weaker ({CE['mean_fold_accuracy'] * 100:.2f}% ± {CE['std_fold_accuracy'] * 100:.2f}%). "
-    loc = f"A pixel-level localiser trained on CASIA does not transfer to Columbia (pooled pixel F1 {LZ['columbia']['pixel_f1_pooled']:.2f}). " if LZ else ""
-    return [
-        "Digital photographs are used as evidence in journalism, insurance, banking and legal proceedings, yet editing tools make it easy to splice content from one image into another. "
-        "Deciding whether an image has been manipulated, and being able to prove later that the decision was not altered, are two separate problems. This project builds TrustSphere AI, "
-        "an image-only forensic system that addresses both. A multi-agent pipeline analyses each uploaded image with three agents: a metadata agent (EXIF fields, editing software, timestamps), "
-        "an image forensics agent, and a provenance agent (C2PA content credentials and invisible AI-generator watermarks). A decision engine fuses the agent scores into an authenticity score "
-        "and a verdict of Authentic, Fake or Inconclusive. Every analysis is hashed with SHA-256, signed with Ed25519, recorded with a chain of custody, optionally anchored on the Polygon Amoy "
-        "blockchain, and exported as an evidence PDF. A web application serves the whole flow: upload, a report with heatmaps, history and live verification.",
-        "The image forensics agent is built around a detector trained for this project: an EfficientNet-B0 that reads error-level-analysis maps computed at three JPEG qualities and is applied "
-        "to native-resolution 224 × 224 crops. It was trained and evaluated on CASIA v2.0 (1,536 authentic and 1,283 tampered images) and Columbia (183 authentic and 180 spliced images), "
-        f"the datasets used by the base papers of this work. Under 5-fold cross-validation on CASIA v2.0 the detector reaches {CR['mean_fold_accuracy'] * 100:.2f}% ± {CR['std_fold_accuracy'] * 100:.2f} accuracy "
-        f"(ROC AUC {CR['pooled']['roc_auc']:.4f}) with a random split and {CG['mean_fold_accuracy'] * 100:.2f}% ± {CG['std_fold_accuracy'] * 100:.2f} (AUC {CG['pooled']['roc_auc']:.4f}) when every tampered image is "
-        f"kept in the same fold as its source image. On a held-out 20% ({PH['n']} images) never seen in training it reaches {pc(HO['accuracy'])} (AUC {HO['roc_auc']:.4f}); the complete pipeline decides "
-        f"{pc(PH['coverage_decided'], 1)} of those images with {pc(PH['accuracy_on_decided'], 1)} accuracy and sends the rest to human review." + col + loc +
-        "The results are compared with the base papers, and the localisation result, which is below the published one, is reported as a limit.",
-    ]
+    return RT.abstract(N)
 
 
 def lit_review(D):
@@ -432,7 +431,7 @@ def build_body(D, doc_root):
     D.table("Project plan", ["Phase", "Activity", "Period"],
             [["1", "Project set-up: FastAPI backend, Next.js scaffold, repository", "1 July 2026"],
              ["2 to 5", "Backend core, forensic agents, decision engine, security layer (signing, C2PA, blockchain anchor)", "7 July 2026"],
-             ["6", "Explainability and the evidence PDF; optional local-LLM summary (disabled in this report)", "7 to 10 July 2026"],
+             ["6", "Explainability and the evidence PDF, plus an optional local LLM summary that is off in this report", "7 to 10 July 2026"],
              ["7", "Scope reduced (video removed 15 July); later reduced to images only", "15 July and 24 October 2026"],
              ["8", "Web application: analysis, report, history and how-it-works pages", "October 2026"],
              ["9", "Dataset preparation, detector training, cross-validation, hold-out evaluation, localisation experiment", "October 2026"],
@@ -1005,8 +1004,49 @@ def build(template, out, pages=None):
                         r._r.getparent().remove(r._r)
                 else:
                     pp.add_run(str(num))
+    fill_front_matter(d)
+    unused = [k for k, _ in RT.OVERRIDES if k not in _USED]
+    print('plain text: %d of %d replacements used' % (len(_USED), len(RT.OVERRIDES)), unused)
     d.save(out)
     return D
+
+
+def fill_front_matter(d):
+    """Team, guide, HOD, programme and semester on the cover, declaration, certificate and acknowledgements."""
+    cells = [c for r in d.tables[0].rows for c in r.cells]
+    for c, v in zip(cells, [x for pair in RT.TEAM for x in pair]):
+        set_runs_text(c.paragraphs[0], v, bold=True)
+    g = [r.cells[0] for r in d.tables[1].rows]
+    set_runs_text(g[0].paragraphs[0], RT.GUIDE_COVER, bold=True)
+    set_runs_text(g[1].paragraphs[0], RT.GUIDE_DESIGNATION)
+
+    def para(start):
+        return next(q for q in d.paragraphs if q.text.strip().startswith(start))
+
+    pairs = [("I    hereby    declare", [("I    hereby    declare", "We hereby declare"), ("submitted by me", "submitted by us"),
+                                          ("carried out by me", "carried out by us"), ("Prof. / Dr. << Guide Name >>", "Prof. " + RT.GUIDE + "."), ("declare    that    the    project     entitled", "declare that the project entitled")]),
+             ("I further declare", [("I further declare", "We further declare")]),
+             ("Signature of the Candidate", [("Candidate", "Candidates")]),
+             ("This is to certify", [("<< Student Name (Reg. No) >>", RT.NAMES_REG), ("him / her", "them"), ("Fall Semester 2024-2025", RT.SEMESTER)]),
+             ("<< Head of the Department >>", [("<< Head of the Department >>", RT.HOD_COVER + ", Head of the Department")]),
+             ("<< Programme >>", [("<< Programme >>", "B.Tech")]),
+             ("Name of the Candidate", [("Name of the Candidate", RT.NAMES)])]
+    for start, subs in pairs:
+        q = para(start)
+        for old, new in subs:
+            if not replace_text(q, old, new):
+                print("front matter: not found:", old)
+        for r in q.runs:
+            r.font.highlight_color = None
+    # the longer HOD line pushed the certificate onto a second page: drop a few empty lines between the examiner line and the HOD name
+    ex = para("Examiner(s)")
+    nxt, removed = ex._p.getnext(), 0
+    while nxt is not None and removed < 4 and nxt.tag == qn("w:p") and not "".join(t.text or "" for t in nxt.iter(qn("w:t"))).strip() and not nxt.xpath(".//w:sectPr"):
+        gone, nxt = nxt, nxt.getnext()
+        gone.getparent().remove(gone)
+        removed += 1
+    for start, text in zip(("I am deeply grateful", "My sincere thanks", "I express my profound", "I am immensely thankful", "Thank you all"), RT.ACK):
+        set_runs_text(para(start), text)
 
 
 def export_pdf(docx_path, pdf_path):
