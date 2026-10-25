@@ -466,7 +466,7 @@ def build_body(D, doc_root):
     D.h2("2.5 Project Plan")
     D.p("The plan follows the history of the project repository. Dates are the commit dates of the corresponding work; the training and evaluation work of October 2026 was done in this semester.")
     D.table("Project plan", ["Phase", "Activity", "Period"],
-            [["1", "Project set-up: FastAPI backend, Next.js scaffold, repository", "1 July 2026"],
+            [["1", "Project set-up: FastAPI backend and web front end, repository", "1 July 2026"],
              ["2 to 5", "Backend core, forensic agents, decision engine, security layer (signing, C2PA, blockchain anchor)", "7 July 2026"],
              ["6", "Explainability and the evidence PDF, plus an optional local LLM summary that is off in this report", "7 to 10 July 2026"],
              ["7", "Scope reduced (video removed 15 July); later reduced to images only", "15 July and 24 October 2026"],
@@ -493,7 +493,7 @@ def build_body(D, doc_root):
     D.h3("3.1.2 Non-Functional")
     D.bullets([
         "**Accuracy and honesty:** report cross-validated and held-out figures only, with the protocol stated.",
-        "**Performance:** analyse one image in seconds on a single GPU. Measured on the 588 held-out images the whole pipeline took 0.24 s per image on average (about 142 s in total).",
+        "**Performance:** analyse one image in seconds on a single GPU. Measured on the 588 held-out images the three agents and the decision engine took 0.24 s per image on average (about 142 s in total), excluding upload, signing, PDF creation and first model load.",
         "**Integrity:** any change to a stored file or record must be detectable.",
         "**Portability:** run on one Windows machine with SQLite and no Redis, and also with PostgreSQL and Redis.",
         "**Security:** signing keys, wallet keys and environment files are never committed to the repository.",
@@ -709,7 +709,7 @@ def build_body(D, doc_root):
     D.table("Cost of building and running the system", ["Item", "Cost"],
             [["Software, models and libraries", "Open-source, no licence cost"], ["Datasets", "Public, no cost"], ["Database", "SQLite locally; free-tier PostgreSQL optional"],
              ["Blockchain anchoring", "Polygon Amoy test network, free test tokens"], ["Training compute", "Existing laptop GPU; a cross-validation run takes tens of minutes"],
-             ["Analysis cost per image", "About 0.24 s on the GPU (measured on 588 images)"]], widths=[7.0, 9.5])
+             ["Analysis cost per image", "About 0.24 s on the GPU for the agents and decision engine (measured on 588 images); a full web request takes several seconds"]], widths=[7.0, 9.5])
 
     # ===== CHAPTER 8 =====
     D.chapter(8, "CONCLUSION")

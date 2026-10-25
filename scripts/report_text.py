@@ -35,8 +35,9 @@ def abstract(N):
         "We trained and tested it on a subset of CASIA v2.0 (1,536 authentic and 1,283 tampered images) and on Columbia (183 authentic and 180 spliced images). "
         f"With 5-fold cross-validation on CASIA v2.0 the accuracy is {N['cr']}% with a random split and {N['cg']}% when each tampered image stays in the same fold as its source, "
         f"and on {N['n']} images that were never used in training it reaches {N['ho']} while the full pipeline gives a verdict on {N['cov']} of them with {N['acc_dec']} accuracy and sends the rest to a person. "
-        f"Columbia is harder because its photos are uncompressed, so a whole image detector reaches only {N['ce']}% while a patch based detector on noise residuals reaches {N['cp']} with a random split and {N['cpg']} when every scene stays in one fold. "
-        f"A model that outlines the tampered area and was trained on CASIA does not work well on Columbia (pixel F1 {N['loc_c']}) and we compare all results with the five base papers and state this weakness.",
+        f"Columbia is harder because its photos are uncompressed, so a whole image detector reaches only {N['ce']}% (mean of the folds), while a patch based detector on noise residuals reaches {N['cp']} with a random split and {N['cpg']} when every scene stays in one fold (accuracy pooled over all folds). "
+        f"A model that outlines the tampered area and was trained on CASIA does not work well on Columbia (pixel F1 {N['loc_c']}). "
+        "We compare the results with the base papers, list in Chapter 7 the results that we exceed and state the weaknesses as well, and the full comparison is in the project repository.",
     ]
 
 
@@ -50,7 +51,7 @@ OVERRIDES = [
      "A second question matters just as much, which is whether anyone can prove after an analysis which file was checked and what the verdict was and that the record was not changed. "
      "A detector that only prints a score cannot answer this, so we built the analysis and the evidence record as one system where each run gives a verdict and the evidence behind it, such as scores and heatmaps and reasons, and a record that anyone can check with cryptography."),
     ("Published splicing detectors report accuracies",
-     "Published detectors report accuracies above 90% on CASIA v2.0 and Columbia [1-3] but most are research code that gives a label for one dataset and stops, while an analyst needs an application that takes any image and explains its answer."),
+     "Published detectors report accuracies above 90% on CASIA v2.0 or Columbia [1-3] but most are research code that gives a label for one dataset and stops, while an analyst needs an application that takes any image and explains its answer."),
     ("A wrong automatic verdict can accuse",
      "A wrong automatic verdict can blame an innocent photographer or clear a fake, so the system should be able to say Inconclusive and pass the image to a person."),
     ("Evidence has to survive scrutiny",
@@ -62,7 +63,7 @@ OVERRIDES = [
     ("Included: image upload",
      "**Included:** image upload, a metadata agent, an image forensics agent with a trained detector, a provenance agent, a decision engine, SHA-256 hashing, Ed25519 signing, a chain of custody, optional blockchain anchoring, an evidence PDF, a REST API and a web application."),
     ("Datasets: CASIA v2.0 and Columbia",
-     "**Datasets:** CASIA v2.0 and Columbia, which are the two image datasets used by the base papers [1-5]."),
+     "**Datasets:** CASIA v2.0 and Columbia. CASIA v2.0 is used by all five base papers [1-5] and Columbia by two of them [1, 5]."),
     ("Experiments: image-level detection",
      "**Experiments:** detection accuracy by cross-validation and a test of the full pipeline on held out images and a localisation experiment."),
     ("Not included: video",
@@ -82,8 +83,9 @@ OVERRIDES = [
      "Copy-move forgery was first found by matching blocks [21], SIFT keypoints can also give the transformation of the copied region [22] and Christlein et al. compared fifteen feature sets in one pipeline [23]. "
      "Splicebuster models noise residuals and splits the image into real and spliced parts without any forged training examples [24], and the filters of the rich models by Fridrich and Kodovský were made for steganalysis [25] and we use them as the SRM input for Columbia."),
     ("Deep networks learn such traces from data",
-     "Deep networks learn these traces from data, and Bayar and Stamm add a constrained first layer that suppresses image content and learns features for manipulation detection [26] and Zhou et al. use an RGB stream and a noise stream in a Faster R-CNN [27]. "
-     "Huh et al. train only on real photos and use their EXIF data to learn whether an image is self consistent, meaning that it could come from one imaging pipeline, and then use this to find splices without ever seeing forged examples [28]. "
+     "Deep networks learn these traces from data. Bayar and Stamm put a constraint on the first convolutional layer, so the network ignores what the picture shows and learns the small differences between neighbouring pixels that editing leaves behind [26]. "
+     "Zhou et al. pass the picture and a noise version of it through two branches of a Faster R-CNN [27]. "
+     "Huh et al. need no forged examples at all, since they train only on real photographs to tell whether two patches carry the same EXIF attributes and then mark the patches that disagree with the rest of the image as a splice [28]. "
      "BusterNet separates the source and target regions of copy-move forgery [29] and ManTra-Net learns many manipulation types and treats localisation as finding anomalies [30], while RRU-Net adds residual feedback to a U-Net [31] and PSCC-Net predicts masks step by step at several scales [32]. "
      "MVSS-Net learns from the noise view and from boundary artifacts and is supervised at several scales [33], CAT-Net learns from JPEG DCT coefficients and pixels [34], ObjectFormer uses RGB and high frequency features in a transformer [35] and TruFor adds a learned noise fingerprint and a reliability map [36]. "
      "Most of these papers are judged on how well they locate the tampered pixels but our detector answers the image level question of authentic or tampered, which is the same question that the base papers [1-4] answer."),
@@ -151,7 +153,7 @@ OVERRIDES = [
     ("Accuracy and honesty",
      "**Accuracy:** only cross-validated and held out figures are reported, with the protocol stated."),
     ("Performance: analyse one image",
-     "**Speed:** analyse one image in seconds on one GPU, and on the 588 held out images the whole pipeline took 0.24 s per image on average, which is about 142 s in total."),
+     "**Speed:** analyse one image in seconds on one GPU. On the 588 held out images the three agents and the decision engine took 0.24 s per image on average (about 142 s in total), and this does not include upload, signing, PDF creation or loading the model for the first time, which is why a full request through the web application takes several seconds (Table 5.1)."),
     ("Integrity: any change",
      "**Integrity:** any change to a stored file or record must be detectable."),
     ("Portability: run on one Windows",
@@ -216,7 +218,7 @@ OVERRIDES = [
      "Most images have neither, in which case the agent reports no signal and is left out of the weighted average."),
     ("The engine computes the weighted mean",
      "The engine takes the weighted mean of the agent scores and applies the thresholds, where Authentic is at or above 0.75 and Fake is at or below 0.40 and anything between is Inconclusive, and it also writes a list of reasons. "
-     "When the trained detector flags the image the manipulation type is shown as Image Splicing / Tampering, and the Inconclusive band is deliberate because it sends borderline images to a person."),
+     "When the trained detector flags the image the manipulation type is shown as Image Splicing / Tampering, and an Inconclusive image is left for a person to review."),
     ("The analysed file is hashed with SHA-256",
      "The analysed file is hashed with SHA-256 and a standard form of the record (file hash, verdict, score, agent scores and time) is signed with an Ed25519 key [13] and the fingerprint of the public key is stored with it. "
      "The chain of custody lists the upload, analysis, signing and anchoring events, and if a wallet is set the file hash and verdict are written to a smart contract on Polygon Amoy and can be read back for checking. "
@@ -239,7 +241,8 @@ OVERRIDES = [
      "All metrics come from out-of-fold or held out predictions, so no image is scored by a model that trained on it."),
     ("A scripted test (scripts/e2e_test.py)",
      "A script (scripts/e2e_test.py) drives a running server through its public API with six images, three authentic and three tampered, and all 19 checks passed. "
-     "This includes the tamper check, where changing one byte of a stored evidence file makes the verification endpoint report TAMPERED and restoring the file makes it pass again."),
+     "This includes the tamper check, where changing one byte of a stored evidence file makes the verification endpoint report TAMPERED and restoring the file makes it pass again. "
+     "The times in the detail column are for the whole request, with upload, signing and PDF creation included and the model loading during the first image, so they are longer than the 0.24 s spent in the agents and the decision engine."),
     # 6 Demonstration
     ("The screenshots below come from the running application",
      "The screenshots below come from the running application and the images were taken from the held out part of CASIA v2.0 and analysed with the hold-out detector, so the detector had never seen them."),
@@ -263,10 +266,11 @@ OVERRIDES = [
     ("Authentic images were called Fake in",
      lambda N: f"Authentic images were called Fake in {N['fp']} of cases and tampered images were called Authentic in {N['fn']}, and most of the cost of the Inconclusive band falls on authentic images because the metadata agent gives a PNG with no EXIF about 0.45 which pulls the combined score towards the middle."),
     ("Columbia consists of uncompressed photographs",
-     "Columbia has uncompressed photographs, so error level analysis which depends on JPEG history has little to work with, and 363 images are also few for training a network on whole images. "
-     "We tried three variants and all are listed above, and the whole image variants are much less stable than on CASIA since their folds differ by more than ten points. "
-     "The patch based variant cuts the image into 128 pixel patches and labels them using the ground truth masks and scores an image by the mean of its top 5% patch probabilities and takes the decision threshold from the other folds. "
-     "Columbia photographs share scenes, so the last row repeats the test with every scene kept inside one fold and it is the stricter figure."),
+     lambda N: "Columbia has uncompressed photographs, so error level analysis which depends on JPEG history has little to work with, and 363 images are also few for training a network on whole images. "
+               "We tried three variants and all are listed above, and the whole image variants are much less stable than on CASIA since their folds differ by more than ten points. "
+               "The patch based variant cuts the image into 128 pixel patches and labels them using the ground truth masks and scores an image by the mean of its top 5% patch probabilities and takes the decision threshold from the other folds. "
+               "Columbia photographs share scenes, so the last row repeats the test with every scene kept inside one fold and it is the stricter figure. "
+               f"The accuracy column is the mean of the five folds, while the abstract gives the accuracy pooled over all 363 images, which is {N['cpg']} for the last row and the same as the mean for the other rows."),
     ("The localiser finds the tampered region well",
      lambda N: f"The localiser finds the tampered region well on images like its training data (pooled F1 {N['loc_a']}) but does not carry over to Columbia (pooled F1 {N['loc_c']} and {N['loc_best']} at the best possible threshold), so localisation across datasets is a limit of this work and the verdict does not use it."),
     ("Only the base-paper results that the detector exceeds",
