@@ -80,7 +80,7 @@ Datasets (both from the Hugging Face compilation `ductai199x/image-manipulation-
 
 ### One command (Windows)
 
-Double-click `START_APP.bat`, or:
+Double-click `START_APP.bat` (it uses port 8000, or the next free port if 8000 is taken, creates `backend/.env` in local mode on first run and opens the browser), or:
 
 ```bash
 cd backend
@@ -88,6 +88,14 @@ python -m uvicorn main:app --port 8000
 ```
 
 Open **http://127.0.0.1:8000/app/**. API docs: **http://127.0.0.1:8000/docs**.
+
+### Results notebook (VS Code / Jupyter)
+
+`TrustSphere_Results.ipynb` shows every result for a demonstration: accuracy table, confusion matrices, ROC and precision-recall curves,
+score distributions, per-fold accuracy, the full-pipeline hold-out test, localisation, the comparison with the base papers and a live run of
+the trained detector on held-out images. The outputs are saved inside the file, so it can be shown without running it.
+To run it: open it in VS Code, choose a Python kernel with `numpy pandas matplotlib scikit-learn ipykernel` (the last section also needs
+`torch timm pillow`) and click **Run All**. Rebuild it with `python scripts/make_notebook.py`.
 
 ### Setup
 

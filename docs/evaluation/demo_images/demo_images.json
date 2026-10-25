@@ -1,0 +1,26 @@
+[
+ {
+  "file": "Au_ani_30509.jpg.png",
+  "label": 0
+ },
+ {
+  "file": "Au_ani_30064.jpg.png",
+  "label": 0
+ },
+ {
+  "file": "Au_ani_30704.jpg.png",
+  "label": 0
+ },
+ {
+  "file": "Tp_D_CRN_M_N_ani10105_ani00100_10086.tif.png",
+  "label": 1
+ },
+ {
+  "file": "Tp_D_CRN_M_N_art10112_cha00086_11672.jpg.png",
+  "label": 1
+ },
+ {
+  "file": "Tp_D_NRN_S_N_art00051_art00010_01025.tif.png",
+  "label": 1
+ }
+]
