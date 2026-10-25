@@ -40,3 +40,12 @@ from the Hugging Face compilation, so the comparison with papers that use the fu
 Titles, authors, venues, volumes and pages of references [6] to [50] were checked against publisher, DBLP, CVF or university repository records.
 For CAT-Net and RRU-Net the page range could not be confirmed, so those two are cited by DOI. The Popescu and Farid papers and a few classic works
 (Fridrich 2003, ResNet, ViT, U-Net, AdamW) were not re-checked online, so check them against Google Scholar before submission.
+
+## Citation numbering and the automatic check
+
+* References are numbered in the order they are first cited, as in the conference paper. One citation is `[3]`, two are `[3, 4]` and three or more in a row are a range such as `[5-9]`.
+* The base papers are cited together in the introduction, so they are references 1 to 5.
+* `python scripts/check_citations.py` checks the built report. It confirms that the numbers are serial with no gaps, that groups are written in this style, that every reference is cited and every cited number exists,
+  that the reference list is in the same order, and that a name or method written before a citation (for example Mahdian and Saic, BusterNet, CoMoFoD) is the reference that is cited.
+  It was also tested on a copy with deliberate mistakes and reported all of them.
+* The mapping used for the last build is stored in `docs/report/citation_map.json`.

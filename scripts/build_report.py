@@ -56,6 +56,42 @@ N = dict(
     ce=f"{CE['mean_fold_accuracy'] * 100:.2f}" if CE else "", cp=pc(CP["pooled"]["accuracy"]) if CP else "", cpg=pc(CPG["pooled"]["accuracy"]) if CPG else "",
     loc_a=f"{LZ['casia_validation']['pixel_f1_pooled']:.2f}", loc_c=f"{LZ['columbia']['pixel_f1_pooled']:.2f}", loc_best=f"{LZ['columbia']['pixel_f1_best_threshold']:.2f}")
 _USED = set()
+_CITE = {}   # number in the source list -> number in order of first appearance
+
+
+def _new_number(n):
+    if n not in _CITE:
+        _CITE[n] = len(_CITE) + 1
+    return _CITE[n]
+
+
+def _format_group(nums):
+    nums, out, i = sorted(set(nums)), [], 0
+    while i < len(nums):
+        j = i
+        while j + 1 < len(nums) and nums[j + 1] == nums[j] + 1:
+            j += 1
+        if j - i >= 2:
+            out.append(f"{nums[i]}-{nums[j]}")
+        else:
+            out.extend(str(x) for x in nums[i:j + 1])
+        i = j + 1
+    return "[" + ", ".join(out) + "]"
+
+
+def cite(text):
+    """Renumber citations in the order they first appear and write groups as in the conference paper."""
+    def sub(m):
+        olds = []
+        for part in m.group(1).split(","):
+            part = part.strip()
+            if "-" in part:
+                a, b = (int(x) for x in part.split("-"))
+                olds += list(range(a, b + 1))
+            else:
+                olds.append(int(part))
+        return _format_group([_new_number(o) for o in olds])
+    return re.sub(r"\[(\d+(?:\s*[-,]\s*\d+)*)\]", sub, text)
 
 
 def plain(text):
@@ -157,6 +193,7 @@ class Doc:
 
     def runs(self, p, text, size=12, bold=False, italic=False, font=None):
         """Supports **bold** and _italic_ markers inside text."""
+        text = cite(text)
         for part in re.split(r"(\*\*.+?\*\*|__.+?__)", text):
             if not part:
                 continue
@@ -252,7 +289,7 @@ class Doc:
                 c = t.rows[i].cells[j]
                 c.text = ""
                 bold = isinstance(v, str) and v.startswith("**")
-                r = c.paragraphs[0].add_run(v.strip("*") if isinstance(v, str) else str(v))
+                r = c.paragraphs[0].add_run(cite(v.strip("*")) if isinstance(v, str) else str(v))
                 r.font.size, r.font.name, r.bold = Pt(size), "Times New Roman", bold
                 c.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.LEFT if (j == 0 and align_first == "left") else WD_ALIGN_PARAGRAPH.CENTER
         for row in t.rows:
@@ -869,7 +906,12 @@ def build(template, out, pages=None):
     app = next(i for i, p in enumerate(P) if p.text.startswith("APPENDIX A"))
     brk = next((q for q in P[ri + 2:app] if q._p.xpath('.//w:br[@w:type="page"]')), None)
     anchor = brk._p if brk is not None else P[app]._p
-    for ref in REFS:
+    inverse = {new: old for old, new in _CITE.items()}
+    ordered = [REFS[inverse[k] - 1] for k in sorted(inverse)]
+    never = [REFS[i] for i in range(len(REFS)) if (i + 1) not in _CITE]
+    if never:
+        print("WARNING: references never cited:", [r[:40] for r in never])
+    for ref in ordered + never:
         el = copy.deepcopy(sample)
         anchor.addprevious(el)
         par = docx.text.paragraph.Paragraph(el, P[app]._parent)
@@ -1005,6 +1047,7 @@ def build(template, out, pages=None):
                 else:
                     pp.add_run(str(num))
     fill_front_matter(d)
+    (ROOT / "docs" / "report" / "citation_map.json").write_text(json.dumps({str(new): REFS[old - 1] for old, new in sorted(_CITE.items(), key=lambda kv: kv[1])}, indent=1), encoding="utf-8")
     # an empty spacer paragraph left at the bottom of a page would push the chapter break onto a blank page
     for q in d.paragraphs:
         if q.text.strip().startswith("CHAPTER ") and q.paragraph_format.page_break_before:
