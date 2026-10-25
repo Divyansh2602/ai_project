@@ -294,14 +294,14 @@ cr, cg = RES["CASIA v2.0, random 5-fold"], RES["CASIA v2.0, source-disjoint 5-fo
 cp, cs = RES["Columbia, patch-based (SRM), random"], RES["Columbia, patch-based (SRM), scene-disjoint"]
 comp = pd.DataFrame([
     ["[2] Ravula and Singh, 2025 (GAN-ViT-CMFD)", "CASIA v2.0", "accuracy", "94.4%", f"{pct(cr['acc'])} / {pct(cg['acc'])}"],
-    ["[3] Rehman and Jain, 2025 (CNN + SVM)",     "CASIA v2.0", "accuracy", "93.57% (mean 93.39%)", f"{pct(cr['acc'])} / {pct(cg['acc'])}"],
+    ["[3] Rehman and Jain, 2025 (CNN + SVM)",     "CASIA v2.0", "mean accuracy over folds", "93.39% (best single figure 98.91%)", f"{pct(cr['acc'])} / {pct(cg['acc'])}"],
     ["[4] Deb and Kar, 2026 (Satyachitra)",       "CASIA v2.0", "precision / recall / F1", "87.31 / 90.15 / 88.33", f"{cr['prec'] * 100:.2f} / {cr['rec'] * 100:.2f} / {cr['f1'] * 100:.2f}"],
     ["Earlier Columbia methods listed in [1]",    "Columbia",   "accuracy", "91% to 93.4%", f"{pct(cp['acc'])} / {pct(cs['acc'])} (patch-based)"],
 ], columns=["Source", "Dataset", "Metric", "Reported", "TrustSphere (random / source- or scene-disjoint)"])
 display(comp)
 
 fig, ax = plt.subplots(figsize=(8, 3.2))
-items = [("Deb & Kar [4] (accuracy not given; F1)", 88.33, cr["f1"] * 100), ("Rehman & Jain [3]", 93.57, cr["acc"] * 100), ("Ravula & Singh [2]", 94.4, cr["acc"] * 100)]
+items = [("Deb & Kar [4] (accuracy not given; F1)", 88.33, cr["f1"] * 100), ("Rehman & Jain [3] (mean over folds)", 93.39, cr["acc"] * 100), ("Ravula & Singh [2]", 94.4, cr["acc"] * 100)]
 for i, (n, rep, ours) in enumerate(items):
     ax.barh(i + .18, rep, .34, color=GREY, label="reported" if i == 0 else None); ax.barh(i - .18, ours, .34, color=BLUE, label="TrustSphere (CASIA, random CV)" if i == 0 else None)
     ax.text(rep + .2, i + .18, f"{rep:.2f}", va="center", fontsize=8); ax.text(ours + .2, i - .18, f"{ours:.2f}", va="center", fontsize=8)

@@ -254,7 +254,7 @@ def write_md(rep):
     if cr and cg:
         a, b = cr["pooled"], cg["pooled"]
         L += [f"| SD31 Ravula et al. 2025 (GAN-ViT-CMFD) | CASIA v2.0 | accuracy | 94.4% | {pc(a['accuracy'])} random / {pc(b['accuracy'])} source-disjoint | above |",
-              f"| SD35 Rehman et al. 2025 (CNN + SVM) | CASIA v2.0 | accuracy | 93.57% (mean over runs 93.39%; best run 98.91%) | {pc(a['accuracy'])} / {pc(b['accuracy'])} | above the 93.57% run and the mean; below the 98.91% best run |",
+              f"| SD35 Rehman et al. 2025 (CNN + SVM) | CASIA v2.0 | accuracy | 98.91% best figure (batch 128, mean over folds 93.39%); 93.57% (batch 200, mean 90.25%) | {pc(a['accuracy'])} / {pc(b['accuracy'])} | above both fold means and the 93.57% figure; below the 98.91% best figure |",
               f"| SD52 Deb et al. 2026 (Satyachitra) | CASIA v2.0 | precision / recall / F1 | 87.31 / 90.15 / 88.33 | {pc(a['precision'])} / {pc(a['recall'])} / {pc(a['f1'])} | above |",
               f"| SD25 Ranjan et al. 2026 (LOOP + ResNet-50 + SVM) | Columbia, CASIA v2.0, Dresden pooled | accuracy | 95.20% | CASIA alone {pc(a['accuracy'])} (Dresden not used here) | level on CASIA; see the pooled row |"]
     colp = rep.get("Columbia, patch-based, SRM input")

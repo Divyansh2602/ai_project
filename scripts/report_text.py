@@ -33,7 +33,7 @@ def abstract(N):
         "Each result is hashed with SHA-256, signed with Ed25519, stored with a chain of custody, anchored on a test blockchain if a wallet is set, and saved as an evidence PDF. "
         "A web application shows the whole process.",
         "The image forensics agent uses a detector we trained. It is an EfficientNet-B0 network that reads error level analysis maps made at three JPEG qualities, using crops at the original resolution. "
-        f"We trained and tested it on CASIA v2.0 (1,536 authentic and 1,283 tampered images) and Columbia (183 authentic and 180 spliced images). "
+        f"We trained and tested it on a subset of CASIA v2.0 (1,536 authentic and 1,283 tampered images) and on Columbia (183 authentic and 180 spliced images). "
         f"With 5-fold cross-validation on CASIA v2.0 the accuracy is {N['cr']}% with a random split and {N['cg']}% when each tampered image stays in the same fold as its source. "
         f"On {N['n']} images that were never used in training it reaches {N['ho']} and the full pipeline gives a verdict on {N['cov']} of them with {N['acc_dec']} accuracy. The rest go to a person. "
         f"Columbia is harder because its photos are uncompressed. A whole image detector reaches only {N['ce']}%, while a patch based detector on noise residuals reaches {N['cp']} with a random split "
@@ -86,10 +86,10 @@ OVERRIDES = [
      "Splicebuster models noise residuals and splits the image into real and spliced parts without any forged training examples [24]. "
      "The filters of the rich models by Fridrich and Kodovský were made for steganalysis [25]. We use them as the SRM input for Columbia."),
     ("Deep networks learn such traces from data",
-     "Deep networks learn these traces from data. Bayar and Stamm constrain the first layer so it ignores image content and learns prediction error filters [26]. "
-     "Zhou et al. use an RGB stream and a noise stream in a Faster R-CNN [27]. Huh et al. train on real photos with EXIF data to predict whether two patches come from the same image, without any forged examples [28]. "
+     "Deep networks learn these traces from data. Bayar and Stamm add a constrained first layer that suppresses image content and learns features for manipulation detection [26]. "
+     "Zhou et al. use an RGB stream and a noise stream in a Faster R-CNN [27]. Huh et al. train only on real photos and use their EXIF data to learn whether an image is self consistent, meaning that it could come from one imaging pipeline. They then use this to find splices without ever seeing forged examples [28]. "
      "BusterNet separates the source and target regions of copy-move forgery [29]. ManTra-Net learns many manipulation types and treats localisation as finding anomalies [30]. "
-     "RRU-Net adds residual feedback to a U-Net [31]. PSCC-Net predicts masks step by step at several scales [32]. MVSS-Net supervises edge, noise and image level outputs together [33]. "
+     "RRU-Net adds residual feedback to a U-Net [31]. PSCC-Net predicts masks step by step at several scales [32]. MVSS-Net learns from the noise view and from boundary artifacts, and is supervised at several scales [33]. "
      "CAT-Net learns from JPEG DCT coefficients and pixels [34]. ObjectFormer uses RGB and high frequency features in a transformer [35]. TruFor adds a learned noise fingerprint and a reliability map [36]. "
      "Most of these papers are judged on how well they locate the tampered pixels. Our detector answers the image level question of authentic or tampered. The base papers [1] to [4] answer the same question."),
     ("Surveys of the field are given in",
@@ -101,21 +101,21 @@ OVERRIDES = [
     ("The five base papers of this project are summarised next",
      "The five base papers of this project are summarised next."),
     ("Ranjan et al. combine a local optimal",
-     "Ranjan et al. combine a local texture pattern descriptor (a variant of the centre symmetric local binary pattern) with ResNet-50 features and classify with an SVM. "
+     "Ranjan et al. extract texture maps with the Local Optimal Oriented Pattern (LOOP), refine them with a pretrained ResNet-50 and classify with an SVM. "
      "They test on the Columbia splicing dataset, CASIA v2.0 and a part of the Dresden image database using stratified 5-fold cross-validation. Their average accuracy is 95.20%. "
-     "Their review table lists older Columbia results between about 91% and 93.4%."),
+     "Their review table lists earlier methods that use Columbia, with accuracies between about 91% and 93.4%."),
     ("Ravula and Singh detect and classify",
      "Ravula and Singh detect and classify copy-move forgery using generative adversarial networks, a vision transformer and spectral clustering together. "
-     "They report accuracy of 98.95% on CoMoFoD, 95.2% on MICC-F220 and 94.4% on CASIA v2."),
+     "In their Table 4 they report accuracy of 98.95% on CoMoFoD, 95.2% on MICC-F220 and 94.4% on CASIA v2. Their abstract gives 99.02% accuracy for CoMoFoD."),
     ("Rehman and Jain extract patch descriptors",
      "Rehman and Jain take patch features from a pretrained CNN, fuse them and classify with an SVM. On CASIA v2.0 they report 93.57% accuracy without augmentation and 98.91% with augmentation. "
-     "Their table also gives the mean and standard deviation over runs, which is 93.39% ± 8.75 for the 98.91% setting."),
+     "Their Table 3 uses 10-fold cross-validation. For batch size 128 it gives accuracy 98.91%, mean 93.39% and standard deviation 8.75%. For batch size 200 it gives accuracy 93.57%, mean 90.25% and standard deviation 7.98%."),
     ("Deb and Kar propose a CNN-based",
      "Deb and Kar propose a CNN based copy-move method with preprocessing, feature extraction, segmentation and localisation steps. They also study how different the datasets are. "
      "On CASIA v2.0 they report precision 87.31, recall 90.15 and F1 88.33."),
     ("Chen et al. extract features from a frozen",
-     "Chen et al. take features from a frozen EfficientNet-B4 and train XGBoost models at several levels for the splicing mask. A second version also predicts the mask boundary. No backpropagation is needed. "
-     "Following [6], they train on CASIA v2.0 and test on CASIA v1.0 and Columbia. They report pixel F1 of 0.5728 (0.6210 with edges) on CASIA v1.0 and 0.6497 (0.6558) on Columbia, with 18.4 million parameters."),
+     "Chen et al. take features from a pretrained EfficientNet-B4 and train XGBoost models at several levels for the splicing mask. A second version also predicts the mask boundary. No backpropagation is needed. "
+     "Following [6], they train on CASIA v2.0 and test on CASIA v1.0 and Columbia. They report pixel F1 of 0.5728 (0.6210 with edges) on CASIA v1.0 and 0.6497 (0.6558) on Columbia, with 18.4 million parameters for GIFT."),
     ("Evaluation that may reward memorisation",
      "**Tests that may reward memory.** CASIA v2.0 has tampered images made from authentic images in the same set. A random split can put a tampered image in the test set and its source in the training set. "
      "The base papers report random split or cross-validation accuracy and do not say if sources were kept apart. We report both a random split and a split that keeps sources together."),
@@ -264,8 +264,8 @@ OVERRIDES = [
      "Each analysis can be downloaded as an evidence PDF with the identification, verdict, findings, heatmaps, chain of custody and signature."),
     # 7 Results
     ("The datasets are CASIA v2.0",
-     "The datasets are CASIA v2.0 (1,536 authentic and 1,283 tampered images, all PNG in the copy we used) and Columbia (183 authentic and 180 spliced images). "
-     "Both come from the Hugging Face collection ductai199x/image-manipulation-dataset-compilation [12]. Label 1 means manipulated. "
+     "The datasets are a subset of CASIA v2.0 and the Columbia set. Our copy of CASIA v2.0 has 1,536 authentic and 1,283 tampered images, all PNG. The full dataset has 7,491 authentic and 5,123 tampered images, so our results are not on the full set. "
+     "Columbia has 183 authentic and 180 spliced images. Both come from the Hugging Face collection ductai199x/image-manipulation-dataset-compilation [12]. Label 1 means manipulated. "
      "We report accuracy, precision, recall, F1, ROC AUC and the equal error rate (EER). A confusion matrix is shown for each experiment."),
     ("The two cross-validation protocols give almost the same",
      "The two cross-validation protocols give almost the same accuracy, 95.53% and 95.32%. Keeping each tampered image with its source did not change the result much. "
@@ -286,7 +286,7 @@ OVERRIDES = [
      lambda N: f"The localiser finds the tampered region well on images like its training data (pooled F1 {N['loc_a']}) but does not carry over to Columbia (pooled F1 {N['loc_c']}, and {N['loc_best']} at the best possible threshold). "
                "Localisation across datasets is a limit of this work. The verdict does not use it."),
     ("Only the base-paper results that the detector exceeds",
-     "Only the base paper results that our detector exceeds are listed, using a comparable metric on the same dataset. The protocols differ in splits, subsets and training data, so the table gives context and is not a ranking. "
+     "Only the base paper results that our detector exceeds are listed, using a comparable metric on the same dataset. The protocols differ in splits, subsets and training data. For example, some papers use the full CASIA v2.0 and we use a subset of it. So the table gives context and is not a ranking. "
      "The full comparison, including results we do not reach, is in the file docs/evaluation/EVALUATION.md in the repository."),
     ("The ELA-based detector works well on CASIA",
      "The ELA based detector works well on CASIA v2.0, where most images come from JPEG files, and poorly on uncompressed Columbia images. The patch based detector on noise residuals fixes this on Columbia but it is a separate model. "

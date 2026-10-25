@@ -30,7 +30,7 @@ Before a live demo: if `backend/.env` has `POLYGON_PRIVATE_KEY` set, each analys
 
 | Experiment | What it tests |
 |---|---|
-| CASIA v2.0, random 5-fold | normal cross-validation, 2,819 images (1,536 authentic, 1,283 tampered) |
+| CASIA v2.0, random 5-fold | normal cross-validation on a 2,819 image subset of CASIA v2.0 (1,536 authentic, 1,283 tampered; the full set has 7,491 and 5,123) |
 | CASIA v2.0, source-disjoint 5-fold | each tampered image stays in the same fold as the authentic image it was made from, so the model cannot memorise sources |
 | Columbia, whole image (ELA) | the same detector on Columbia's uncompressed photos, 363 images |
 | Columbia, patch-based (SRM), random | small patches on noise-residual input |
@@ -86,7 +86,7 @@ The verdict does not use this model; heatmaps are supporting evidence only.
 | Paper | Reported | Ours |
 |---|---|---|
 | Ravula and Singh 2025 | 94.4% (CASIA v2) | 95.53% / 95.32% |
-| Rehman and Jain 2025 | 93.57% (CASIA v2.0) | 95.53% / 95.32% |
+| Rehman and Jain 2025 | mean accuracy over 10 folds 93.39% (their best single figure is 98.91%) | 95.53% / 95.32% |
 | Deb and Kar 2026 | precision/recall/F1 87.31 / 90.15 / 88.33 | 95.16 / 95.01 / 95.09 |
 | earlier Columbia methods listed in Ranjan 2026 | 91% to 93.4% | 97.25% / 96.97% (patch-based) |
 
@@ -138,7 +138,7 @@ Limits (say them before the guide asks):
 
 ## 6. Likely questions and short answers
 
-- **"Is 95% good?"** It is above the CASIA numbers of three of the five base papers (94.4%, 93.57%, F1 88.33) and level with the fourth (95.2%, pooled over three datasets). Some web results are higher; protocols differ.
+- **"Is 95% good?"** It is above the CASIA numbers of three base papers (94.4%, the 93.39% fold mean of Rehman and Jain, and F1 88.33), although Rehman and Jain also report a best figure of 98.91%. It is level with the fourth (95.2%, pooled over three datasets). Some web results are higher; protocols differ.
 - **"Could it have memorised the images?"** We tested exactly that: keeping each tampered image with its source gives 95.3% vs 95.5%.
 - **"Why ELA?"** Cheap, interpretable, and a pasted region often has a different JPEG history. We stacked three qualities because it gave the best development-split result.
 - **"Why a different model for Columbia?"** Columbia is uncompressed, so ELA has little signal; noise residuals do. Patches also multiply the tiny dataset.

@@ -109,7 +109,7 @@
      "score": 0.41357070207595825
     }
    ],
-   "gradcam_path": "C:/Users/DIVYAN~1/AppData/Local/Temp/ts_eval_ko8qhe6r/heatmaps/Tp_D_CNN_M_N_nat00041_nat10123_11439.jpg_gradcam.png",
+   "gradcam_path": "C:/Users/DIVYAN~1/AppData/Local/Temp/ts_eval_x_r5_p_p/heatmaps/Tp_D_CNN_M_N_nat00041_nat10123_11439.jpg_gradcam.png",
    "gradcam_method": "gradcam",
    "trained_detector": {
     "p_manipulated": 1.0,

@@ -91,7 +91,7 @@ Each row compares like with like (same dataset, same kind of metric). Protocols 
 | base paper | dataset | metric | reported | TrustSphere | result |
 |---|---|---|---|---|---|
 | SD31 Ravula et al. 2025 (GAN-ViT-CMFD) | CASIA v2.0 | accuracy | 94.4% | 95.53% random / 95.32% source-disjoint | above |
-| SD35 Rehman et al. 2025 (CNN + SVM) | CASIA v2.0 | accuracy | 93.57% (mean over runs 93.39%; best run 98.91%) | 95.53% / 95.32% | above the 93.57% run and the mean; below the 98.91% best run |
+| SD35 Rehman et al. 2025 (CNN + SVM) | CASIA v2.0 | accuracy | 98.91% best figure (batch 128, mean over folds 93.39%); 93.57% (batch 200, mean 90.25%) | 95.53% / 95.32% | above both fold means and the 93.57% figure; below the 98.91% best figure |
 | SD52 Deb et al. 2026 (Satyachitra) | CASIA v2.0 | precision / recall / F1 | 87.31 / 90.15 / 88.33 | 95.16% / 95.01% / 95.09% | above |
 | SD25 Ranjan et al. 2026 (LOOP + ResNet-50 + SVM) | Columbia, CASIA v2.0, Dresden pooled | accuracy | 95.20% | CASIA alone 95.53% (Dresden not used here) | level on CASIA; see the pooled row |
 | SD25 table of earlier Columbia methods | Columbia | accuracy | 91 to 93.4% | 97.25% random / 96.97% scene-disjoint (patch-based) | above |

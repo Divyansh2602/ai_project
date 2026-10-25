@@ -370,8 +370,8 @@ def lit_review(D):
     D.table("Summary of the base papers", ["Ref.", "Method", "Datasets", "Task", "Reported result"],
             [["[1]", "Local pattern + ResNet-50 + SVM", "Columbia, CASIA v2.0, Dresden", "Image-level detection", "95.20% average accuracy"],
              ["[2]", "GAN + ViT + spectral clustering", "CoMoFoD, MICC-F220, CASIA v2", "Copy-move detection", "94.4% on CASIA v2"],
-             ["[3]", "CNN patch features + SVM", "CASIA v2.0 (and others)", "Copy-move detection", "93.57% (98.91% with augmentation)"],
-             ["[4]", "CNN copy-move framework", "CASIA v2.0, CoMoFoD, MICC-F220", "Copy-move detection", "F1 88.33 on CASIA v2.0"],
+             ["[3]", "CNN patch features + SVM", "CASIA v2.0", "Copy-move detection", "93.57% (98.91% with augmentation)"],
+             ["[4]", "CNN copy-move framework", "CASIA v2.0, CoMoFoD, MICC-F220, CMFD", "Copy-move detection", "F1 88.33 on CASIA v2.0"],
              ["[5]", "EfficientNet-B4 + XGBoost", "CASIA v2.0 (train); CASIA v1.0, Columbia (test)", "Pixel-level localisation", "F1 0.6497 on Columbia"]],
             widths=[1.0, 4.0, 4.2, 3.2, 3.6], size=9)
 
@@ -652,7 +652,7 @@ def build_body(D, doc_root):
         "The full comparison, including results the detector does not reach, is in the repository file docs/evaluation/EVALUATION.md.")
     D.table("CASIA v2.0 results of the base papers that the trained detector exceeds", ["Base paper", "Metric", "Reported", "TrustSphere (random / source-disjoint)"],
             [["[2] Ravula and Singh, 2025", "Accuracy", "94.4%", f"{pc(CR['pooled']['accuracy'])} / {pc(CG['pooled']['accuracy'])}"],
-             ["[3] Rehman and Jain, 2025", "Accuracy", "93.57% (mean over runs 93.39%)", f"{pc(CR['pooled']['accuracy'])} / {pc(CG['pooled']['accuracy'])}"],
+             ["[3] Rehman and Jain, 2025", "Mean accuracy over folds", "93.39% (best single figure 98.91%)", f"{pc(CR['pooled']['accuracy'])} / {pc(CG['pooled']['accuracy'])}"],
              ["[4] Deb and Kar, 2026", "Precision / recall / F1", "87.31 / 90.15 / 88.33",
               f"{CR['pooled']['precision'] * 100:.2f} / {CR['pooled']['recall'] * 100:.2f} / {CR['pooled']['f1'] * 100:.2f} (random)"]], widths=[4.5, 3.2, 4.3, 4.6], size=9)
     if CP and CPG:
@@ -1005,6 +1005,14 @@ def build(template, out, pages=None):
                 else:
                     pp.add_run(str(num))
     fill_front_matter(d)
+    # an empty spacer paragraph left at the bottom of a page would push the chapter break onto a blank page
+    for q in d.paragraphs:
+        if q.text.strip().startswith("CHAPTER ") and q.paragraph_format.page_break_before:
+            prev = q._p.getprevious()
+            while prev is not None and prev.tag == qn("w:p") and not "".join(t.text or "" for t in prev.iter(qn("w:t"))).strip() \
+                    and not prev.xpath(".//w:sectPr") and not prev.xpath(".//w:drawing") and not prev.xpath('.//w:br[@w:type="page"]'):
+                gone, prev = prev, prev.getprevious()
+                gone.getparent().remove(gone)
     unused = [k for k, _ in RT.OVERRIDES if k not in _USED]
     print('plain text: %d of %d replacements used' % (len(_USED), len(RT.OVERRIDES)), unused)
     d.save(out)
