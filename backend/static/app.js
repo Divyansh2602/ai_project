@@ -221,7 +221,7 @@ async function reportPage(id) {
       ${ver ? chainCard("File integrity", ver.file_integrity.status, ver.file_integrity.status === "intact" ? "ok" : "bad", `<code>${esc((ver.file_integrity.current_hash || "").slice(0, 40))}&hellip;</code>`) : chainCard("File integrity", "unavailable", "warn", "")}
       ${ver ? chainCard("Ed25519 signature", ver.record_signature.status, ver.record_signature.status === "valid" ? "ok" : "bad", `<code>${esc(ver.record_signature.algorithm || "")} key ${esc((ver.record_signature.key_fingerprint || "").slice(0, 16))}&hellip;</code>`) : chainCard("Ed25519 signature", "unavailable", "warn", "")}
       ${anchor ? chainCard("Blockchain anchor", anchor.status, ["verified", "anchored"].includes(anchor.status) ? "ok" : (anchor.status === "MISMATCH" ? "bad" : "warn"),
-        `<code>${esc(anchor.network || "no network")}${anchor.tx_hash ? "<br>tx " + esc(anchor.tx_hash.slice(0, 40)) + "&hellip;" : ""}</code>`) : chainCard("Blockchain anchor", "unavailable", "warn", "")}
+        `<code>${esc(anchor.network || "no network")}${anchor.tx_hash ? "<br>tx " + (() => { const tx = "0x" + String(anchor.tx_hash).replace(/^0x/, ""); return `<a href="https://amoy.polygonscan.com/tx/${esc(tx)}" target="_blank" rel="noopener">${esc(tx.slice(0, 20))}&hellip;</a>`; })() : ""}</code>`) : chainCard("Blockchain anchor", "unavailable", "warn", "")}
     </div>
     ${custody ? `<h3 style="margin-top:18px">Chain of custody</h3><ul class="timeline">${custody}</ul>` : ""}
     <div class="actions"><a class="btn" href="/api/report/${esc(rep.file_id)}/pdf" target="_blank" rel="noopener">Download evidence PDF</a>

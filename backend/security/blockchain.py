@@ -83,6 +83,17 @@ def _connect(cfg):
     return w3
 
 
+def with_0x(tx_hash: str | None) -> str | None:
+    """Transaction hashes must start with 0x for the explorer. Recent web3/hexbytes versions return them without it."""
+    if not tx_hash:
+        return tx_hash
+    return "0x" + tx_hash.removeprefix("0x")
+
+
+def explorer_tx_url(tx_hash: str | None) -> str | None:
+    return f"https://amoy.polygonscan.com/tx/{with_0x(tx_hash)}" if tx_hash else None
+
+
 def anchor_verdict(file_hash: str, verdict: str, timestamp: int | None = None) -> dict:
     """Write the verdict on-chain. Never raises — returns a status dict:
 
@@ -98,6 +109,9 @@ def anchor_verdict(file_hash: str, verdict: str, timestamp: int | None = None) -
         "explorer_url": None,
     }
     cfg = _config()
+    if os.getenv("TRUSTSPHERE_ANCHOR", "on").strip().lower() in ("off", "0", "false", "no"):
+        result["reason"] = "anchoring switched off (TRUSTSPHERE_ANCHOR=off)"
+        return result
     if not cfg["private_key"]:
         result["reason"] = "POLYGON_PRIVATE_KEY not set — anchoring disabled"
         return result
@@ -127,8 +141,8 @@ def anchor_verdict(file_hash: str, verdict: str, timestamp: int | None = None) -
 
         signed = account.sign_transaction(tx)
         tx_hash = w3.eth.send_raw_transaction(signed.raw_transaction)
-        result["tx_hash"] = tx_hash.hex()
-        result["explorer_url"] = f"https://amoy.polygonscan.com/tx/0x{tx_hash.hex().removeprefix('0x')}"
+        result["tx_hash"] = with_0x(tx_hash.hex())
+        result["explorer_url"] = explorer_tx_url(tx_hash.hex())
 
         try:
             receipt = w3.eth.wait_for_transaction_receipt(tx_hash, timeout=90)

@@ -28,6 +28,7 @@ from reportlab.platypus import (
 )
 
 from core import xai
+from security import blockchain
 
 REPORT_DIR = os.getenv("REPORT_DIR", "reports")
 
@@ -210,7 +211,7 @@ def build_pdf(evidence, verdict, agent_results, audit) -> str:
                 ["Anchor status", audit.blockchain_status or "—"]]
         if audit.blockchain_hash:
             rows.append(["Anchor transaction", Paragraph(
-                f"https://amoy.polygonscan.com/tx/{audit.blockchain_hash}", ss["Mono"])])
+                f'<link href="{blockchain.explorer_tx_url(audit.blockchain_hash)}">{blockchain.explorer_tx_url(audit.blockchain_hash)}</link>', ss["Mono"])])
         story.append(_kv_table(rows))
 
     # ── 6. Digital signature ──

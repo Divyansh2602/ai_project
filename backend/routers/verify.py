@@ -49,7 +49,7 @@ def verify_evidence(file_id: str, db: Session = Depends(get_db)):
 
     # 3. Blockchain anchor
     chain_check = {"status": audit.blockchain_status if audit else "not_anchored",
-                   "tx_hash": audit.blockchain_hash if audit else None,
+                   "tx_hash": blockchain.with_0x(audit.blockchain_hash) if audit else None,
                    "network": audit.blockchain_network if audit else None,
                    "on_chain_record": None}
     if audit and audit.blockchain_status in ("anchored", "pending"):
