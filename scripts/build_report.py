@@ -822,7 +822,7 @@ def build(template, out, pages=None):
     P = d.paragraphs
     for p in P[:25]:
         if p.text.strip() == "Programme":
-            set_runs_text(p, "Computer Science and Engineering", bold=True, size=19)
+            set_runs_text(p, "Computer Science and Engineering (Information Security)", bold=True, size=15)
     for t in d.tables[:2]:
         for row in t.rows:
             for c in row.cells:
@@ -1075,12 +1075,14 @@ def fill_front_matter(d):
         return next(q for q in d.paragraphs if q.text.strip().startswith(start))
 
     pairs = [("I    hereby    declare", [("I    hereby    declare", "We hereby declare"), ("submitted by me", "submitted by us"),
-                                          ("carried out by me", "carried out by us"), ("Prof. / Dr. << Guide Name >>", "Prof. " + RT.GUIDE + "."), ("declare    that    the    project     entitled", "declare that the project entitled")]),
+                                          ("carried out by me", "carried out by us"), ("Prof. / Dr. << Guide Name >>", "Prof. " + RT.GUIDE + "."), ("declare    that    the    project     entitled", "declare that the project entitled"),
+                                          ("in Computer Science and Engineering to VIT", "in Computer Science and Engineering (Information Security) to VIT")]),
              ("I further declare", [("I further declare", "We further declare")]),
              ("Signature of the Candidate", [("Candidate", "Candidates")]),
-             ("This is to certify", [("<< Student Name (Reg. No) >>", RT.NAMES_REG), ("him / her", "them"), ("Fall Semester 2024-2025", RT.SEMESTER)]),
+             ("This is to certify", [("<< Student Name (Reg. No) >>", RT.NAMES_REG), ("him / her", "them"), ("Fall Semester 2024-2025", RT.SEMESTER),
+                                  ("in Computer Science and Engineering,", "in Computer Science and Engineering (Information Security),")]),
              ("<< Head of the Department >>", [("<< Head of the Department >>", RT.HOD_COVER + ", Head of the Department")]),
-             ("<< Programme >>", [("<< Programme >>", "B.Tech")]),
+             ("<< Programme >>", [("<< Programme >>", "B.Tech. CSE (Information Security)")]),
              ("Name of the Candidate", [("Name of the Candidate", RT.NAMES)])]
     for start, subs in pairs:
         q = para(start)
