@@ -1091,6 +1091,10 @@ def fill_front_matter(d):
                 print("front matter: not found:", old)
         for r in q.runs:
             r.font.highlight_color = None
+            r.font.color.rgb = RGBColor(0, 0, 0)    # the template shows the project title in red
+    # the template splits this paragraph into many runs and the PDF export shows "orany" and "ofthe": use one run
+    contents = para("The contents of this report")
+    set_runs_text(contents, contents.text)
     # the longer HOD line pushed the certificate onto a second page: drop a few empty lines between the examiner line and the HOD name
     ex = para("Examiner(s)")
     nxt, removed = ex._p.getnext(), 0
