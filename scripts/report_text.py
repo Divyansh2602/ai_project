@@ -12,15 +12,15 @@ GUIDE_DESIGNATION = "Assistant Professor Sr. Grade 2"
 HOD = "Dr. Rajeshkannan R"
 HOD_COVER = "Dr. RAJESHKANNAN R"
 SEMESTER = "Fall Semester 2026-2027"
-NAMES = "Divyansh Gupta, Shubham Raj and Rudrarka Nath"
+NAMES = "Divyansh Gupta, Shubham Raj, Rudrarka Nath"
 NAMES_REG = "Divyansh Gupta (23BCI0065), Shubham Raj (23BCI0160) and Rudrarka Nath (23BCI0053)"
 
 ACK = [
-    "We thank Vellore Institute of Technology (VIT) for giving us the chance and the resources to carry out this project and the facilities and support at VIT helped us build and test our ideas.",
-    "We sincerely thank Dr. Jaisankar N, Dean of the School of Computer Science and Engineering (SCOPE), for the support and encouragement given to the students of the school which motivated us to do our best work.",
-    "We thank Dr. Rajeshkannan R, Head of the Department, for guidance and support during this project and the advice and feedback we received helped us shape the work and solve problems along the way.",
-    "We are very thankful to our project guide, Manikandan G, Assistant Professor Sr. Grade 2, for regular guidance and useful feedback and the time given in our reviews helped us improve our methods and finish this work.",
-    "Thank you all for your support.",
+    "I am deeply grateful to the management of Vellore Institute of Technology (VIT) for providing me with the opportunity and resources to undertake this project. Their commitment to fostering a conducive learning environment has been instrumental in my academic journey. The support and infrastructure provided by VIT have enabled me to explore and develop my ideas to their fullest potential.",
+    "My sincere thanks to Dr. Jaisankar N, the Dean of the School of Computer Science and Engineering (SCOPE), for his unwavering support and encouragement. His leadership and vision have greatly inspired me to strive for excellence. The Dean’s dedication to academic excellence and innovation has been a constant source of motivation for me. I appreciate his efforts in creating an environment that nurtures creativity and critical thinking.",
+    "I express my profound appreciation to Dr. Rajeshkannan R, the Head of the Department of Computer Science and Engineering (Information Security), for their insightful guidance and continuous support. Their expertise and advice have been crucial in shaping the direction of my project. The Head of Department’s commitment to fostering a collaborative and supportive atmosphere has greatly enhanced my learning experience. Their constructive feedback and encouragement have been invaluable in overcoming challenges and achieving my project goals.",
+    "I am immensely thankful to my project guide, Manikandan G, for their dedicated mentorship and invaluable feedback. Their patience, knowledge, and encouragement have been pivotal in the successful completion of this project. My supervisor’s willingness to share their expertise and provide thoughtful guidance has been instrumental in refining my ideas and methodologies. Their support has not only contributed to the success of this project but has also enriched my overall academic experience.",
+    "Thank you all for your contributions and support.",
 ]
 
 

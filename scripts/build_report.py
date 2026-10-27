@@ -20,7 +20,7 @@ from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_COLOR_INDEX
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from docx.shared import Cm, Pt, RGBColor
+from docx.shared import Cm, Pt, RGBColor, Twips
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -220,8 +220,8 @@ class Doc:
     def h3(self, text):
         self.para(text, 12, True, align="left", before=6, after=3, keep_next=True)
 
-    def p(self, text):
-        self.para(plain(text), 12)
+    def p(self, text, lead=""):
+        self.para(lead + plain(text), 12)
 
     def bullets(self, items, numbered=False):
         for k, t in enumerate(items, 1):
@@ -387,23 +387,18 @@ def lit_review(D):
         "follows the U-Net encoder-decoder layout [48], and training uses AdamW [49]. On the evidence side, Hasan and Salah proposed Ethereum smart contracts that track where a piece of media came from through the hashes of "
         "the stored files [50]; this project anchors a SHA-256 hash of the analysed image in a similar way, and adds the signature and chain of custody around it.")
     D.p("The five base papers of this project are summarised next.")
-    D.h3("Base paper 1: local optimal oriented pattern with deep features and an SVM [1]")
     D.p("Ranjan et al. combine a local optimal oriented texture descriptor (a centre-symmetric local binary pattern variant) with ResNet-50 features and classify with an SVM. They evaluate on the Columbia "
         "splicing dataset, CASIA v2.0 and a subset of the Dresden image database with stratified 5-fold cross-validation and report an average accuracy of 95.20%. Their review table lists earlier Columbia "
-        "results between about 91% and 93.4%.")
-    D.h3("Base paper 2: GAN-ViT-CMFD [2]")
+        "results between about 91% and 93.4%.", lead="In Local Optimal Oriented Pattern with Deep Features and an SVM [1], ")
     D.p("Ravula and Singh detect and classify copy-move forgery with a framework that combines generative adversarial networks, a vision transformer and spectral clustering. They report accuracy on "
-        "CoMoFoD (98.95%), MICC-F220 (95.2%) and CASIA v2 (94.4%).")
-    D.h3("Base paper 3: deep CNN features with a machine-learning classifier [3]")
+        "CoMoFoD (98.95%), MICC-F220 (95.2%) and CASIA v2 (94.4%).", lead="In GAN-ViT-CMFD [2], ")
     D.p("Rehman and Jain extract patch descriptors with a pre-trained CNN, fuse them and classify with an SVM. On CASIA v2.0 they report 93.57% accuracy without augmentation and 98.91% with augmentation; "
-        "their results table also lists the mean and standard deviation over runs (93.39% ± 8.75 for the 98.91% setting).")
-    D.h3("Base paper 4: Satyachitra [4]")
+        "their results table also lists the mean and standard deviation over runs (93.39% ± 8.75 for the 98.91% setting).", lead="In Deep CNN Features with a Machine-Learning Classifier [3], ")
     D.p("Deb and Kar propose a CNN-based copy-move framework with pre-processing, feature extraction, segmentation and localisation stages, and analyse dataset heterogeneity. On CASIA v2.0 they report "
-        "precision 87.31, recall 90.15 and F1 88.33.")
-    D.h3("Base paper 5: GIFT, a green image forgery tracker [5]")
+        "precision 87.31, recall 90.15 and F1 88.33.", lead="In Satyachitra [4], ")
     D.p("Chen et al. extract features from a frozen EfficientNet-B4 and train multi-level XGBoost models for the splicing mask and, in the edge-enhanced variant, for the mask boundary, so no back-propagation "
         "is needed. Following [6] they train on CASIA v2.0 and test on CASIA v1.0 and Columbia, reporting pixel-level F1 of 0.5728 (0.6210 with edges) on CASIA v1.0 and 0.6497 (0.6558) on Columbia, with 18.4 million "
-        "parameters.")
+        "parameters.", lead="In GIFT, a Green Image Forgery Tracker [5], ")
     D.table("Summary of the base papers", ["Ref.", "Method", "Datasets", "Task", "Reported result"],
             [["[1]", "Local pattern + ResNet-50 + SVM", "Columbia, CASIA v2.0, Dresden", "Image-level detection", "95.20% average accuracy"],
              ["[2]", "GAN + ViT + spectral clustering", "CoMoFoD, MICC-F220, CASIA v2", "Copy-move detection", "94.4% on CASIA v2"],
@@ -539,11 +534,11 @@ def build_body(D, doc_root):
     D.h3("4.2.3 Class Diagram")
     D.p("The data model has four tables: Evidence (the uploaded file), AgentResult (one row per agent), FinalVerdict (one row per analysis) and AuditLog (signature, anchor and chain of custody). "
         "All agents implement the same run(path) interface, which is what lets the decision engine treat them uniformly.")
-    D.figure(FIG / "fig_class_model.png", "Class diagram: evidence data model", max_w=14.0, max_h=11.0)
-    D.figure(FIG / "fig_class_agents.png", "Class diagram: agents and decision engine", max_w=13.0, max_h=11.0)
+    D.figure(FIG / "fig_class_model.png", "Class diagram: evidence data model", max_w=14.0, max_h=9.0)
+    D.figure(FIG / "fig_class_agents.png", "Class diagram: agents and decision engine", max_w=13.0, max_h=9.0)
     D.h3("4.2.4 Sequence Diagram")
     D.p("Figure 4.6 shows one analysis from upload to report. The report and verification calls are separate requests, so the verification can be repeated at any later time.")
-    D.figure(FIG / "fig_sequence.png", "Sequence diagram: analysing one image", max_w=16.0, max_h=17.5)
+    D.figure(FIG / "fig_sequence.png", "Sequence diagram: analysing one image", max_w=16.0, max_h=12.0)
 
     # ===== CHAPTER 5 =====
     D.chapter(5, "METHODOLOGY AND TESTING")
@@ -613,19 +608,19 @@ def build_body(D, doc_root):
     # ===== CHAPTER 6 =====
     D.chapter(6, "PROJECT DEMONSTRATION")
     D.p("The screenshots below come from the running application. The images used were taken from the held-out part of CASIA v2.0 and analysed with the hold-out detector, so the detector had never seen them.")
-    D.figure(SHOTS / "01-analyze.png", "Analyze page: the user chooses an image and sees the analysis stages", max_w=12.5, max_h=9.5)
-    D.figure(SHOTS / "02-analyze-file-selected.png", "A file selected for analysis", max_w=12.5, max_h=9.5)
+    D.figure(SHOTS / "01-analyze.png", "Analyze page: the user chooses an image and sees the analysis stages", max_w=12.5, max_h=8.5)
+    D.figure(SHOTS / "02-analyze-file-selected.png", "A file selected for analysis", max_w=12.5, max_h=8.5)
     D.p("For a tampered image the report opens with the verdict: a gauge of the authenticity score, the manipulation type, the reasoning and the file hash (Figure 6.3). The agent breakdown that follows shows "
         "each agent's findings. The image forensics card places the original, the error-level map and the Grad-CAM attention map side by side and lists the trained detector's probability (Figure 6.4). "
         "The evidence chain re-verifies the file hash and the signature on every visit and lists the chain of custody (Figure 6.5).")
     t1 = cards("03-report-tampered-1")
     D.figure(t1[0] if len(t1) > 0 else SHOTS / "03-report-tampered-1.png", "Verdict card for a tampered image", max_w=14.0, max_h=8.0)
-    D.figure(t1[1] if len(t1) > 1 else SHOTS / "03-report-tampered-1.png", "Agent breakdown for the tampered image: metadata, image forensics with heatmaps, provenance", max_w=14.0, max_h=21.0)
+    D.figure(t1[1] if len(t1) > 1 else SHOTS / "03-report-tampered-1.png", "Agent breakdown for the tampered image: metadata, image forensics with heatmaps, provenance", max_w=14.0, max_h=16.0)
     D.figure(t1[2] if len(t1) > 2 else SHOTS / "03-report-tampered-1.png", "Evidence chain: file integrity, Ed25519 signature, anchor status and chain of custody", max_w=14.0, max_h=11.0)
     others = [cards(n)[0] for n in ("04-report-tampered-2", "05-report-authentic", "06-report-inconclusive")]
     D.figure(stack(others, SHOTS / "_crops" / "verdicts.png"), "Verdict cards of a second tampered image (Fake), an authentic image (Authentic) and an authentic image the engine sends to human review (Inconclusive)", max_w=13.5, max_h=20.0)
-    D.figure(SHOTS / "07-history.png", "History page: every stored analysis with its verdict and score", max_w=13.0, max_h=11.0)
-    D.figure(SHOTS / "08-how-it-works.png", "How it works page: the agents, the fusion weights and the evidence chain", max_w=13.0, max_h=15.0)
+    D.figure(SHOTS / "07-history.png", "History page: every stored analysis with its verdict and score", max_w=13.0, max_h=9.0)
+    D.figure(SHOTS / "08-how-it-works.png", "How it works page: the agents, the fusion weights and the evidence chain", max_w=13.0, max_h=13.0)
     D.p("Each analysis can be downloaded as an evidence PDF containing the identification, verdict, findings, heatmaps, chain of custody and signature.")
     D.figure(SHOT / "09-evidence-pdf-tampered-page1.png", "First page of the evidence PDF of a tampered image", max_w=10.5, max_h=15.5)
 
@@ -872,8 +867,15 @@ def build(template, out, pages=None):
         delete_paragraph(p)
     anchor = next(q for q in d.paragraphs[ai + 1:] if has_sectpr(q))._p
     D = Doc(d, anchor)
-    for k, txt in enumerate(abstract_text()):
-        D.para(txt, 12, align="justify", after=8, line=1.15)
+    D.para(" ".join(abstract_text()), 12, align="justify", after=8, line=1.15)
+    # lift the heading: the template puts six empty paragraphs above it; and leave a gap under it
+    head = P[ai]
+    prev = head._p.getprevious()
+    while prev is not None and prev.tag == qn("w:p") and not "".join(t.text or "" for t in prev.iter(qn("w:t"))).strip() and not prev.xpath(".//w:sectPr"):
+        gone, prev = prev, prev.getprevious()
+        gone.getparent().remove(gone)
+    head.paragraph_format.space_after = Pt(16)
+    head.paragraph_format.page_break_before = True
     D.para("**Keywords:** image forgery detection, splicing, error level analysis, EfficientNet, digital evidence, multi-agent system, web application.", 12, align="left", before=6)
 
     # body: replace chapter-1 placeholder content
@@ -956,9 +958,21 @@ def build(template, out, pages=None):
             else:
                 pp.add_run(txt)
             pp.paragraph_format.space_before = Pt(0)
-            pp.paragraph_format.space_after = Pt(0)
+            pp.paragraph_format.space_after = Pt(5)
             for r in pp.runs:
-                r.font.size = Pt(10.5)
+                r.font.size = Pt(12)
+        trpr = row._tr.trPr
+        if trpr is not None:
+            for h in trpr.findall(qn("w:trHeight")):     # same row spacing whether a title wraps or not
+                trpr.remove(h)
+    # size 12 needs a wider title column, so the table takes the whole text width
+    for gc, w in zip(ft._tbl.tblGrid.findall(qn("w:gridCol")), (1700, 5900, 1300)):
+        gc.set(qn("w:w"), str(w))
+    for row in ft.rows:
+        for c, w in zip(row.cells, (1700, 5900, 1300)):
+            tcw = c._tc.get_or_add_tcPr().find(qn("w:tcW"))
+            tcw.set(qn("w:w"), str(w))
+            tcw.set(qn("w:type"), "dxa")
     P = d.paragraphs
     th = next(i for i, q in enumerate(P) if q.text.startswith("Table No."))
     sample_row = copy.deepcopy(P[th + 1]._p)
@@ -974,6 +988,10 @@ def build(template, out, pages=None):
         runs[0].text = f"{no}\t{cap}\t{(pages or {}).get('tab ' + no, '')}"
         for r in runs[1:]:
             r._r.getparent().remove(r._r)
+        # long titles wrap inside the title column instead of running into the page-number column
+        par.paragraph_format.left_indent = Twips(2006)
+        par.paragraph_format.first_line_indent = Twips(-1023)
+        par.paragraph_format.right_indent = Twips(1100)
     for p in d.paragraphs:
         if p.text.startswith("(In the chapters, figure caption"):
             delete_paragraph(p)
@@ -1046,6 +1064,17 @@ def build(template, out, pages=None):
                         r._r.getparent().remove(r._r)
                 else:
                     pp.add_run(str(num))
+    # the template rows differ in alignment, so put every page number on one centred line under "Page No."
+    for row in t.rows:
+        pp = row.cells[2].paragraphs[0]
+        pp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        pp.paragraph_format.left_indent = None
+        pp.paragraph_format.first_line_indent = None
+        pp.paragraph_format.right_indent = None
+        ppr = pp._p.pPr
+        tabs = ppr.find(qn("w:tabs")) if ppr is not None else None
+        if tabs is not None:
+            ppr.remove(tabs)
     fill_front_matter(d)
     (ROOT / "docs" / "report" / "citation_map.json").write_text(json.dumps({str(new): REFS[old - 1] for old, new in sorted(_CITE.items(), key=lambda kv: kv[1])}, indent=1), encoding="utf-8")
     # an empty spacer paragraph left at the bottom of a page would push the chapter break onto a blank page
@@ -1126,7 +1155,7 @@ def locate_pages(pdf_path, D, toc_keys):
         k = key.strip()
         if not k:
             continue
-        probe = (f"{sl} {k}" if sl else k) if k != "Abstract" else "ABSTRACT"
+        probe = (f"{sl} {k.split(' (COST')[0]}" if sl else k) if k != "Abstract" else "ABSTRACT"
         start = 0 if k == "Abstract" else body_start
         for i in range(start, len(texts)):
             if i < body_start and k != "Abstract":
