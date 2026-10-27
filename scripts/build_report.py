@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parent.parent
 EV = ROOT / "docs" / "evaluation"
 FIG = ROOT / "docs" / "report" / "figures"
 SHOT = ROOT / "docs" / "screenshots"
-TITLE = "TrustSphere AI: A Multi-Agent Framework for Image Manipulation Detection with Verifiable Digital Evidence"
+TITLE = "Autonomous Deepfake Detection and Digital Evidence Verification Using Multi-Agent Forensic Analysis"
 M = json.loads((EV / "metrics.json").read_text(encoding="utf-8"))
 
 
@@ -1134,6 +1134,9 @@ def fill_front_matter(d):
     # the template splits this paragraph into many runs and the PDF export shows "orany" and "ofthe": use one run
     contents = para("The contents of this report")
     set_runs_text(contents, contents.text)
+    for start in ("We hereby declare", "We further declare"):    # same fix for the declaration ("ordiploma", uneven spacing)
+        q = para(start)
+        set_runs_text(q, q.text)
     # the longer HOD line pushed the certificate onto a second page: drop a few empty lines between the examiner line and the HOD name
     ex = para("Examiner(s)")
     nxt, removed = ex._p.getnext(), 0
