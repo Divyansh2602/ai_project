@@ -965,6 +965,9 @@ def build(template, out, pages=None):
         if trpr is not None:
             for h in trpr.findall(qn("w:trHeight")):     # same row spacing whether a title wraps or not
                 trpr.remove(h)
+    for c in ft.rows[0].cells:                      # column headings at the size of the contents page headings
+        for r in c.paragraphs[0].runs:
+            r.font.size = Pt(12)
     # size 12 needs a wider title column, so the table takes the whole text width
     for gc, w in zip(ft._tbl.tblGrid.findall(qn("w:gridCol")), (1700, 5900, 1300)):
         gc.set(qn("w:w"), str(w))
@@ -975,6 +978,8 @@ def build(template, out, pages=None):
             tcw.set(qn("w:type"), "dxa")
     P = d.paragraphs
     th = next(i for i, q in enumerate(P) if q.text.startswith("Table No."))
+    for r in P[th].runs:
+        r.font.size = Pt(12)
     sample_row = copy.deepcopy(P[th + 1]._p)
     delete_paragraph(P[th + 1])
     last = d.paragraphs[th]._p
@@ -1004,6 +1009,10 @@ def build(template, out, pages=None):
         gone, prev = prev, prev.getprevious()
         gone.getparent().remove(gone)
     lt.paragraph_format.page_break_before = True
+    for q in d.paragraphs:                          # list headings at the size of the contents heading
+        if q.text.strip() in ("List of Figures", "List of Tables"):
+            for r in q.runs:
+                r.font.size = Pt(14)
 
     # abbreviations and symbols
     P = d.paragraphs
@@ -1121,6 +1130,7 @@ def fill_front_matter(d):
         for r in q.runs:
             r.font.highlight_color = None
             r.font.color.rgb = RGBColor(0, 0, 0)    # the template shows the project title in red
+            r.font.italic = False                   # and the degree line in italics
     # the template splits this paragraph into many runs and the PDF export shows "orany" and "ofthe": use one run
     contents = para("The contents of this report")
     set_runs_text(contents, contents.text)
